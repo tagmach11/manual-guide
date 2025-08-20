@@ -166,7 +166,7 @@ html[data-theme="light"] .toggle-content {
   border-left-color: #2563eb;
 }
 
-/html[data-theme="dark"] {
+html[data-theme="dark"] {
   /* 버튼(글자만 버튼처럼 보이는 형태 유지) */
   .toggle-btn {
     background: #16283a;   /* 남색 톤 */
@@ -182,7 +182,6 @@ html[data-theme="light"] .toggle-content {
     background: #0f1f2e;     /* 진한 남색(배경) */
     color: #ffffff;           /* 흰 글씨 */
     border-left: 2px solid #7fb3ff; /* 왼쪽 얇은 라인(파랑) */
-    /* 필요하면 그림자/모서리 등 */
     /* box-shadow: 0 2px 8px rgba(0,0,0,.35); */
     /* border-radius: 6px;  // 이미 있으시면 유지 */
   }
