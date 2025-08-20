@@ -187,204 +187,43 @@ html[data-theme="dark"] {
   }
 }
 
-//파일 추가
-
-/* ===========================================
-   Explorer — “진짜 파일 탐색기” 스타일
-   =========================================== */
-
-/* 색상 토큰 (라이트 기본) */
-:root {
-  --exp-text:        #111827;
-  --exp-dim:         #6b7280;
-  --exp-bg-hover:    rgba(15, 23, 42, .05);
-  --exp-bg-active:   rgba(15, 23, 42, .10);
-  --exp-line:        rgba(148,163,184,.35);
-  --exp-icon:        #334155;
-  --exp-folder:      #2563eb; /* 폴더 아이콘 푸른색 */
-  --exp-file:        #475569; /* 파일 아이콘 회색 */
+/* 라이트 모드 기본 */
+.sidebar, .explorer { 
+  background: #f8fafc;
+  color: #1f2937;
 }
+.explorer a { color: inherit; text-decoration: none; }
+.explorer a:hover { text-decoration: underline; }
 
-/* 다크 모드 색상 토큰 */
-html[data-theme="dark"], .dark, .theme-dark, [data-theme="dark"] {
-  --exp-text:        #e5e7eb;
-  --exp-dim:         #9ca3af;
-  --exp-bg-hover:    rgba(255,255,255,.06);
-  --exp-bg-active:   rgba(255,255,255,.12);
-  --exp-line:        rgba(148,163,184,.28);
-  --exp-icon:        #cbd5e1;
-  --exp-folder:      #93c5fd;
-  --exp-file:        #cbd5e1;
-}
-
-/* 기본 레이아웃 정리 */
-.explorer {
-  font-size: 14px;
-  line-height: 1.35;
-  color: var(--exp-text);
-}
-
-/* 각 항목 줄 */
-.explorer .item,
-.explorer .node,
-.explorer .file {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: .45rem;
-  padding: 6px 8px 6px 10px;
+/* 각 줄 hover/active 느낌 */
+.explorer *[role="treeitem"],
+.explorer .item, .explorer .node, .explorer .file {
   border-radius: 8px;
-  color: var(--exp-text);
-  cursor: default;
+  padding: 6px 8px;
 }
-
-/* 호버/선택 강조 */
-.explorer .item:hover,
-.explorer .node:hover,
-.explorer .file:hover {
-  background: var(--exp-bg-hover);
+.explorer *[role="treeitem"]:hover,
+.explorer .item:hover, .explorer .node:hover, .explorer .file:hover {
+  background: rgba(15, 23, 42, .05);
 }
-.explorer .item.active,
-.explorer .node.active,
-.explorer .file.active {
-  background: var(--exp-bg-active);
+.explorer .active, .explorer *[aria-selected="true"] {
+  background: rgba(15, 23, 42, .10);
   font-weight: 700;
 }
 
-/* 왼쪽 트리 가이드 라인 */
-.explorer .tree,
-.explorer .children {
-  position: relative;
+/* 다크 모드 */
+html[data-theme="dark"] .sidebar,
+html[data-theme="dark"] .explorer {
+  background: #0b1520;
+  color: #e5e7eb;
 }
-.explorer .children {
-  margin-left: 18px; /* 들여쓰기 */
-  padding-left: 10px;
-  border-left: 1px dashed var(--exp-line);
+html[data-theme="dark"] .explorer *[role="treeitem"]:hover,
+html[data-theme="dark"] .explorer .item:hover,
+html[data-theme="dark"] .explorer .node:hover,
+html[data-theme="dark"] .explorer .file:hover {
+  background: rgba(255,255,255,.06);
 }
-
-/* 접힘/펼침 토글(화살표) — 폴더/섹션 노드 앞에 */
-.explorer .item .caret,
-.explorer .node .caret {
-  width: 12px;
-  height: 12px;
-  flex: 0 0 12px;
-  margin-right: 2px;
-  color: var(--exp-dim);
-}
-
-/* Quartz DOM에 caret이 없다면 가짜로 생성 */
-.explorer .item.has-children::before,
-.explorer .node.has-children::before {
-  content: "▸";                    /* 접힘 */
-  color: var(--exp-dim);
-  width: 12px;
-  display: inline-block;
-  text-align: center;
-  margin-right: 2px;
-}
-.explorer .item.has-children.is-open::before,
-.explorer .node.has-children.is-open::before {
-  content: "▾";                    /* 펼침 */
-}
-
-/* ===== 아이콘들 (SVG data-URI) ===== */
-
-/* 폴더(닫힘) */
-@function svg-url($c) {
-  @return url("data:image/svg+xml;utf8,\
-<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='#{$c}'>\
-<path d='M10 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-8l-2-2z'/>\
-</svg>");
-}
-
-/* 폴더(열림) */
-@function svg-folder-open($c) {
-  @return url("data:image/svg+xml;utf8,\
-<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='#{$c}'>\
-<path d='M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v1H6a2 2 0 0 0-1.94 1.5L3 18V7z'/>\
-<path d='M21 10H6a1 1 0 0 0-.97.76L4 18a2 2 0 0 0 1.94 2.5H19a2 2 0 0 0 1.94-1.5l1.5-6A2 2 0 0 0 21 10z'/>\
-</svg>");
-}
-
-/* 파일(문서) */
-@function svg-file($c) {
-  @return url("data:image/svg+xml;utf8,\
-<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='#{$c}'>\
-<path d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/>\
-<path d='M14 2v6h6' fill-opacity='.4'/>\
-</svg>");
-}
-
-/* 라벨(텍스트) 앞 공간 확보 */
-.explorer .label,
-.explorer .item .text,
-.explorer .file .text {
-  position: relative;
-  padding-left: 22px;
-}
-
-/* 폴더 기본 아이콘(닫힘) */
-.explorer .folder > .label::before,
-.explorer .item.folder > .text::before,
-.explorer .node.folder > .text::before {
-  content: "";
-  position: absolute;
-  left: 0; top: 1px;
-  width: 16px; height: 16px;
-  background-image: svg-url(var(--exp-folder));
-  background-size: 16px 16px;
-  background-repeat: no-repeat;
-}
-
-/* 폴더 열림 */
-.explorer .folder.is-open > .label::before,
-.explorer .item.folder.is-open > .text::before,
-.explorer .node.folder.is-open > .text::before {
-  background-image: svg-folder-open(var(--exp-folder));
-}
-
-/* 파일 아이콘 */
-.explorer .file > .label::before,
-.explorer .item.file > .text::before {
-  content: "";
-  position: absolute;
-  left: 0; top: 1px;
-  width: 16px; height: 16px;
-  background-image: svg-file(var(--exp-file));
-  background-size: 16px 16px;
-  background-repeat: no-repeat;
-}
-
-/* 비활성/회색 처리 (예: disabled/외부링크 등) */
-.explorer .muted,
-.explorer .dim {
-  color: var(--exp-dim);
-}
-
-/* 링크 스타일 중립화(파일명 느낌) */
-.explorer a {
-  color: inherit;
-  text-decoration: none;
-}
-.explorer a:hover {
-  text-decoration: underline;
-}
-
-/* 밀도 옵션(선택) — 아이템이 조금 더 촘촘하게 보이고 싶다면 해제 */
-.explorer.compact .item,
-.explorer.compact .node,
-.explorer.compact .file {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-
-//룰추가
-/* 펼침 상태가 aria-expanded 로 표시되는 경우 */
-.explorer .item[aria-expanded="true"]::before,
-.explorer .node[aria-expanded="true"]::before {
-  content: "▾";
-}
-.explorer .item[aria-expanded="true"] > .label::before {
-  background-image: svg-folder-open(var(--exp-folder));
+html[data-theme="dark"] .explorer .active,
+html[data-theme="dark"] .explorer *[aria-selected="true"] {
+  background: rgba(255,255,255,.12);
+  font-weight: 700;
 }
