@@ -162,8 +162,8 @@ $shadow: 0 10px 30px rgba(16, 24, 40, .08);
 /* ---------------------- */
 
 html[data-theme="dark"] .toggle-btn {
-  background: #1f2937;            /* gray-800 */
-  border-color: #374151;          /* gray-700 */
+  background: #55749f;            /* gray-800 */
+  border-color: #cb2679;          /* gray-700 */
   color: #e5e7eb;                 /* gray-200 */
 }
 
@@ -180,7 +180,7 @@ html[data-theme="dark"] .toggle-content {
 /* 시스템 다크 프리팁(혹시 data-theme 미사용 시 대비용) */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) .toggle-btn {
-    background: #eef0f3;
+    background: #1d3251;
     border-color: #000103;
     color: #e5e7eb;
   }
