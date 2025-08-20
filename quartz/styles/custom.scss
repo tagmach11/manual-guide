@@ -118,31 +118,75 @@ $shadow: 0 10px 30px rgba(16, 24, 40, .08);
     &::after { right: 6%; top: 6%; width: 160px; height: 120px; }
   }
 }
+/* 공통 버튼 & 콜랩스 기본 */
 .toggle-btn {
-  background: #f3f4f6; /* Tailwind gray-100 느낌 */
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  padding: 4px 10px;
-  font-size: 0.9rem;
+  display: inline-block;          /* 글자만 클릭 영역 */
+  padding: 6px 12px;
+  border: 1px solid var(--interactive-normal, #d1d5db);
+  border-radius: 8px;
+  background: var(--interactive-accent, #f3f4f6);
+  color: var(--text-normal, #111827);
   cursor: pointer;
-  margin-left: auto;   /* 오른쪽 정렬 */
-  display: block;
-  text-align: right;
+  font-weight: 600;
+  user-select: none;
+  margin: 0 0 8px auto;           /* 우측 정렬 */
+  transition: background .15s ease, border-color .15s ease, color .15s ease, box-shadow .15s ease;
 }
 
 .toggle-btn:hover {
-  background: #e5e7eb;
+  background: var(--background-modifier-hover, #e5e7eb);
+}
+
+.toggle-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59,130,246,.35); /* 파란 포커스 링 */
 }
 
 .toggle-content {
   display: none;
-  margin: 0.5rem 0;
-  padding: 0.5rem 1rem;
-  border-left: 3px solid #2563eb; /* Tailwind blue-600 */
-  background: #f9fafb;
-  border-radius: 4px;
+  margin: .5rem 0 1rem;
+  padding: .75rem 1rem;
+  border-left: 3px solid #2563eb; /* blue-600 */
+  background: var(--background-secondary, #f9fafb);
+  color: var(--text-normal, #111827);
+  border-radius: 6px;
 }
 
 .toggle-content.open {
   display: block;
+}
+
+/* ---------------------- */
+/* 다크 모드 최적화       */
+/* Quartz4는 보통 data-theme를 씀 */
+/* ---------------------- */
+
+html[data-theme="dark"] .toggle-btn {
+  background: #1f2937;            /* gray-800 */
+  border-color: #374151;          /* gray-700 */
+  color: #e5e7eb;                 /* gray-200 */
+}
+
+html[data-theme="dark"] .toggle-btn:hover {
+  background: #374151;            /* gray-700 */
+}
+
+html[data-theme="dark"] .toggle-content {
+  background: #0f172a;            /* slate-900 */
+  color: #e5e7eb;                 /* gray-200 */
+  border-left-color: #93c5fd;     /* blue-300 */
+}
+
+/* 시스템 다크 프리팁(혹시 data-theme 미사용 시 대비용) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .toggle-btn {
+    background: #1f2937;
+    border-color: #374151;
+    color: #e5e7eb;
+  }
+  :root:not([data-theme]) .toggle-content {
+    background: #0f172a;
+    color: #e5e7eb;
+    border-left-color: #93c5fd;
+  }
 }
