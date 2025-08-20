@@ -119,18 +119,19 @@ $shadow: 0 10px 30px rgba(16, 24, 40, .08);
   }
 }
 /* 공통 버튼 & 콜랩스 기본 */
+/* === 토글 버튼 / 내용 기본 === */
 .toggle-btn {
-  display: inline-block;          /* 글자만 클릭 영역 */
+  display: inline-block;
   padding: 6px 12px;
-  border: 1px solid var(--interactive-normal, #d1d5db);
   border-radius: 8px;
-  background: var(--interactive-accent, #f3f4f6);
-  color: var(--text-normal, #111827);
   cursor: pointer;
   font-weight: 600;
   user-select: none;
-  margin: 0 0 8px auto;           /* 우측 정렬 */
+  margin: 0 0 8px auto; /* 우측 정렬 */
   transition: background .15s ease, border-color .15s ease, color .15s ease, box-shadow .15s ease;
+  border: 1px solid var(--interactive-normal, #d1d5db);
+  background: var(--interactive-accent, #f3f4f6);
+  color: var(--text-normal, #111827); /* <-- 라이트 fallback을 진한 색으로 */
 }
 
 .toggle-btn:hover {
@@ -139,54 +140,44 @@ $shadow: 0 10px 30px rgba(16, 24, 40, .08);
 
 .toggle-btn:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(59,130,246,.35); /* 파란 포커스 링 */
+  box-shadow: 0 0 0 3px rgba(59,130,246,.35);
 }
 
 .toggle-content {
   display: none;
   margin: .5rem 0 1rem;
   padding: .75rem 1rem;
-  border-left: 3px solid #2563eb; /* blue-600 */
+  border-left: 3px solid #2563eb;
   background: var(--background-secondary, #f9fafb);
-  color: var(--text-normal, #c3ccdf);
+  color: var(--text-normal, #111827);   /* <-- 라이트 fallback 진하게 수정 */
   border-radius: 6px;
 }
+.toggle-content.open { display: block; }
 
-.toggle-content.open {
-  display: block;
+/* === 라이트 모드 명시 === */
+html[data-theme="light"] .toggle-btn {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+  color: #111827;
+}
+html[data-theme="light"] .toggle-content {
+  background: #f9fafb;
+  color: #111827;
+  border-left-color: #2563eb;
 }
 
-/* ---------------------- */
-/* 다크 모드 최적화       */
-/* Quartz4는 보통 data-theme를 씀 */
-/* ---------------------- */
-
+/* === 다크 모드 명시 === */
 html[data-theme="dark"] .toggle-btn {
-  background: #55749f;            /* gray-800 */
-  border-color: #cb2679;          /* gray-700 */
-  color: #e5e7eb;                 /* gray-200 */
+  background: #1f2937;   /* gray-800 */
+  border-color: #374151; /* gray-700 */
+  color: #e5e7eb;        /* gray-200 */
 }
-
 html[data-theme="dark"] .toggle-btn:hover {
-  background: #374151;            /* gray-700 */
+  background: #374151;   /* gray-700 */
 }
-
 html[data-theme="dark"] .toggle-content {
-  background: #0f172a;            /* slate-900 */
-  color: #e5e7eb;                 /* gray-200 */
-  border-left-color: #93c5fd;     /* blue-300 */
+  background: #0f172a;   /* slate-900 */
+  color: #e5e7eb;        /* gray-200 */
+  border-left-color: #93c5fd; /* blue-300 */
 }
 
-/* 시스템 다크 프리팁(혹시 data-theme 미사용 시 대비용) */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) .toggle-btn {
-    background: #1d3251;
-    border-color: #000103;
-    color: #e5e7eb;
-  }
-  :root:not([data-theme]) .toggle-content {
-    background: #0f172a;
-    color: #e5e7eb;
-    border-left-color: #93c5fd;
-  }
-}
