@@ -9,7 +9,6 @@ import styles from "../../styles/custom.scss"
 import popoverStyle from "../../components/styles/popover.scss"
 import { BuildCtx } from "../../util/ctx"
 import { QuartzComponent } from "../../components/types"
-import explorerIOS from "../../styles/explorer-ios.js" 
 import {
   googleFontHref,
   googleFontSubsetHref,
