@@ -186,3 +186,43 @@ html[data-theme="dark"] {
     /* border-radius: 6px;  // 이미 있으시면 유지 */
   }
 }
+
+/*테스트 진행중 css*/
+/* 네비게이션 바 전체 */
+.top-nav {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 24px;
+  background: #ffffffcc; /* 반투명 흰색 */
+  backdrop-filter: blur(8px); /* 유리 느낌 */
+  border-bottom: 1px solid #e5e7eb;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* 로고 영역 */
+.top-nav .logo {
+  font-weight: 700; font-size: 1.2rem; color: #15354a;
+}
+
+/* 메뉴 영역 */
+.top-nav .menu {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; gap: 24px;
+}
+
+/* 메뉴 링크 */
+.top-nav .menu a {
+  text-decoration: none; font-weight: 500; color: #333;
+  padding: 6px 10px; border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+/* Hover 효과 */
+.top-nav .menu a:hover {
+  background: #15354a; color: #fff;
+}
+
+/* 활성화된 메뉴 */
+.top-nav .menu a.active {
+  background: #15354a; color: #fff; font-weight: 600;
+}
