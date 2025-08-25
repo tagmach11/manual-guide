@@ -58,12 +58,24 @@ const Header: QuartzComponent = ({ children }: QuartzComponentProps) => {
             </div>
           </li>
 
-          <li class="nav-item">
-            <a class="nav-btn" href="/news">소식</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-btn" href="/ir">투자정보</a>
-          </li>
+          <li class="nav-item has-mega">
+  <button class="nav-btn" type="button">사이트</button>
+  <div class="mega-panel">
+    <div class="mega-col">
+      <a href="/etc/사이트/게시판-공지사항/" class="mega-link">게시판 공지사항</a>
+      <a href="/etc/사이트/게시판-자료실/" class="mega-link">게시판 자료실</a>
+      <a href="/etc/사이트/메뉴관리/" class="mega-link">메뉴관리</a>
+      <a href="/etc/사이트/메인화면표시-마이크로링크/" class="mega-link">메인화면표시(마이크로링크)</a>
+    </div>
+    <div class="mega-col highlight">
+      <a href="/etc/사이트/" class="card">
+        <div class="thumb"></div>
+        <div class="card-title">사이트 전체보기</div>
+        <div class="card-desc">사이트 매뉴얼 모음</div>
+      </a>
+    </div>
+  </div>
+</li>
         </ul>
       </nav>
 
