@@ -188,41 +188,70 @@ html[data-theme="dark"] {
 }
 
 /*테스트 진행중 css*/
-/* 네비게이션 바 전체 */
-.top-nav {
-  position: sticky; top: 0; z-index: 100;
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 12px 24px;
-  background: #ffffffcc; /* 반투명 흰색 */
-  backdrop-filter: blur(8px); /* 유리 느낌 */
-  border-bottom: 1px solid #e5e7eb;
-  font-family: 'Segoe UI', sans-serif;
+/* 바 */
+.top-nav{
+  position: sticky; top:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:16px; padding:12px 20px;
+  background:#fff; border-bottom:1px solid #eceef3;
 }
 
-/* 로고 영역 */
-.top-nav .logo {
-  font-weight: 700; font-size: 1.2rem; color: #15354a;
+.top-nav .brand{
+  font-weight:700; font-size:1.2rem; color:#111; text-decoration:none;
 }
 
-/* 메뉴 영역 */
-.top-nav .menu {
-  list-style: none; margin: 0; padding: 0;
-  display: flex; gap: 24px;
+.nav-links{
+  display:flex; gap:8px; list-style:none; margin:0; padding:0;
+}
+.nav-item{ position:relative; }
+
+.nav-btn{
+  appearance:none; background:transparent; border:0; cursor:pointer;
+  padding:10px 14px; border-radius:999px;
+  font-weight:600; color:#222; transition:all .15s ease;
+}
+.nav-btn:hover{ background:#f2f4f8; }
+
+/* 메가 패널 */
+.has-mega .mega-panel{
+  position:absolute; left:50%; transform:translateX(-50%);
+  top:calc(100% + 10px); display:none;
+  width:min(920px, 90vw);
+  background:#fff; border:1px solid #e9edf5;
+  border-radius:18px; box-shadow:0 16px 40px rgba(16,24,40,.12);
+  padding:18px; gap:18px;
 }
 
-/* 메뉴 링크 */
-.top-nav .menu a {
-  text-decoration: none; font-weight: 500; color: #333;
-  padding: 6px 10px; border-radius: 8px;
-  transition: all 0.2s ease;
-}
+/* hover로 표시 */
+.has-mega:hover > .mega-panel{ display:flex; }
 
-/* Hover 효과 */
-.top-nav .menu a:hover {
-  background: #15354a; color: #fff;
-}
+/* 레이아웃 */
+.mega-panel{ display:flex; }
+.mega-col{ flex:1; min-width:280px; }
+.mega-col.highlight{ flex:1.4; display:flex; align-items:center; }
 
-/* 활성화된 메뉴 */
-.top-nav .menu a.active {
-  background: #15354a; color: #fff; font-weight: 600;
+.mega-link{
+  display:block; padding:10px 12px; border-radius:10px;
+  color:#111; text-decoration:none; font-weight:600;
+}
+.mega-link:hover{ background:#f5f7fb; }
+
+/* 카드 영역 (우측 강조) */
+.card{
+  display:block; width:100%; text-decoration:none; color:inherit;
+  border:1px solid #e9edf5; border-radius:18px; padding:14px;
+  box-shadow:0 8px 24px rgba(16,24,40,.08);
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.card:hover{ transform:translateY(-2px); box-shadow:0 16px 36px rgba(16,24,40,.12); }
+.thumb{
+  width:100%; height:140px; border-radius:12px; background:#eef3ff;
+  margin-bottom:12px;
+}
+.card-title{ font-weight:700; margin-bottom:4px; }
+.card-desc{ color:#556070; font-size:.95rem; }
+
+/* 반응형 */
+@media (max-width: 860px){
+  .has-mega:hover > .mega-panel{ display:none; } /* 모바일에선 hover 비활성화 */
 }
