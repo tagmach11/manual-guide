@@ -62,10 +62,10 @@ const Header: QuartzComponent = ({ children }: QuartzComponentProps) => {
   <button class="nav-btn" type="button">사이트</button>
   <div class="mega-panel">
     <div class="mega-col">
-      <a href="/etc/사이트/게시판-공지사항/" class="mega-link">게시판 공지사항</a>
-      <a href="/etc/사이트/게시판-자료실/" class="mega-link">게시판 자료실</a>
-      <a href="/etc/사이트/메뉴관리/" class="mega-link">메뉴관리</a>
-      <a href="/etc/사이트/메인화면표시-마이크로링크/" class="mega-link">메인화면표시(마이크로링크)</a>
+      <a href="/etc/사이트/게시판-공지사항.md/" class="mega-link">게시판 공지사항</a>
+      <a href="/etc/사이트/게시판-자료실.md/" class="mega-link">게시판 자료실</a>
+      <a href="/etc/사이트/메뉴관리.md/" class="mega-link">메뉴관리</a>
+      <a href="/etc/사이트/메인화면표시-마이크로링크.md/" class="mega-link">메인화면표시(마이크로링크)</a>
     </div>
     <div class="mega-col highlight">
       <a href="/etc/사이트/" class="card">
