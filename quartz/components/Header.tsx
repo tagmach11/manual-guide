@@ -31,8 +31,8 @@ const Header: QuartzComponent = ({ children }: QuartzComponentProps) => {
   return (
     <header class="qz-header">
       <nav class="top-nav">
-        <a class="brand" href="/">
-        <img src = "/logo.png" alt = "Manual 로고" />
+        <a class="brand" href="https://imgbb.com/">
+        <img src = "https://i.ibb.co/xd0phSx/logo.png" alt = "Manual 로고" />
         </a>
 
         <ul class="nav-links">
