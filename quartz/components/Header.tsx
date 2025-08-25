@@ -74,6 +74,12 @@ const Header: QuartzComponent = ({ children }: QuartzComponentProps) => {
         <div class="thumb"></div>
         <div class="card-title">사이트 전체보기</div>
         <div class="card-desc">사이트 매뉴얼 모음</div>
+        <div class="card-title">카드 테스트1</div>
+        <div class="card-desc">카드 테스트 모음</div>
+        <div class="card-title">카드 테스트1</div>
+        <div class="card-desc">카드 테스트 모음</div>
+        <div class="card-title">카드 테스트1</div>
+        <div class="card-desc">카드 테스트 모음</div>
       </a>
     </div>
   </div>
