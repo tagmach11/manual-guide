@@ -187,41 +187,65 @@ html[data-theme="dark"] {
   }
 }
 
-/*테스트 진행중 css*/
-
+/* ===== Top Navigation (메뉴바) ===== */
 .top-nav{
   position: sticky; top:0; z-index:100;
   display:flex; justify-content:space-between; align-items:center;
   gap:16px; padding:12px 20px;
   background:#fff; border-bottom:1px solid #eceef3;
+  overflow: visible; /* 드롭다운 잘림 방지 */
 }
-.top-nav .brand{ font-weight:700; font-size:1.2rem; color:#111; text-decoration:none; }
+.top-nav .brand{
+  font-weight:700; font-size:1.2rem; color:#111; text-decoration:none;
+}
 .nav-links{ display:flex; gap:8px; list-style:none; margin:0; padding:0; }
 .nav-item{ position:relative; }
 .nav-btn{
   appearance:none; background:transparent; border:0; cursor:pointer;
-  padding:10px 14px; border-radius:999px; font-weight:600; color:#222;
+  padding:10px 14px; border-radius:999px; font-weight:600; color:#222; text-decoration:none;
+  transition:background .15s ease;
 }
 .nav-btn:hover{ background:#f2f4f8; }
 
-/* 메가 드롭다운 */
+/* ===== Mega Dropdown (메가 드롭다운) ===== */
+/* 버튼 -> 패널 사이 호버 끊김 방지용 '보이지 않는 다리' */
+.nav-item.has-mega{ position:relative; }
+.nav-item.has-mega::after{
+  content:"";
+  position:absolute; left:0; right:0; top:100%;
+  height:14px; /* 패널 margin-top(10px)보다 조금 크게 */
+}
+
+/* 패널 박스 */
 .has-mega .mega-panel{
   position:absolute; left:50%; transform:translateX(-50%);
-  top:calc(100% + 10px); display:none;
+  top:100%;             /* 버튼 바로 아래에 붙이고 */
+  margin-top:10px;      /* 시각적 간격은 margin으로 */
+  display:none;
   width:min(920px, 90vw);
   background:#fff; border:1px solid #e9edf5; border-radius:18px;
   box-shadow:0 16px 40px rgba(16,24,40,.12);
   padding:18px; gap:18px;
+  z-index:9999;         /* 레이어 최상단으로 */
+  pointer-events:auto;  /* 내부 클릭 허용 */
 }
-.has-mega:hover > .mega-panel{ display:flex; }
 
+/* 열기 조건: hover + focus-within 모두 허용 (키보드 접근성) */
+.has-mega:hover > .mega-panel,
+.has-mega:focus-within > .mega-panel{
+  display:flex;
+}
+
+/* 패널 내부 레이아웃 */
 .mega-panel{ display:flex; }
 .mega-col{ flex:1; min-width:280px; }
 .mega-col.highlight{ flex:1.4; display:flex; align-items:center; }
 
+/* 링크/카드 스타일 */
 .mega-link{
   display:block; padding:10px 12px; border-radius:10px;
   color:#111; text-decoration:none; font-weight:600;
+  transition:background .15s ease;
 }
 .mega-link:hover{ background:#f5f7fb; }
 
@@ -236,5 +260,19 @@ html[data-theme="dark"] {
 .card-title{ font-weight:700; margin-bottom:4px; }
 .card-desc{ color:#556070; font-size:.95rem; }
 
-/* 패널 잘림 방지 */
-.page, .container, .content { overflow: visible; }
+/* ===== 잘림/레이어 보정 (상황 따라 유지) ===== */
+.page, .container, .content, body{ overflow:visible; }
+
+/* ===== 모바일 (선택 사항) : 클릭 토글을 쓴다면 ===== */
+@media (max-width: 860px){
+  /* 모바일에선 hover로 열리지 않게 */
+  .has-mega:hover > .mega-panel{ display:none; }
+  /* JS로 .open 클래스를 붙일 때만 열리게 */
+  .has-mega.open > .mega-panel{ display:flex; }
+
+  /* 패널을 화면 가로에 꽉 차게 */
+  .has-mega .mega-panel{
+    left:0; right:0; transform:none; width:100vw; max-width:none;
+    margin-left:calc(-50vw + 50%); /* 화면 양끝 정렬 */
+  }
+}
