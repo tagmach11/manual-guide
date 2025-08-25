@@ -68,20 +68,14 @@ const Header: QuartzComponent = ({ children }: QuartzComponentProps) => {
       <a href="/_etc/사이트/게시판-자료실/" class="mega-link">게시판 자료실</a>
       <a href="/_etc/사이트/메뉴관리/" class="mega-link">메뉴관리</a>
       <a href="/_etc/사이트/메인화면표시-마이크로링크/" class="mega-link">메인화면표시(마이크로링크)</a>
-    </div>
-    <div class="mega-col highlight">
-      <a href="/_etc/사이트/" class="card">
-        <div class="thumb"></div>
-        <div class="card-title">사이트 전체보기</div>
-        <div class="card-desc">사이트 매뉴얼 모음</div>
-      </a>
-    </div>
-    <div class="mega-col highlight">
-      <a href="/_etc/사이트/" class="card">
-        <div class="thumb"></div>
-        <div class="card-title">사이트 전체보기</div>
-        <div class="card-desc">사이트 매뉴얼 모음</div>
-      </a>
+       <a href="/_etc/사이트/게시판-공지사항/" class="mega-link">게시판 공지사항</a>
+      <a href="/_etc/사이트/게시판-자료실/" class="mega-link">게시판 자료실</a>
+      <a href="/_etc/사이트/메뉴관리/" class="mega-link">메뉴관리</a>
+      <a href="/_etc/사이트/메인화면표시-마이크로링크/" class="mega-link">메인화면표시(마이크로링크)</a> <a href="/_etc/사이트/게시판-공지사항/" class="mega-link">게시판 공지사항</a>
+      <a href="/_etc/사이트/게시판-자료실/" class="mega-link">게시판 자료실</a>
+      <a href="/_etc/사이트/메뉴관리/" class="mega-link">메뉴관리</a>
+      <a href="/_etc/사이트/메인화면표시-마이크로링크/" class="mega-link">메인화면표시(마이크로링크)</a>
+       
     </div>
     <div class="mega-col highlight">
       <a href="/_etc/사이트/" class="card">
