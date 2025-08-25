@@ -1,3 +1,282 @@
 @use "./base.scss";
 
-// put your custom CSS here!
+/* =========================
+   Quartz 4 Custom SCSS (FINAL)
+   ========================= */
+
+/* 팔레트 & 공통 */
+$bg: #ffffff;
+$primary: #15354a;      // 남색 타이틀
+$accent: #f5e3d8;       // 살구 포인트
+$shadow: 0 10px 30px rgba(16, 24, 40, .08);
+
+/* ===== 버튼 공통 ===== */
+.btn {
+  display: inline-block;
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-weight: 700;
+  border: 2px solid currentColor;
+  text-decoration: none;
+  margin-right: 10px;
+  transition: transform .12s ease, opacity .12s ease;
+  &:hover { transform: translateY(-1px); }
+  &.primary { background: $primary; color: #fff; border-color: transparent; }
+}
+
+/* ===== 히어로 콜아웃 (배너) ===== */
+/* [!hero] 콜아웃 또는 <div class="callout" data-callout="hero">… */
+.callout[data-callout="hero"] {
+  border: none;
+  background: linear-gradient(180deg, #fff 0%, #f6f7fb 100%);
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: $shadow;
+  position: relative;
+
+  .callout-title { display: none; } /* [!hero] 제목줄 숨김 */
+
+  .callout-content {
+    display: grid;
+    grid-template-columns: 1.1fr .9fr;
+    gap: 24px;
+    align-items: center;
+
+    h1, h2 {
+      color: $primary;
+      margin: .1em 0 .3em;
+      font-weight: 800;
+    }
+    p { margin: .3em 0 1em; opacity: .9; }
+
+    .hero-img {
+      width: 100%;
+      height: auto;
+      border-radius: 22px;
+      box-shadow: $shadow;
+      display: block;
+    }
+  }
+
+  /* 살구색 배경 오브젝트 */
+  &::after {
+    content: "";
+    position: absolute;
+    right: 8%;
+    top: 12%;
+    width: 220px;
+    height: 180px;
+    background: $accent;
+    border-radius: 42% 58% 40% 60% / 60% 40% 60% 40%;
+    filter: blur(2px);
+    opacity: .7;
+    z-index: 0;
+  }
+}
+
+/* ===== 페이지 상단에 배너 올리기 (해당 노트에만 적용) ===== */
+/* 프런트매터에 cssclass: hero-first 추가 */
+.hero-first {
+  /* 페이지 타이틀/빵부스러기 숨김(있는 경우만) */
+  .page-title, .article-title, header h1,
+  .breadcrumb-container, nav.breadcrumbs, .article-metadata {
+    display: none !important;
+  }
+
+  /* 문서 첫 요소가 hero일 때 상단 여백 제거 */
+  .callout[data-callout="hero"]:first-of-type {
+    margin-top: 0 !important;
+  }
+
+  /* 배너만 강조(여백/그림자는 위의 hero 규칙 사용) */
+}
+
+/* ===== 사이드바(Explorer) 은은한 터치만 ===== */
+.explorer .item:hover,
+.explorer .file:hover,
+.explorer .node:hover {
+  background: rgba(143,159,169,.08);
+  border-radius: 8px;
+}
+.explorer .item.active,
+.explorer .file.active {
+  background: rgba(40,75,99,.12);
+  font-weight: 700;
+  border-radius: 8px;
+}
+
+/* ===== 대/중/소 노트별 이미지 통일(옵션) ===== */
+/* 노트 프런트매터에 cssclass: menu-big / menu-mid / menu-small */
+.menu-big   .markdown-preview-view img { width: 600px; height: auto; border-radius: 12px; object-fit: cover; }
+.menu-mid   .markdown-preview-view img { width: 420px; height: auto; border-radius: 10px; object-fit: cover; }
+.menu-small .markdown-preview-view img { width: 260px; height: auto; border-radius:  8px; object-fit: cover; }
+
+/* ===== 반응형 ===== */
+@media (max-width: 860px) {
+  .callout[data-callout="hero"] {
+    .callout-content { grid-template-columns: 1fr; gap: 18px; }
+    &::after { right: 6%; top: 6%; width: 160px; height: 120px; }
+  }
+}
+/* 공통 버튼 & 콜랩스 기본 */
+/* === 토글 버튼 / 내용 기본 === */
+.toggle-btn {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  user-select: none;
+  margin: 0 0 8px auto; /* 우측 정렬 */
+  transition: background .15s ease, border-color .15s ease, color .15s ease, box-shadow .15s ease;
+  border: 1px solid var(--interactive-normal, #d1d5db);
+  background: var(--interactive-accent, #f3f4f6);
+  color: var(--text-normal, #111827); /* <-- 라이트 fallback을 진한 색으로 */
+}
+
+.toggle-btn:hover {
+  background: var(--background-modifier-hover, #e5e7eb);
+}
+
+.toggle-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59,130,246,.35);
+}
+
+.toggle-content {
+  display: none;
+  margin: .5rem 0 1rem;
+  padding: .75rem 1rem;
+  border-left: 3px solid #2563eb;
+  background: var(--background-secondary, #f9fafb);
+  color: var(--text-normal, #111827);   /* <-- 라이트 fallback 진하게 수정 */
+  border-radius: 6px;
+}
+.toggle-content.open { display: block; }
+
+/* === 라이트 모드 명시 === */
+html[data-theme="light"] .toggle-btn {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+  color: #111827;
+}
+html[data-theme="light"] .toggle-content {
+  background: #f9fafb;
+  color: #111827;
+  border-left-color: #2563eb;
+}
+
+html[data-theme="dark"] {
+  /* 버튼(글자만 버튼처럼 보이는 형태 유지) */
+  .toggle-btn {
+    background: #16283a;   /* 남색 톤 */
+    border-color: #25405b; /* 버튼 테두리 살짝 진하게 */
+    color: #ffffff;         /* 흰 글씨 */
+  }
+  .toggle-btn:hover {
+    background: #1c334a;   /* hover 시 조금 더 밝은 남색 */
+  }
+
+  /* 콜랩스 내용 박스 */
+  .toggle-content {
+    background: #0f1f2e;     /* 진한 남색(배경) */
+    color: #ffffff;           /* 흰 글씨 */
+    border-left: 2px solid #7fb3ff; /* 왼쪽 얇은 라인(파랑) */
+    /* box-shadow: 0 2px 8px rgba(0,0,0,.35); */
+    /* border-radius: 6px;  // 이미 있으시면 유지 */
+  }
+}
+
+/* ===== Top Navigation (메뉴바) ===== */
+.top-nav{
+  position: sticky; top:0; z-index:100;
+  display:flex; justify-content:space-between; align-items:center;
+  gap:16px; padding:12px 20px;
+  background:#fff; border-bottom:1px solid #eceef3;
+  overflow: visible; /* 드롭다운 잘림 방지 */
+}
+.top-nav .brand{
+  font-weight:700; font-size:2rem; color:#111; text-decoration:none;
+}
+.top-nav .brand img {
+  height: 32px;
+  display: block;
+}
+.nav-links{ display:flex; gap:8px; list-style:none; margin:0; padding:0; }
+.nav-item{ position:relative; }
+.nav-btn{
+  appearance:none; background:transparent; border:0; cursor:pointer;
+  padding:10px 14px; border-radius:999px; font-weight:600; color:#222; text-decoration:none;
+  transition:background .15s ease;
+}
+.nav-btn:hover{ background:#f2f4f8; }
+
+/* ===== Mega Dropdown (메가 드롭다운) ===== */
+/* 버튼 -> 패널 사이 호버 끊김 방지용 '보이지 않는 다리' */
+.nav-item.has-mega{ position:relative; }
+.nav-item.has-mega::after{
+  content:"";
+  position:absolute; left:0; right:0; top:100%;
+  height:14px; /* 패널 margin-top(10px)보다 조금 크게 */
+}
+
+/* 패널 박스 */
+.has-mega .mega-panel{
+  position:absolute; left:50%; transform:translateX(-50%);
+  top:100%;             /* 버튼 바로 아래에 붙이고 */
+  margin-top:10px;      /* 시각적 간격은 margin으로 */
+  display:none;
+  width:min(920px, 90vw);
+  background:#fff; border:1px solid #e9edf5; border-radius:18px;
+  box-shadow:0 16px 40px rgba(16,24,40,.12);
+  padding:18px; gap:18px;
+  z-index:9999;         /* 레이어 최상단으로 */
+  pointer-events:auto;  /* 내부 클릭 허용 */
+}
+
+/* 열기 조건: hover + focus-within 모두 허용 (키보드 접근성) */
+.has-mega:hover > .mega-panel,
+.has-mega:focus-within > .mega-panel{
+  display:flex;
+}
+
+/* 패널 내부 레이아웃 */
+.mega-panel{ display:flex; }
+.mega-col{ flex:1; min-width:280px; }
+.mega-col.highlight{ flex:1.4; display:flex; align-items:center; }
+
+/* 링크/카드 스타일 */
+.mega-link{
+  display:block; padding:10px 12px; border-radius:10px;
+  color:#111; text-decoration:none; font-weight:600;
+  transition:background .15s ease;
+}
+.mega-link:hover{ background:#f5f7fb; }
+
+.card{
+  display:block; width:100%; text-decoration:none; color:inherit;
+  border:1px solid #e9edf5; border-radius:18px; padding:14px;
+  box-shadow:0 8px 24px rgba(16,24,40,.08);
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.card:hover{ transform:translateY(-2px); box-shadow:0 16px 36px rgba(16,24,40,.12); }
+.thumb{ width:100%; height:140px; border-radius:12px; background:#eef3ff; margin-bottom:12px; }
+.card-title{ font-weight:700; margin-bottom:4px; }
+.card-desc{ color:#556070; font-size:.95rem; }
+
+/* ===== 잘림/레이어 보정 (상황 따라 유지) ===== */
+.page, .container, .content, body{ overflow:visible; }
+
+/* ===== 모바일 (선택 사항) : 클릭 토글을 쓴다면 ===== */
+@media (max-width: 860px){
+  /* 모바일에선 hover로 열리지 않게 */
+  .has-mega:hover > .mega-panel{ display:none; }
+  /* JS로 .open 클래스를 붙일 때만 열리게 */
+  .has-mega.open > .mega-panel{ display:flex; }
+
+  /* 패널을 화면 가로에 꽉 차게 */
+  .has-mega .mega-panel{
+    left:0; right:0; transform:none; width:100vw; max-width:none;
+    margin-left:calc(-50vw + 50%); /* 화면 양끝 정렬 */
+  }
+}
