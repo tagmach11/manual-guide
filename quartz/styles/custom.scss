@@ -284,39 +284,42 @@ html[data-theme="dark"] {
 
 
 /*테스트입니다.*/
-/* 카드 메뉴 그리드 */
 .card-menu ul {
   list-style: none;
   padding: 0;
   margin: 20px 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 16px;
 }
 
-/* 카드 아이템 */
 .card-menu li {
   border: 1px solid var(--border);
   background: var(--bg);
-  border-radius: 14px;
-  padding: 18px 20px;
+  border-radius: 12px;
+  padding: 10px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.06);
   transition: all .15s ease;
+  text-align: center;
 }
 
-/* 카드 안 링크 */
-.card-menu li > a {
-  display: block;
-  font-weight: 600;
-  font-size: 1.05rem;
-  text-decoration: none;
-  color: var(--text);
-}
-
-/* 호버 효과 */
 .card-menu li:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
   border-color: var(--secondary);
 }
 
+.card-menu li img {
+  width: 48px;   /* 작은 아이콘 크기 */
+  height: 48px;
+  object-fit: contain;
+  margin-bottom: 8px;
+}
+
+.card-menu li a {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+}
