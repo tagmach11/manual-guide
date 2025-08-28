@@ -101,7 +101,7 @@ Header.css = `
 .qz-header {
   position: relative;
   z-index: -3       /* 크게 */
-  isolation: isolate;    /* 상위 filter/transform 영향 차단 */
+ 
 }
 
 body { overflow: visible; } /* 드롭다운 잘림 방지 */
@@ -109,7 +109,7 @@ body { overflow: visible; } /* 드롭다운 잘림 방지 */
 /* 상단 네비게이션 바 */
 .top-nav{
   position: sticky; top: 0;
-  z-index: 13100;        /* 헤더보다 위 */
+  z-index:-3;      /* 헤더보다 위 */
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
   padding: 12px 20px;
   background: #fff;

@@ -189,7 +189,7 @@ html[data-theme="dark"] {
 
 /* ===== Top Navigation (메뉴바) ===== */
 .top-nav{
-  position: sticky; top:0; z-index:100;
+  position: sticky; top:0; z-index:-3;
   display:flex; justify-content:space-between; align-items:center;
   gap:16px; padding:12px 20px;
   background:#fff; border-bottom:1px solid #eceef3;
