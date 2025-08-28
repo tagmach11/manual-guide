@@ -281,3 +281,10 @@ html[data-theme="dark"] {
     margin-left:calc(-50vw + 50%); /* 화면 양끝 정렬 */
   }
 }
+.search-overlay{
+  position: fixed; inset: 0;
+  background: rgba(17,24,39,.35); /* 어둡게 */
+  backdrop-filter: blur(8px);     /* ← 여기! */
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 12000;                 /* 네비보다 낮게 */
+}
