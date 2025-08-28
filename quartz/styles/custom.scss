@@ -284,62 +284,39 @@ html[data-theme="dark"] {
 
 
 /*테스트입니다.*/
-/* 카드 그리드 기본: 섹션(## 제목) 아래의 1단계 목록을 카드로 */
+/* 카드 메뉴 그리드 */
 .card-menu ul {
   list-style: none;
   padding: 0;
-  margin: 12px 0 24px;
+  margin: 20px 0;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 12px;
+  gap: 16px;
 }
 
-/* 카드 */
+/* 카드 아이템 */
 .card-menu li {
   border: 1px solid var(--border);
   background: var(--bg);
-  border-radius: 12px;
-  padding: 14px 16px;
-  box-shadow: 0 2px 6px rgba(0,0,0,.04);
-  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+  border-radius: 14px;
+  padding: 18px 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  transition: all .15s ease;
 }
 
-/* 링크를 카드 전체로 클릭 가능하게 */
+/* 카드 안 링크 */
 .card-menu li > a {
   display: block;
   font-weight: 600;
+  font-size: 1.05rem;
   text-decoration: none;
   color: var(--text);
 }
 
 /* 호버 효과 */
 .card-menu li:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0,0,0,.08);
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
   border-color: var(--secondary);
 }
 
-/* 중첩 목록(카드 안에 설명/하위 메뉴가 있을 때) */
-.card-menu li ul {
-  margin-top: 8px;
-  display: block;
-  grid-template-columns: none;
-  gap: 6px;
-}
-.card-menu li ul li {
-  border: 0;
-  border-radius: 8px;
-  padding: 6px 0;
-  box-shadow: none;
-  transform: none;
-}
-.card-menu li ul li a {
-  font-weight: 500;
-  opacity: .9;
-}
-
-/* 모바일 여백 보정 */
-@media (max-width: 520px) {
-  .card-menu ul { gap: 10px; }
-  .card-menu li { padding: 12px; }
-}
