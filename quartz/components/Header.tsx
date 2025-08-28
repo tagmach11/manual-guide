@@ -100,7 +100,7 @@ Header.css = `
 /* 헤더 자체를 독립 쌓임맥락으로 만들어 블러 영향 안 받게 */
 .qz-header {
   position: relative;
-  z-index: 13000;        /* 크게 */
+  z-index: -3       /* 크게 */
   isolation: isolate;    /* 상위 filter/transform 영향 차단 */
 }
 
