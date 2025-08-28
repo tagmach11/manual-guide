@@ -18,11 +18,8 @@ export default ((opts?: Options) => {
           <a href="https://lx2.4csoft.com/">LX2 메뉴얼  {version}</a> © {year}
         </p>
         <ul>
-          {Object.entries(links).map(([text, link]) => (
-            <li>
-              <a href={link}>{text}</a>
-            </li>
-          ))}
+         
+         
         </ul>
       </footer>
     )
