@@ -100,7 +100,7 @@ Header.css = `
 /* 헤더 자체를 독립 쌓임맥락으로 만들어 블러 영향 안 받게 */
 .qz-header {
   position: relative;
-  z-index: 90       /* 크게 */
+  z-index: 1       /* 크게 */
  
 }
 
@@ -110,7 +110,7 @@ body { overflow: visible; } /* 드롭다운 잘림 방지 */
 .top-nav{
   position: sticky; 
   top: 0;
-  z-index:100;      /* 헤더보다 위 */
+  z-index:2;      /* 헤더보다 위 */
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
   padding: 12px 20px;
   background: #fff;
@@ -137,7 +137,7 @@ body { overflow: visible; } /* 드롭다운 잘림 방지 */
   background: #fff; border: 1px solid #e9edf5; border-radius: 18px;
   box-shadow: 0 16px 40px rgba(16,24,40,.12);
   padding: 18px; gap: 18px;
-  z-index: 120;        /* 네비보다 한 단계 위 */
+  z-index: 3;        /* 네비보다 한 단계 위 */
 }
 .has-mega:hover > .mega-panel{ display: flex; }
 
