@@ -429,3 +429,22 @@ html[data-theme="dark"] {
   .pill-cards .thumb{ height:110px; }
   .pill-cards .legend{ padding:9px 10px; }
 }
+
+/*_etc 테스트*/
+
+/* ↓ 폴더 라벨(정확히 /_etc/ 로 끝나는 링크)만 숨김 */
+.explorer .folder > a[href="/_etc/"],
+.explorer .folder > a[href="_etc/"]{
+  /* 완전 제거(display:none)는 트리까지 사라질 수 있어요.
+     라벨 텍스트만 안 보이게 처리 */
+  color: transparent !important;
+  text-shadow: none !important;
+  /* 공간 최소화 */
+  height: 4px; padding: 0; margin: 0; line-height: 0.1;
+  /* 클릭 비활성화(선택) */
+  pointer-events: none;
+}
+
+/* 라벨 다음에 오는 자식 리스트의 여백 보정(마크업에 따라 선택) */
+.explorer .folder > a[href="/_etc/"] + * { margin-top: 0; }
+.explorer .folder > a[href="_etc/"] + *  { margin-top: 0; }
