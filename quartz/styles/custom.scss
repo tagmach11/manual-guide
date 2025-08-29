@@ -629,3 +629,32 @@ html[data-theme="dark"] .apple-cards .thumb img{ filter: saturate(1.05) contrast
 
 .apple-cards .legend .title{ font-weight: 700; font-size: 1.12rem; }
 .apple-cards .sec > ul{ gap:26px; }
+
+/* --- 1) overlay 겹침 방지 (현재 디자인 유지 시) --- */
+.apple-cards .pill-card{ position: relative; }
+.apple-cards .thumb{ position: relative; z-index: 1; }
+.apple-cards .legend{ position: absolute; z-index: 2; }  /* 이미지 위로 */
+html[data-theme="dark"] .apple-cards .legend{
+  /* 다크에서 가독성 보정 */
+  background: rgba(28,28,30,.62);
+  border: 1px solid rgba(255,255,255,.16);
+}
+
+/* --- 2) 애플 카드처럼 '텍스트를 이미지 아래'로: data-legend="below" --- */
+.apple-cards .sec[data-legend="below"] .legend{
+  position: static;             /* 절대배치 해제 */
+  margin: 12px 0 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  text-align: left;
+  padding: 0;
+}
+.apple-cards .sec[data-legend="below"] .legend .title{
+  font-weight: 700; font-size: 1.05rem; letter-spacing: -.01em;
+}
+.apple-cards .sec[data-legend="below"] .legend .subtitle{
+  margin-top: 4px; font-size: .92rem; opacity: .9;
+}
+/* 이미지 영역은 조금 더 크게 */
+.apple-cards .sec[data-legend="below"] .thumb{ height: 200px; }
