@@ -430,6 +430,20 @@ html[data-theme="dark"] {
   .pill-cards .legend{ padding:9px 10px; }
 }
 
+/*카드뷰 감싸 앉게 */
+/* 섹션 제목(####)을 둥근 라벨처럼 */
+.pill-cards h4{
+  display:inline-block;
+  margin: 10px 0 10px;
+  padding: 6px 14px;
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  background: var(--bg);
+  font-weight: 800;
+  box-shadow: 0 4px 14px rgba(0,0,0,.06);
+}
+/* 제목 아래 카드 그리드와 간격 */
+.pill-cards h4 + ul{ margin-top: 6px; }
 /*_etc 폴더 숨기기*/
 .explorer .folder-container[data-folderpath="_etc/index"]{
   display: none !important;
