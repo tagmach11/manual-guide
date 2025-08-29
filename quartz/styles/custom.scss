@@ -430,14 +430,22 @@ html[data-theme="dark"] {
   .pill-cards .legend{ padding:9px 10px; }
 }
 
-/*_etc 테스트*/
 
-/* _etc 폴더 컨테이너를 평탄화 + 라벨은 숨김 */
-.explorer .folder:has(> a[href="/_etc/"]),
-.explorer .folder:has(> a[href="_etc/"]){
-  display: contents !important;     /* 컨테이너는 사라지지만, 자식들은 그대로 렌더 */
+
+
+
+/*    테스 트  */
+/* _etc 폴더 라벨만 숨기기 (href가 ../_etc/ 처럼 상대경로여도 매칭) */
+.explorer .folder-container:has(> div > a.folder-title[href*="_etc/"]) {
+  display: none !important;
 }
-.explorer .folder:has(> a[href="/_etc/"]) > a,
-.explorer .folder:has(> a[href="_etc/"]) > a{
-  display: none !important;         /* 라벨만 숨김 */
+
+/* 라벨을 숨겨도 자식 목록은 항상 펼쳐서 보이게 */
+.explorer .folder-container:has(> div > a.folder-title[href*="_etc/"]) + .folder-outer {
+  display: block !important;
+  height: auto !important;
+  visibility: visible !important;
 }
+
+/* (선택) 트리 잘림 방지용 — 필요시만 */
+.explorer .explorer-ul { overflow: visible !important; }
