@@ -436,16 +436,20 @@ html[data-theme="dark"] {
 
 /*    테스 트  */
 /* _etc 폴더 라벨만 숨기기 (href가 ../_etc/ 처럼 상대경로여도 매칭) */
-.explorer .folder-container:has(> div > a.folder-title[href*="_etc/"]) {
+/* 1) _etc 라벨(폴더 헤더)만 숨김 */
+.explorer .folder-container[data-folderpath="_etc/index"]{
   display: none !important;
 }
 
-/* 라벨을 숨겨도 자식 목록은 항상 펼쳐서 보이게 */
-.explorer .folder-container:has(> div > a.folder-title[href*="_etc/"]) + .folder-outer {
+/* 2) 바로 뒤 형제인 내용 영역은 항상 펼쳐서 보이게 강제 */
+.explorer .folder-container[data-folderpath="_etc/index"] + .folder-outer{
   display: block !important;
   height: auto !important;
   visibility: visible !important;
+  overflow: visible !important;
 }
 
-/* (선택) 트리 잘림 방지용 — 필요시만 */
-.explorer .explorer-ul { overflow: visible !important; }
+/* 3) 내용 리스트 자체가 접히는 테마 대비(안전장치) */
+.explorer .folder-container[data-folderpath="_etc/index"] + .folder-outer > .content{
+  display: block !important;
+}
