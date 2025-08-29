@@ -171,23 +171,8 @@ body { overflow: visible; } /* 드롭다운 잘림 방지 */
   .has-mega.open > .mega-panel{ display: flex; }
 
 }
-  /* ===== 검색/그래프(모달류)를 최상단으로 ===== */
-#search,
-.search,
-.search-modal,
-.search-container,
-[role="dialog"],
-dialog[open],
-.modal,
-.modal-backdrop,
-#graph,
-.graph,
-.graph-view,
-.graph-container,
-canvas.graph,
-.global-graph {
-  position: fixed !important;
-  z-index: 3000 !important; /* 네비/드롭다운보다 위 */
+ body:has(dialog[open], .search, .search-modal, #graph, .graph-view){
+  .top-nav{ z-index: 1; pointer-events: none; }
 }
 `
 
