@@ -434,20 +434,36 @@ html[data-theme="dark"] {
 
 
 
-/*    테스 트  */
-/* _etc 폴더 라벨만 숨기기 (href가 ../_etc/ 처럼 상대경로여도 매칭) */
-/* 1) _etc 폴더 라벨 숨김 */
+/*    테스 트  
+
 .explorer .folder-container[data-folderpath="_etc/index"]{
   display: none !important;
 }
 
-/* 2) _etc 하위 파일/폴더 항목 숨김 (네 DOM 구조에 맞춤) */
+
 .explorer .content li:has(> a[data-for^="_etc/"]) {   /* <li><a data-for="_etc/…"> */
+/*  display: none !important;
+}
+
+.explorer a[href^="../_etc/"],
+.explorer a[href*="/_etc/"] {
+  display: none !important;
+}*/
+/* === _etc 라벨 숨김 (모든 변형 경로 대응) === */
+.explorer .folder-container[data-folderpath$="/_etc/index"],
+.explorer .folder-container[data-folderpath="_etc/index"],
+.explorer .folder-container:has(> div > a.folder-title[href*="/_etc/"]),
+.explorer .folder-container:has(> div > a.folder-title[href*="_etc/"]) {
   display: none !important;
 }
 
-/* 3) 혹시 data-for가 없고 href만 있는 경우까지 커버 */
-.explorer a[href^="../_etc/"],
-.explorer a[href*="/_etc/"] {
+/* === _etc 하위 항목 숨김 (data-for 또는 href 모든 케이스) === */
+.explorer .content li:has(> a[data-for^="_etc/"]),
+.explorer .content li:has(> a[data-for*="/_etc/"]),
+.explorer .content li:has(> a[href^="_etc/"]),
+.explorer .content li:has(> a[href*="/_etc/"]),
+.explorer .content li:has(> a[href*="../_etc/"]),
+.explorer .content li:has(> a[href*="../../_etc/"]),
+.explorer .content li:has(> a[href*="/manual-guide/_etc/"]) {
   display: none !important;
 }
