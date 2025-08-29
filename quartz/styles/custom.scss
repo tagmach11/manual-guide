@@ -430,40 +430,18 @@ html[data-theme="dark"] {
   .pill-cards .legend{ padding:9px 10px; }
 }
 
-
-
-
-
-/*    테스 트  
-
+/*_etc 폴더 숨기기*/
 .explorer .folder-container[data-folderpath="_etc/index"]{
   display: none !important;
 }
 
 
 .explorer .content li:has(> a[data-for^="_etc/"]) {   /* <li><a data-for="_etc/…"> */
-/*  display: none !important;
+  display: none !important;
 }
 
 .explorer a[href^="../_etc/"],
 .explorer a[href*="/_etc/"] {
   display: none !important;
-}*/
-/* === _etc 라벨 숨김 (모든 변형 경로 대응) === */
-.explorer .folder-container[data-folderpath$="/_etc/index"],
-.explorer .folder-container[data-folderpath="_etc/index"],
-.explorer .folder-container:has(> div > a.folder-title[href*="/_etc/"]),
-.explorer .folder-container:has(> div > a.folder-title[href*="_etc/"]) {
-  display: none !important;
 }
 
-/* === _etc 하위 항목 숨김 (data-for 또는 href 모든 케이스) === */
-.explorer .content li:has(> a[data-for^="_etc/"]),
-.explorer .content li:has(> a[data-for*="/_etc/"]),
-.explorer .content li:has(> a[href^="_etc/"]),
-.explorer .content li:has(> a[href*="/_etc/"]),
-.explorer .content li:has(> a[href*="../_etc/"]),
-.explorer .content li:has(> a[href*="../../_etc/"]),
-.explorer .content li:has(> a[href*="/manual-guide/_etc/"]) {
-  display: none !important;
-}
