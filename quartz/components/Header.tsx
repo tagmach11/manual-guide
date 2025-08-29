@@ -171,9 +171,30 @@ body { overflow: visible; } /* 드롭다운 잘림 방지 */
   .has-mega.open > .mega-panel{ display: flex; }
 
 }
- body:has(dialog[open], .search, .search-modal, #graph, .graph-view){
-  .top-nav{ z-index: 1; pointer-events: none; }
+  .nav-item.has-mega { position: relative; z-index: 105; } /* 네비보다 살짝 위 */
+.nav-item.has-mega::after{
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 100%;
+  height: 14px;                 /* 버튼과 패널 사이 빈 공간 메움 */
+  /* pointer-events: auto;  // 기본값이면 충분합니다 */
 }
+ :root{ --z-modal: 3000; }
+
+#search,
+.search, .search-modal, .search-container,
+[role="dialog"], dialog[open],
+.modal, .modal-backdrop,
+#graph, .graph, .graph-view, .graph-container, canvas.graph, .global-graph{
+  position: fixed !important;
+  z-index: var(--z-modal) !important;
+}
+
+/* (선택) 오버레이 떠 있으면 네비 클릭 막기 */
+body:has(dialog[open], .search, .search-modal, #graph, .graph-view) .top-nav{
+  pointer-events: none;
+}
+
 `
 
 
