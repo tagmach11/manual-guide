@@ -37,24 +37,24 @@ const Header: QuartzComponent = ({ children }: QuartzComponentProps) => {
 
         <ul class="nav-links">
           <li class="nav-item">
-            <a class="nav-btn" href="/intro">소개</a>
+            <a class="nav-btn" href="/intro">회원</a>
           </li>
 
           <li class="nav-item has-mega">
-            <button class="nav-btn" type="button">약속과 책임</button>
+            <button class="nav-btn" type="button">콘텐츠</button>
             <div class="mega-panel">
               <div class="mega-col">
-                <a href="/esg-report" class="mega-link">ESG 보고서</a>
-                <a href="/project-dangol" class="mega-link">프로젝트 단골</a>
-                <a href="/active-green" class="mega-link">액티브그린</a>
-                <a href="/digital-responsibility" class="mega-link">디지털 책임</a>
-                <a href="/social-value" class="mega-link">사회경제적 가치</a>
+                <a href="/esg-report" class="mega-link">학습</a>
+                <a href="/project-dangol" class="mega-link">시험</a>
+                <a href="/active-green" class="mega-link">과제</a>
+                <a href="/digital-responsibility" class="mega-link">설문</a>
+                <a href="/social-value" class="mega-link">토론</a>
               </div>
               <div class="mega-col highlight">
                 <a href="/esg-report" class="card">
                   <div class="thumb"></div>
-                  <div class="card-title">ESG 보고서</div>
-                  <div class="card-desc">지속가능한 미래를 위한 우리의 약속</div>
+                  <div class="card-title">서비스</div>
+                  <div class="card-desc">서비스</div>
                 </a>
               </div>
             </div>
