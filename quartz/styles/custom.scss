@@ -539,94 +539,93 @@ html[data-theme="dark"]{
 
 
 
-/* ===== Apple-like cards (works on your existing .pill-card markup) ===== */
-
-/* 카드 그리드 크기/간격 업 */
-.apple-cards .sec > ul{
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 22px;
+/* ===== Apple style tokens ===== */
+:root{
+  --apple-bg: #fff;
+  --apple-text: #111;
+  --apple-muted: #6b7280;                 /* 회색 텍스트 */
+  --apple-border: rgba(0,0,0,.10);        /* 아주 얇은 테두리 */
+  --apple-shadow: 0 12px 30px rgba(0,0,0,.08);
+  --apple-chip-bg: rgba(245,245,247,.80); /* 반투명 캡슐 */
+  --apple-chip-border: rgba(0,0,0,.10);
+  --apple-chip-text: #111;
+}
+html[data-theme="dark"]{
+  --apple-bg: #0b0b0c;
+  --apple-text: #f5f5f7;
+  --apple-muted: #c1c2c5;
+  --apple-border: rgba(255,255,255,.12);
+  --apple-shadow: 0 18px 40px rgba(0,0,0,.55);
+  --apple-chip-bg: rgba(28,28,30,.62);
+  --apple-chip-border: rgba(255,255,255,.16);
+  --apple-chip-text: #fff;
 }
 
-/* 카드 컨테이너 */
-.apple-cards .pill-card{
-  position: relative;
-  display: block;
-  padding: 22px 22px 26px;
-  border-radius: 28px;
-  background: var(--apple-card-bg, #ffffff);
-  border: 1px solid var(--apple-card-border, #eceff4);
-  box-shadow: 0 10px 28px rgba(16,24,40,.10);
-  overflow: hidden;
-  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-}
-.apple-cards .pill-card:hover{
-  transform: translateY(-3px);
-  box-shadow: 0 18px 48px rgba(16,24,40,.14);
-  border-color: #e3e8f0;
-}
-
-/* 텍스트(기존 legend 오버레이를 '상단 좌측' 정보영역으로 전환) */
-.apple-cards .legend{
-  position: static !important;
-  background: transparent !important;
-  color: var(--text) !important;
-  padding: 0 !important;
-  margin: 0 0 6px !important;
-  text-align: left !important;
-  box-shadow: none !important;
-}
-.apple-cards .legend .title{
-  display: block;
-  font-size: 1.45rem;
-  line-height: 1.15;
-  font-weight: 900;
-  letter-spacing: -.01em;
-}
-.apple-cards .legend .subtitle{
-  display: block;
-  margin-top: 6px;
-  font-size: .95rem;
-  opacity: .85;
-}
-
-/* 이미지(카드 우하단에 크게 배치, 비율 유지) */
-.apple-cards .thumb{
-  position: absolute !important;
-  right: -4%;
-  bottom: -6%;
-  width: 62%;
-  height: auto !important;
-  background: transparent !important;
-  border-radius: 0 !important;
-  pointer-events: none;   /* 클릭 방해 X */
-}
-.apple-cards .thumb img{
-  width: 100%;
-  height: auto;
-  object-fit: contain !important;
-  display: block;
-  filter: drop-shadow(0 6px 16px rgba(0,0,0,.15));
-  transform: translateZ(0); /* 약간 더 선명 */
-}
-
-/* 섹션 라벨(네가 쓰는 .sec[data-label])은 유지 */
-.apple-cards .sec{ position: relative; z-index: 0; }
+/* ===== Section label (캡슐) ===== */
+.apple-cards .sec{ position:relative; margin:28px 0 36px; padding-top:18px; }
 .apple-cards .sec::before{
-  /* 이전에 준 라벨 스타일을 쓰고 있다면 그대로 사용 */
+  content: attr(data-label);
+  position:absolute; top:-14px; left:10px;
+  padding:8px 16px; border-radius:22px;
+  background: var(--apple-chip-bg);
+  color: var(--apple-chip-text);
+  border: 1px solid var(--apple-chip-border);
+  font-weight: 600; font-size: 0.95rem; letter-spacing: -.01em;
+  box-shadow: var(--apple-shadow);
   z-index: 2;
 }
-.apple-cards .pill-card{ z-index: 1; }
+/* 오른쪽 정렬 옵션 유지 */
+.apple-cards .sec[data-align="right"]::before{ left:auto; right:10px; }
 
-/* 다크 모드 토큰 */
-html[data-theme="dark"] .apple-cards{
-  --apple-card-bg: #0f1f2e;
-  --apple-card-border: #243547;
+/* 섹션 그리드 (넓은 여백, 큰 타일) */
+.apple-cards .sec > ul{
+  list-style:none; padding:0; margin:18px 0 0;
+  display:grid; gap:22px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
 }
-html[data-theme="dark"] .apple-cards .pill-card{
-  box-shadow: 0 14px 40px rgba(0,0,0,.45);
+
+/* ===== Card ===== */
+.apple-cards .pill-card{
+  display:block; position:relative; text-decoration:none;
+  color: var(--apple-text);
+  background: var(--apple-bg);
+  border: 1px solid var(--apple-border);
+  border-radius: 26px;
+  overflow:hidden;
+  box-shadow: var(--apple-shadow);
+  transition: transform .18s ease, box-shadow .18s ease;
 }
-/*
-.apple-cards .pill-card{ padding: 20px 20px 24px; border-radius: 26px; }
-.apple-cards .thumb{ width: 58%; bottom: -4%; right: -2%; }
-.apple-cards .legend .title{ font-size: 1.35rem; }
-*/
+.apple-cards .pill-card:hover{ transform: translateY(-4px) scale(1.01); }
+
+/* 큰 썸네일 + 모서리 둥근 느낌 */
+.apple-cards .thumb{ height: 160px; }
+.apple-cards .thumb img{
+  width:100%; height:100%; object-fit: cover; display:block;
+  border-radius: 22px;                     /* 이미지도 둥글게 */
+}
+
+/* 하단 반투명 캡슐(Apple식 오버레이) */
+.apple-cards .legend{
+  position:absolute; left:16px; right:16px; bottom:14px;
+  padding:10px 14px;
+  border-radius: 16px;
+  background: var(--apple-chip-bg);
+  border: 1px solid var(--apple-chip-border);
+  color: var(--apple-chip-text);
+  backdrop-filter: saturate(130%) blur(10px);
+  text-align:center; line-height:1.15;
+  box-shadow: 0 8px 24px rgba(0,0,0,.16);
+}
+.apple-cards .legend .title{
+  display:block; font-weight:700; font-size:1.05rem; letter-spacing:-.01em;
+}
+.apple-cards .legend .subtitle{
+  display:block; margin-top:4px; font-size:.88rem; color: var(--apple-muted);
+}
+
+/* 다크 모드 대비 강화 */
+html[data-theme="dark"] .apple-cards .pill-card{ background:#111214; }
+html[data-theme="dark"] .apple-cards .thumb img{ filter: saturate(1.05) contrast(1.03); }
+
+.apple-cards .legend .title{ font-weight: 700; font-size: 1.12rem; }
+.apple-cards .sec > ul{ gap:26px; }
