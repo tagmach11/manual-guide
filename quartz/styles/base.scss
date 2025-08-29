@@ -231,7 +231,7 @@ a {
     }
 
     & .sidebar.left {
-      z-index: 1;
+      z-index: 100;
       grid-area: grid-sidebar-left;
       flex-direction: column;
       @media all and ($mobile) {
