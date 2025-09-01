@@ -534,15 +534,6 @@ html[data-theme="dark"]{
 .pill-cards .sec[data-align="right"]::before{ left:auto; right:12px; }
 .pill-cards .sec[data-align="right"][data-emoji]::after{ left:auto; right:14px; }
 
-
-/*애플 카드뷰 테스트*/
-
-
-
-
-
-
-
 /* ==== Neo Icon Cards (contrast tuned + blue hover) ==== */
 :root{
   --neo-bg:#fff; --neo-text:#0e1116; --neo-muted:#5f6b7a;
@@ -699,7 +690,7 @@ html[data-theme="dark"]{
 [data-theme="dark"] .neo-icon svg { stroke: var(--neo-icon-stroke); }
 
 /* 리스트 화살표도 파란색으로 동기화 */
-.neo-cards .neo-links a::after { content: "→"; opacity: .75; transition: transform .15s ease, opacity .15s ease, color .15s ease; }
+.neo-cards .neo-links a::after { content: ""; opacity: .75; transition: transform .15s ease, opacity .15s ease, color .15s ease; }
 .neo-cards .neo-links a:hover::after,
 .neo-cards .neo-links a:focus-visible::after { transform: translateX(2px); opacity: .95; color: var(--neo-blue); }
 
