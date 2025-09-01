@@ -659,38 +659,36 @@ html[data-theme="dark"] .apple-cards .legend{
 /* 이미지 영역은 조금 더 크게 */
 .apple-cards .sec[data-legend="below"] .thumb{ height: 200px; }
 
-/* 체크박스 숨김 + 표시 토글 */
-.qz-hidden { position: absolute; left: -9999px; }
-#menuToggle:not(:checked) + .qz-modal { display: none; }
+/* 토글 로직: ~ (일반 형제) 사용해 Quartz 랩퍼 삽입 대비 */
+.qz-hidden{position:absolute;left:-9999px;}
+.qz-wrap .qz-modal{display:flex;} /* 기본 열림(checked) */
+.qz-wrap #menuToggle:not(:checked) ~ .qz-modal{display:none;}
 
-/* 모달 공통 */
-.qz-modal { position: fixed; inset: 0; z-index: 2147483647;
-  display: flex; align-items: center; justify-content: center; }
-.qz-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.6); }
-.qz-panel { position: relative; width: min(1200px, 94vw); max-height: 90vh; overflow: auto;
-  background: #fff; border-radius: 12px; padding: 16px 20px; box-shadow: 0 8px 30px rgba(0,0,0,.2); }
-.qz-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-.qz-x { position: absolute; top: 10px; right: 10px; cursor: pointer;
-  background: #e0e0e0; border-radius: 8px; padding: 4px 10px; font-weight: 700; }
+/* 모달 프레임 */
+.qz-modal{position:fixed;inset:0;z-index:2147483647;display:flex;align-items:center;justify-content:center}
+.qz-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.6)}
+.qz-panel{position:relative;width:min(1200px,94vw);max-height:90vh;overflow:auto;background:#fff;border-radius:12px;padding:16px 20px;box-shadow:0 8px 30px rgba(0,0,0,.2)}
+.qz-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.qz-x{position:absolute;top:10px;right:10px;cursor:pointer;background:#e0e0e0;border-radius:8px;padding:4px 10px;font-weight:700}
 
 /* 레이아웃 */
-.qz-layout { display: grid; grid-template-columns: 240px 1fr; gap: 20px; }
-.qz-left { border-right: 1px solid #eceef3; padding-right: 16px; }
-.qz-left ul { margin: 0; padding-left: 0; list-style: none; }
-.qz-left li { padding: 8px 6px; border-radius: 8px; }
-.qz-left li strong { color: #1166cc; }
+.qz-layout{display:grid;grid-template-columns:240px 1fr;gap:20px}
+.qz-left{border-right:1px solid #eceef3;padding-right:16px}
+.qz-left ul{margin:0;padding:0;list-style:none}
+.qz-left li{padding:8px 6px;border-radius:8px}
+.qz-left li strong{color:#1166cc}
 
-/* 우측 3열 */
-.qz-right { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; }
-.qz-col details { border: 1px solid #e0e0e0; border-radius: 8px; padding: 10px 12px; background: #fafafa; }
-.qz-col summary { font-weight: 700; cursor: pointer; list-style: none; }
-.qz-col details[open] { background: #fff; border-color: #2a7de1; }
-.qz-col ul { margin: 8px 0 0; padding-left: 18px; }
+/* 우측 3열 + 아코디언 */
+.qz-right{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.qz-col details{border:1px solid #e0e0e0;border-radius:8px;padding:10px 12px;background:#fafafa}
+.qz-col summary{font-weight:700;cursor:pointer;list-style:none}
+.qz-col details[open]{background:#fff;border-color:#2a7de1}
+.qz-col ul{margin:8px 0 0;padding-left:18px}
 
-/* 다크모드 대응(선택) */
-@media (prefers-color-scheme: dark) {
-  .qz-panel { background: #1e1f22; color: #eaeaea; }
-  .qz-col details { background: #26282c; border-color: #3a3d42; }
-  .qz-col details[open] { background: #1e1f22; border-color: #4a8ff0; }
-  .qz-x { background: #3a3d42; }
+/* 다크 모드 */
+@media (prefers-color-scheme: dark){
+  .qz-panel{background:#1e1f22;color:#eaeaea}
+  .qz-col details{background:#26282c;border-color:#3a3d42}
+  .qz-col details[open]{background:#1e1f22;border-color:#4a8ff0}
+  .qz-x{background:#3a3d42}
 }
