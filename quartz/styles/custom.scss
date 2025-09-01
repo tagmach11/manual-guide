@@ -658,3 +658,22 @@ html[data-theme="dark"] .apple-cards .legend{
 }
 /* 이미지 영역은 조금 더 크게 */
 .apple-cards .sec[data-legend="below"] .thumb{ height: 200px; }
+
+/*모달 테스트*/
+details {
+  cursor: pointer;
+}
+
+details[open] > summary::after {
+  content: "▲";
+  float: right;
+}
+
+details > summary::after {
+  content: "▼";
+  float: right;
+}
+
+summary {
+  list-style: none;
+}
