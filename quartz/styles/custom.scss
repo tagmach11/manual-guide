@@ -877,3 +877,92 @@ html[data-theme="dark"]{
 
 /* Quartz 기본 규칙과 충돌 방지 */
 .apple-cards *{ box-sizing:border-box; }
+
+/* ==== Neo Icon Cards (clean & trendy) ==== */
+:root{
+  --neo-bg:#fff; --neo-text:#0f1115; --neo-muted:#6b7280;
+  --neo-border:#e7e9ee; --neo-ring:#dfe6ff;
+  --neo-shadow:0 8px 24px rgba(0,0,0,.05);
+  --neo-shadow-hover:0 14px 42px rgba(0,0,0,.10);
+  --neo-r:20px; --neo-gap:18px;
+  --neo-icon-bg:linear-gradient(180deg,#f7f9ff,#f2f6ff);
+  --neo-icon-stroke:#2b59ff;
+}
+[data-theme="dark"]{
+  --neo-bg:#12151b; --neo-text:#eef2f6; --neo-muted:#9aa3ad;
+  --neo-border:#1f2430; --neo-ring:#20304a;
+  --neo-shadow:0 10px 28px rgba(0,0,0,.45);
+  --neo-shadow-hover:0 16px 48px rgba(0,0,0,.6);
+  --neo-icon-bg:linear-gradient(180deg,#171c25,#12161e);
+  --neo-icon-stroke:#6ea8ff;
+}
+
+/* 컨테이너 */
+.neo-cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+  gap:26px;
+}
+
+/* 카드 */
+.neo-card{
+  background:var(--neo-bg); color:var(--neo-text);
+  border:1px solid var(--neo-border);
+  border-radius:var(--neo-r);
+  box-shadow:var(--neo-shadow);
+  padding:22px;
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  position:relative; isolation:isolate; overflow:hidden;
+}
+.neo-card::after{ /* 미세 링 */
+  content:""; position:absolute; inset:-1px; border-radius:inherit;
+  pointer-events:none; box-shadow:0 0 0 0 rgba(0,0,0,0);
+  transition:box-shadow .2s ease;
+}
+.neo-card:hover{
+  transform:translateY(-3px);
+  box-shadow:var(--neo-shadow-hover);
+  border-color:transparent;
+}
+.neo-card:hover::after{
+  box-shadow:0 0 0 6px var(--neo-ring) inset;
+}
+
+/* 헤더 */
+.neo-head{ display:flex; align-items:center; gap:14px; margin-bottom:10px; }
+.neo-icon{
+  width:56px; height:56px; border-radius:14px;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--neo-icon-bg); border:1px solid var(--neo-border);
+}
+.neo-icon svg{ width:32px; height:32px; stroke:var(--neo-icon-stroke); fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+
+/* 타이틀 */
+.neo-title{ margin:0; font-weight:800; letter-spacing:-.01em; font-size:1.2rem; line-height:1.25; }
+.neo-title a{ color:inherit; text-decoration:none; }
+.neo-title a:hover{ text-decoration:underline; }
+.neo-sub{ margin:.15rem 0 0; color:var(--neo-muted); font-weight:600; font-size:.98rem; }
+
+/* 링크 리스트 */
+.neo-links{ margin:12px 0 0; padding:0; list-style:none; display:grid; gap:8px; }
+.neo-links.two-col{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px 14px; }
+.neo-links a{
+  display:inline-flex; align-items:center; gap:8px;
+  color:inherit; text-decoration:none; font-weight:700; font-size:.98rem;
+}
+.neo-links a::after{ content:"→"; opacity:.6; transition:transform .15s ease, opacity .15s ease; }
+.neo-links a:hover{ text-decoration:underline; }
+.neo-links a:hover::after{ transform:translateX(2px); opacity:.9; }
+
+/* 악센트 컬러(필요 시 추가) */
+.neo-card.accent-blue   { --neo-icon-bg:linear-gradient(180deg,#eef3ff,#e8efff); --neo-icon-stroke:#2b59ff; }
+.neo-card.accent-emerald{ --neo-icon-bg:linear-gradient(180deg,#e9fff6,#e6fbef); --neo-icon-stroke:#0ea569; }
+.neo-card.accent-amber  { --neo-icon-bg:linear-gradient(180deg,#fff7e7,#fff1db); --neo-icon-stroke:#d97706; }
+.neo-card.accent-rose   { --neo-icon-bg:linear-gradient(180deg,#ffe8ee,#ffe9f2); --neo-icon-stroke:#e11d48; }
+
+/* 모바일 최적화 */
+@media (max-width:900px){
+  .neo-cards{ gap:20px; }
+  .neo-card{ padding:18px; }
+  .neo-icon{ width:52px; height:52px; }
+}
