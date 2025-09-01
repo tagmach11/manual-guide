@@ -995,3 +995,55 @@ html[data-theme="dark"]{
 
 /* 안전장치: Quartz 기본 규칙과 충돌 방지 */
 .neo-cards *{ box-sizing:border-box; }
+
+
+/* === Quartz 기본 링크/뱃지 스타일 리셋 (카드 내부 전용) === */
+.neo-cards a,
+.neo-cards a.internal-link,
+.neo-cards a.external-link {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  filter: none !important;
+  opacity: 1 !important;
+  color: var(--neo-text) !important; /* 기본 글자색 강제 */
+}
+
+/* Quartz가 붙이는 링크 꼬리표/아이콘 제거 */
+.neo-cards a.internal-link::after,
+.neo-cards a.external-link::after {
+  content: none !important;
+}
+
+/* 제목/메뉴 링크: 호버 시 파란색으로 */
+.neo-cards .neo-title a,
+.neo-cards .neo-links a { transition: color .15s ease, text-decoration-color .15s ease; }
+
+.neo-cards .neo-title a:hover,
+.neo-cards .neo-title a:focus-visible,
+.neo-cards .neo-links a:hover,
+.neo-cards .neo-links a:focus-visible {
+  color: var(--neo-blue) !important;
+  text-decoration: underline;
+  outline: none;
+}
+
+/* 다크모드에서 부제/보조 텍스트 가독성 ↑ */
+[data-theme="dark"] .neo-card .neo-sub { color: #d5dbe6; }     /* 부제 */
+[data-theme="dark"] .neo-card { border-color: #2c3646; }       /* 카드 테두리 선명 */
+[data-theme="dark"] .neo-icon { border-color: #2c3646; }       /* 아이콘 박스 테두리 */
+[data-theme="dark"] .neo-icon svg { stroke: var(--neo-icon-stroke); }
+
+/* 리스트 화살표도 파란색으로 동기화 */
+.neo-cards .neo-links a::after { content: "→"; opacity: .75; transition: transform .15s ease, opacity .15s ease, color .15s ease; }
+.neo-cards .neo-links a:hover::after,
+.neo-cards .neo-links a:focus-visible::after { transform: translateX(2px); opacity: .95; color: var(--neo-blue); }
+
+/* (옵션) 카드 안의 모든 링크는 항상 굵게 */
+.neo-cards .neo-links a { font-weight: 700; }
+.neo-cards .neo-title a { font-weight: 800; }
+
+/* 일부 테마에서 앵커가 블록/뱃지로 강제되는 경우 대비 */
+.neo-cards .neo-links a, .neo-cards .neo-title a { display: inline; }
