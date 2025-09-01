@@ -664,40 +664,136 @@ html[data-theme="dark"] .apple-cards .legend{
   --z-modal: 40; /* 헤더보다 높게만 */
 }
 
-/* 모달 컨테이너 */
-.qzM{ position:fixed; inset:0; z-index:var(--z-modal); display:block; }
-.qzM:not([open]){ display:none; }
-
-/* 배경 = summary (눌러서 닫힘) */
-.qzM > summary{
-  list-style:none; position:fixed; inset:0; background:rgba(0,0,0,.55);
-}
-.qzM > summary::-webkit-details-marker{ display:none; }
-
-/* 패널 */
-.qzM-panel{
-  position:fixed; left:50%; top:50%; transform:translate(-50%,-50%);
-  width:min(1200px,94vw); max-height:90vh; overflow:auto;
-  background:#fff; border-radius:12px; padding:16px 20px;
-  box-shadow:0 8px 30px rgba(0,0,0,.22);
+/* ====== Card View for Quartz 4.5 ====== */
+:root {
+  --qz-card-bg: #ffffff;
+  --qz-card-text: #111418;
+  --qz-card-sub: #6b7280;
+  --qz-card-border: #e5e7eb;
+  --qz-card-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  --qz-card-shadow-hover: 0 16px 40px rgba(0,0,0,0.12);
+  --qz-radius: 16px;
+  --qz-gap: 16px;
 }
 
-/* 레이아웃 = 좌측 카테고리 + 우측 3열 */
-.qzM-layout{ display:grid; grid-template-columns:240px 1fr; gap:20px; }
-.qzM-left{ border-right:1px solid #eceef3; padding-right:16px; }
-.qzM-left ul{ margin:0; padding:0; list-style:none; }
-.qzM-left li{ padding:8px 6px; border-radius:8px; }
-.qzM-left li strong{ color:#1166cc; }
-
-.qzM-right{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
-.qzM-col details{ border:1px solid #e0e0e0; border-radius:8px; padding:10px 12px; background:#fafafa; }
-.qzM-col summary{ list-style:none; font-weight:700; cursor:pointer; }
-.qzM-col details[open]{ background:#fff; border-color:#2a7de1; }
-.qzM-col ul{ margin:8px 0 0; padding-left:18px; }
-
-/* 다크모드 */
-@media (prefers-color-scheme: dark){
-  .qzM-panel{ background:#1e1f22; color:#eaeaea; }
-  .qzM-col details{ background:#26282c; border-color:#3a3d42; }
-  .qzM-col details[open]{ background:#1e1f22; border-color:#4a8ff0; }
+[data-theme="dark"] {
+  --qz-card-bg: #111418;
+  --qz-card-text: #f3f4f6;
+  --qz-card-sub: #a1a1aa;
+  --qz-card-border: #22262b;
+  --qz-card-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  --qz-card-shadow-hover: 0 16px 40px rgba(0,0,0,0.6);
 }
+
+/* 카드 컨테이너: 자동 줄바꿈 그리드 */
+.qz-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--qz-gap);
+  align-items: stretch;
+}
+
+/* 카드 본체 */
+.qz-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--qz-card-bg);
+  color: var(--qz-card-text);
+  border: 1px solid var(--qz-card-border);
+  border-radius: var(--qz-radius);
+  box-shadow: var(--qz-card-shadow);
+  text-decoration: none !important;
+  overflow: hidden;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  position: relative;
+  isolation: isolate; /* 내부 효과 분리 */
+}
+
+.qz-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--qz-card-shadow-hover);
+  border-color: transparent;
+}
+
+/* 썸네일 */
+.qz-card .thumb {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3 / 2; /* 3:2 비율 유지 */
+  background: #f2f3f5;
+}
+
+.qz-card .thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.02);
+  transition: transform .35s ease, filter .35s ease;
+}
+
+.qz-card:hover .thumb img {
+  transform: scale(1.06);
+  filter: saturate(1.06);
+}
+
+/* 본문(제목/부제/설명/메타) */
+.qz-card .legend {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 16px 16px;
+}
+
+.qz-card .title {
+  font-weight: 800;
+  font-size: 1.05rem;
+  line-height: 1.25;
+}
+
+.qz-card .subtitle {
+  font-weight: 600;
+  font-size: .9rem;
+  color: var(--qz-card-sub);
+}
+
+.qz-card .desc {
+  margin: 6px 0 0;
+  font-size: .9rem;
+  line-height: 1.45;
+  color: var(--qz-card-text);
+  opacity: .9;
+}
+
+/* 메타 라인 (태그/링크 등) */
+.qz-card .meta {
+  margin-top: 8px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.qz-card .meta .tag {
+  font-size: .75rem;
+  border: 1px solid var(--qz-card-border);
+  padding: 2px 8px;
+  border-radius: 999px;
+  opacity: .9;
+}
+
+.qz-card .meta .link {
+  font-size: .82rem;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* 작은 화면에서 여백 조정 */
+@media (max-width: 520px) {
+  .qz-cards { gap: 12px; }
+  .qz-card .legend { padding: 12px 12px 14px; }
+}
+
+/* 옵시디언/Quartz 기본 스타일 충돌 방지(선택적) */
+.qz-card p { margin: 0; }
+.qz-card * { box-sizing: border-box; }
