@@ -660,20 +660,8 @@ html[data-theme="dark"] .apple-cards .legend{
 .apple-cards .sec[data-legend="below"] .thumb{ height: 200px; }
 
 /*모달 테스트*/
-details {
-  cursor: pointer;
-}
-
-details[open] > summary::after {
-  content: "▲";
-  float: right;
-}
-
-details > summary::after {
-  content: "▼";
-  float: right;
-}
-
-summary {
-  list-style: none;
-}
+.qz-modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.6);z-index:9999}
+.qz-panel{width:min(1100px,92vw);max-height:90vh;overflow:auto;background:#fff;
+  border-radius:12px;padding:16px 20px;box-shadow:0 8px 30px rgba(0,0,0,.2)}
+.qz-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
