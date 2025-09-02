@@ -547,3 +547,43 @@ html, body, .page, #quartz-body { overflow-x: hidden !important; }
 .sidebar.left .explorer .explorer-content li{
   display: block; /* list-item 공간 제거 */
 }
+
+/* === Explorer 전용 슬림 스크롤바 === */
+.sidebar.left .explorer .explorer-content{
+  /* 내용 폭 흔들림 방지 + 파폭 전용 색 */
+  scrollbar-gutter: stable both-edges;
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: color-mix(in srgb, var(--x-text) 30%, transparent) transparent;
+}
+
+/* WebKit 계열(Chrome/Edge/Safari) */
+.sidebar.left .explorer .explorer-content::-webkit-scrollbar{
+  width: 10px;                 /* 기본 두께 */
+}
+.sidebar.left .explorer .explorer-content:hover::-webkit-scrollbar{
+  width: 12px;                 /* 호버 시 살짝 두껍게 */
+}
+
+.sidebar.left .explorer .explorer-content::-webkit-scrollbar-track{
+  background: transparent;     /* 트랙은 투명 */
+  margin: 6px 0;               /* 위/아래 여백으로 끝단 둔탁함 제거 */
+}
+
+.sidebar.left .explorer .explorer-content::-webkit-scrollbar-thumb{
+  border-radius: 999px;
+  border: 3px solid transparent;         /* 안쪽만 보이게 */
+  background-clip: padding-box;
+  background-color: color-mix(in srgb, var(--x-text) 28%, transparent);
+  transition: background-color .15s ease, border-color .15s ease;
+}
+
+.sidebar.left .explorer .explorer-content:hover::-webkit-scrollbar-thumb{
+  background-color: color-mix(in srgb, var(--x-text) 40%, transparent);
+}
+
+.sidebar.left .explorer .explorer-content::-webkit-scrollbar-thumb:active{
+  background-color: color-mix(in srgb, var(--x-accent) 70%, transparent);
+}
+
+/* 모서리/가로는 항상 투명(가로 스크롤 억제 유지) */
+.sidebar.left .explorer .explorer-content::-webkit-scrollbar-corner{ background: transparent; }
