@@ -275,8 +275,7 @@ li:has(> .folder-outer:not(.open)) > .folder-container > svg {
 /* 기능(여닫기/슬라이드)은 건드리지 않고 외형만 변경 */
 
 :root{
-  --x-row: 44px;         /* 한 줄 높이 */
-  --x-visible: 6;        /* 데스크톱에서 보이는 줄 수 */
+  --x-row: 44px; --x-visible: 6;                    /* 보이는 줄 수 */
   --x-bg:#fff; --x-text:#0f1116;
   --x-border:#e7eaf2; --x-sep:#eef1f6;
   --x-hover:#f5f7fe; --x-active:#eaf1ff; --x-accent:#2563eb;
@@ -287,303 +286,117 @@ li:has(> .folder-outer:not(.open)) > .folder-container > svg {
   --x-hover:#162031; --x-active:#182642; --x-accent:#60a5fa;
 }
 
-/* 바깥은 가로 스크롤 금지 */
+/* 가로 스크롤 전역 차단 */
 html, body, .page, #quartz-body { overflow-x: hidden !important; }
 
-/* 패널은 카드처럼 (동작 관련 속성은 변경 X) */
+/* 패널 */
 .sidebar.left { overflow: visible !important; }
 .sidebar.left .explorer{
-  background:var(--x-bg);
-  color:var(--x-text);
-  border:1px solid var(--x-border);
-  border-radius:18px;
-  padding:10px;
-  box-shadow:0 8px 24px rgba(16,24,40,.06);
+  background:var(--x-bg); color:var(--x-text);
+  border:1px solid var(--x-border); border-radius:18px;
+  padding:10px; box-shadow:0 8px 24px rgba(16,24,40,.06);
 }
 
-/* 목록: 세로 스크롤만, 가로는 clip (넘침 잘라내기) */
+/* 헤더: 카드/아이콘/토글 제거 + 제목 교체 */
+:root { --explorer-label: "메뉴"; }  /* ← 여기만 바꾸면 제목 변경 */
+.sidebar.left:has(.explorer) { padding-top: 0 !important; }
+.sidebar.left .explorer :where(h1,h2,h3){
+  margin:0 !important; padding:0 !important; background:transparent !important; box-shadow:none !important;
+}
+.sidebar.left .explorer .fold,
+.sidebar.left .explorer :is(.desktop-explorer,.mobile-explorer) svg,
+.sidebar.left .explorer .lucide-chevron-down { display:none !important; }
+.sidebar.left .explorer :is(.desktop-explorer,.mobile-explorer){
+  background:transparent !important; border:0 !important; padding:0 !important;
+  cursor:default !important; pointer-events:none; color:var(--x-text) !important;
+}
+.sidebar.left .explorer :is(.desktop-explorer,.mobile-explorer) h2{
+  position:relative; color:transparent !important;
+}
+.sidebar.left .explorer :is(.desktop-explorer,.mobile-explorer) h2::after{
+  content: var(--explorer-label); position:absolute; inset:0;
+  color:var(--x-text); font-weight:800; letter-spacing:-.01em;
+}
+
+/* 리스트(세로 스크롤만) */
 .sidebar.left .explorer .explorer-content{
-  margin-top:8px; padding:6px 6px 10px;
-  border-top:1px solid var(--x-sep);
-  box-sizing:border-box;
-  overflow-y:auto !important;
-  overflow-x:clip !important;           /* 가로 스크롤 완전 차단 */
+  margin-top:6px !important; padding:6px 6px 10px;
+  border-top:1px solid var(--x-sep); box-sizing:border-box;
+  overflow-y:auto !important; overflow-x:clip !important;
   max-height: calc(var(--x-row) * var(--x-visible));
-  width:100%; max-width:100%;
-  padding-right: 10px;                  /* 스크롤바 여유 */
+  width:100%; max-width:100%; padding-right:10px;       /* 스크롤바 여유 */
+  scrollbar-gutter: stable both-edges;
 }
 
-/* 가로 넘침 방지(내부 요소가 폭을 밀지 못하게) */
-.sidebar.left,
-.sidebar.left .explorer,
-.sidebar.left .explorer .explorer-content{ max-width:100%; overflow-x:hidden !important; }
-.sidebar.left .explorer .explorer-content *,
-.sidebar.left .explorer .explorer-content a{
-  min-width:0; max-width:100%;
-  white-space:nowrap; text-overflow:ellipsis; overflow:hidden;
+/* 들여쓰기/마커 완전 제거 */
+.sidebar.left .explorer .explorer-content ul,
+.sidebar.left .explorer .explorer-content li{
+  list-style:none !important; padding-inline-start:0 !important; margin-inline-start:0 !important;
 }
+.sidebar.left .explorer .explorer-content li::marker{ content:"" !important; font-size:0 !important; }
+.sidebar.left .explorer .explorer-content li{ display:block; }
 
-/* 리스트/폴더/파일 라인 — 순수 스타일만 */
+/* 폴더/트리 */
 .sidebar.left .explorer .folder-container{
-  display:flex; align-items:center; gap:8px;
-  padding:8px 10px; border-radius:12px; user-select:none;
+  display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:12px; user-select:none;
 }
 .sidebar.left .explorer .folder-container:hover{ background:var(--x-hover); }
-
 .sidebar.left .explorer .folder-icon{
-  width:18px; height:18px; color:#6b7280;
-  transition:transform .25s ease, color .15s ease; flex-shrink:0;
+  width:18px; height:18px; color:#6b7280; transition:transform .25s ease, color .15s ease; flex-shrink:0;
 }
-/* (원본의 회전 로직 유지) */
+/* (기존 회전 로직 유지: li:has(>.folder-outer:not(.open)) ... ) */
+.sidebar.left .explorer .folder-outer{ display:grid; grid-template-rows:0fr; transition:grid-template-rows .25s ease; }
+.sidebar.left .explorer .folder-outer.open{ grid-template-rows:1fr; }
+.sidebar.left .explorer .folder-outer > ul{ margin-left:8px; padding-left:12px; border-left:1px solid var(--x-border); }
 
-/* 파일 링크 */
+/* 파일 링크(흐릿 제거 포함) */
+.sidebar.left .explorer a{
+  text-decoration:none !important; background:transparent !important; box-shadow:none !important;
+  border:0 !important; filter:none !important; opacity:1 !important; color:inherit !important;
+}
 .sidebar.left .explorer .explorer-content li > a{
   display:flex; align-items:center; gap:8px;
   padding:8px 10px; margin:2px 0; width:100%;
-  border-radius:12px; text-decoration:none; color:inherit; opacity:.92;
+  border-radius:12px; color:var(--x-text) !important; opacity:1 !important;
   transition:background .15s ease, color .15s ease, opacity .15s ease;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0;
 }
-.sidebar.left .explorer .explorer-content li > a:hover{ background:var(--x-hover); opacity:1; }
+.sidebar.left .explorer .explorer-content li > a:hover{ background:var(--x-hover); }
 .sidebar.left .explorer .explorer-content li > a.active{
   background:var(--x-active); color:var(--x-accent) !important;
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--x-accent) 36%, transparent);
   position:relative;
 }
 .sidebar.left .explorer .explorer-content li > a.active::before{
-  content:""; position:absolute; left:6px; top:22%; bottom:22%;
-  width:3px; border-radius:2px; background:var(--x-accent);
+  content:""; position:absolute; left:6px; top:22%; bottom:22%; width:3px; border-radius:2px; background:var(--x-accent);
 }
 
-/* 링크/뱃지 초기화(Quartz 기본 밑줄/배지 제거) */
-.sidebar.left .explorer a{
-  text-decoration:none !important; background:transparent !important;
-  box-shadow:none !important; border:0 !important; filter:none !important;
-  opacity:1 !important; color:inherit !important;
-}
-
-/* 모바일: 원본의 드로어 토글(transform/visibility)을 존중 — 위치/transform 건들지 않음 */
+/* 모바일: 원본 드로어 토글 동작 유지(위치/transform 건드리지 않음) */
 @media (max-width: 900px){
   .sidebar.left .explorer .explorer-content{
-    /* 원본 position/transform 그대로. 여기서는 스크롤/여백만 */
-    overflow-y:auto !important;
-    overflow-x:clip !important;
-    padding-right:12px;
-  }
-}
-/* === 1) 텍스트/링크가 흐릿해 보이는 것 제거 === */
-.sidebar.left .explorer .explorer-content li > a{
-  color: var(--x-text, var(--dark, #0f1116)) !important;
-  opacity: 1 !important;               /* Quartz 기본 0.75 제거 */
-  text-decoration: none !important;
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-/* 제목/버튼 회색 박스 제거(텍스트만 보이게) */
-.sidebar.left .explorer :where(h1,h2,h3){
-  margin: 0; padding: 0;
-  background: transparent !important;
-  box-shadow: none !important;
-}
-.sidebar.left .explorer :is(.desktop-explorer,.mobile-explorer){
-  background: transparent !important;
-  border: 0 !important;
-  color: var(--x-text, #0f1116) !important;
-  padding: 8px 12px;
-  border-radius: 10px;
-}
-.sidebar.left .explorer :is(.desktop-explorer,.mobile-explorer):hover{
-  background: var(--x-hover, #f5f7fe) !important;
-}
-
-/* === 2) 토글 클릭 막는 레이어 방지 (모바일·데스크톱 모두) === */
-/* 헤더 버튼이 항상 콘텐츠보다 위에 올라오도록 보장 */
-.sidebar.left .explorer :is(.desktop-explorer,.mobile-explorer){ position: relative; z-index: 102; }
-/* 리스트 영역은 그 아래에서만 클릭 받기 */
-.sidebar.left .explorer .explorer-content{ position: relative; z-index: 100; }
-
-/* 모바일에서 닫힌 상태일 땐 리스트가 클릭을 가로채지 않도록 */
-@media (max-width: 900px){
-  .sidebar.left .explorer.collapsed > .explorer-content{
-    pointer-events: none;
-  }
-  .sidebar.left .explorer:not(.collapsed) > .explorer-content{
-    pointer-events: auto;
+    overflow-y:auto !important; overflow-x:clip !important; padding-right:12px;
   }
 }
 
-/* === 3) 가로 스크롤 재발 방지(마지막 안전장치) === */
-.sidebar.left,
-.sidebar.left .explorer,
+/* 슬림 스크롤바 (Explorer 전용) */
 .sidebar.left .explorer .explorer-content{
-  max-width: 100% !important;
-  overflow-x: hidden !important;
-}
-.sidebar.left .explorer .explorer-content *{
-  min-width: 0; max-width: 100%;
-  white-space: nowrap; text-overflow: ellipsis; overflow: hidden;
-}
-
-/* === 4) 보기 줄 수(필요하면 숫자만) === */
-:root{ --x-row: 44px; --x-visible: 6; }
-.sidebar.left .explorer .explorer-content{
-  max-height: calc(var(--x-row) * var(--x-visible));
-  padding-right: 10px;  /* 스크롤바 공간 */
-}
-
-/* ==== Explorer: 여백 제거 + 제목 바꾸기 + 토글 아이콘 숨김 ==== */
-
-/* 1) 상단 빈칸(패널 바깥 여백) 없애기 */
-.sidebar.left:has(.explorer) { padding-top: 0 !important; }
-
-/* 2) 헤더의 카드/그림자/여백 제거(텍스트만 보이게) */
-.sidebar.left .explorer h1,
-.sidebar.left .explorer h2,
-.sidebar.left .explorer h3 {
-  margin: 0 !important;
-  padding: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-/* 3) 토글(접기) 아이콘/표시 숨김 */
-.sidebar.left .explorer .fold,
-.sidebar.left .explorer :is(.desktop-explorer,.mobile-explorer) svg,
-.sidebar.left .explorer .lucide-chevron-down { display: none !important; }
-
-/* 4) 헤더 버튼은 클릭 불가(토글 없애므로) + 배경 제거 */
-.sidebar.left .explorer :is(.desktop-explorer,.mobile-explorer){
-  background: transparent !important;
-  border: 0 !important;
-  padding: 0 !important;
-  cursor: default !important;
-  pointer-events: none;          /* 더 이상 열고닫기 안 함 */
-  color: var(--exp-text, #0f1116) !important;
-}
-
-/* 5) 제목 텍스트 바꾸기 (원하는 라벨로 변경) */
-:root { --explorer-label: "메뉴"; }  /* ← 여기만 바꾸면 제목 변경됨 */
-
-.sidebar.left .explorer :is(.desktop-explorer,.mobile-explorer) h2{
-  position: relative;
-  color: transparent !important;   /* 원래 'Explorer' 숨기기 */
-}
-.sidebar.left .explorer :is(.desktop-explorer,.mobile-explorer) h2::after{
-  content: var(--explorer-label);
-  position: absolute; inset: 0;
-  color: var(--exp-text, #0f1116);
-  font-weight: 800;
-  letter-spacing: -.01em;
-}
-
-/* 6) 목록 위 불필요한 상단 여백 줄이기(경계선은 유지하고 싶으면 놔둬도 OK) */
-.sidebar.left .explorer .explorer-content{
-  margin-top: 6px !important;
-}
-/* ==== Explorer: 여백 제거 + 제목 바꾸기 + 토글 아이콘 숨김 ==== */
-
-/* 1) 상단 빈칸(패널 바깥 여백) 없애기 */
-.sidebar.left:has(.explorer) { padding-top: 0 !important; }
-
-/* 2) 헤더의 카드/그림자/여백 제거(텍스트만 보이게) */
-.sidebar.left .explorer h1,
-.sidebar.left .explorer h2,
-.sidebar.left .explorer h3 {
-  margin: 0 !important;
-  padding: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-/* 3) 토글(접기) 아이콘/표시 숨김 */
-.sidebar.left .explorer .fold,
-.sidebar.left .explorer :is(.desktop-explorer,.mobile-explorer) svg,
-.sidebar.left .explorer .lucide-chevron-down { display: none !important; }
-
-/* 4) 헤더 버튼은 클릭 불가(토글 없애므로) + 배경 제거 */
-.sidebar.left .explorer :is(.desktop-explorer,.mobile-explorer){
-  background: transparent !important;
-  border: 0 !important;
-  padding: 0 !important;
-  cursor: default !important;
-  pointer-events: none;          /* 더 이상 열고닫기 안 함 */
-  color: var(--exp-text, #0f1116) !important;
-}
-
-/* 5) 제목 텍스트 바꾸기 (원하는 라벨로 변경) */
-:root { --explorer-label: "메뉴"; }  /* ← 여기만 바꾸면 제목 변경됨 */
-
-.sidebar.left .explorer :is(.desktop-explorer,.mobile-explorer) h2{
-  position: relative;
-  color: transparent !important;   /* 원래 'Explorer' 숨기기 */
-}
-.sidebar.left .explorer :is(.desktop-explorer,.mobile-explorer) h2::after{
-  content: var(--explorer-label);
-  position: absolute; inset: 0;
-  color: var(--exp-text, #0f1116);
-  font-weight: 800;
-  letter-spacing: -.01em;
-}
-
-/* 6) 목록 위 불필요한 상단 여백 줄이기(경계선은 유지하고 싶으면 놔둬도 OK) */
-.sidebar.left .explorer .explorer-content{
-  margin-top: 6px !important;
-}
-
-/* Explorer 리스트 앞 들여쓰기/마커 완전 제거 */
-.sidebar.left .explorer .explorer-content ul,
-.sidebar.left .explorer .explorer-content li{
-  list-style: none !important;
-  padding-inline-start: 0 !important; /* UL 기본 들여쓰기 제거 */
-  margin-inline-start: 0 !important;  /* Safari/Firefox 보정 */
-}
-
-.sidebar.left .explorer .explorer-content li::marker{
-  content: "" !important;   /* 마커 내용 제거 */
-  font-size: 0 !important;  /* 일부 브라우저 마커 박스 축소 */
-}
-
-/* 혹시 테마가 다시 list-style을 강제할 때 최후 수단 */
-.sidebar.left .explorer .explorer-content li{
-  display: block; /* list-item 공간 제거 */
-}
-
-/* === Explorer 전용 슬림 스크롤바 === */
-.sidebar.left .explorer .explorer-content{
-  /* 내용 폭 흔들림 방지 + 파폭 전용 색 */
-  scrollbar-gutter: stable both-edges;
-  scrollbar-width: thin; /* Firefox */
+  scrollbar-width: thin;
   scrollbar-color: color-mix(in srgb, var(--x-text) 30%, transparent) transparent;
 }
-
-/* WebKit 계열(Chrome/Edge/Safari) */
-.sidebar.left .explorer .explorer-content::-webkit-scrollbar{
-  width: 10px;                 /* 기본 두께 */
-}
-.sidebar.left .explorer .explorer-content:hover::-webkit-scrollbar{
-  width: 12px;                 /* 호버 시 살짝 두껍게 */
-}
-
+.sidebar.left .explorer .explorer-content::-webkit-scrollbar{ width:10px; }
+.sidebar.left .explorer .explorer-content:hover::-webkit-scrollbar{ width:12px; }
 .sidebar.left .explorer .explorer-content::-webkit-scrollbar-track{
-  background: transparent;     /* 트랙은 투명 */
-  margin: 6px 0;               /* 위/아래 여백으로 끝단 둔탁함 제거 */
+  background:transparent; margin:6px 0;
 }
-
 .sidebar.left .explorer .explorer-content::-webkit-scrollbar-thumb{
-  border-radius: 999px;
-  border: 3px solid transparent;         /* 안쪽만 보이게 */
-  background-clip: padding-box;
+  border-radius:999px; border:3px solid transparent; background-clip:padding-box;
   background-color: color-mix(in srgb, var(--x-text) 28%, transparent);
   transition: background-color .15s ease, border-color .15s ease;
 }
-
 .sidebar.left .explorer .explorer-content:hover::-webkit-scrollbar-thumb{
   background-color: color-mix(in srgb, var(--x-text) 40%, transparent);
 }
-
 .sidebar.left .explorer .explorer-content::-webkit-scrollbar-thumb:active{
   background-color: color-mix(in srgb, var(--x-accent) 70%, transparent);
 }
-
-/* 모서리/가로는 항상 투명(가로 스크롤 억제 유지) */
-.sidebar.left .explorer .explorer-content::-webkit-scrollbar-corner{ background: transparent; }
+.sidebar.left .explorer .explorer-content::-webkit-scrollbar-corner{ background:transparent; }
