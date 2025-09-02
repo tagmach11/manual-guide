@@ -401,77 +401,95 @@ html, body, .page, #quartz-body { overflow-x: hidden !important; }
 }
 .sidebar.left .explorer .explorer-content::-webkit-scrollbar-corner{ background:transparent; }
 
-/* === 0) 수평 스크롤 완전 차단(재확인) === */
-.sidebar.left .explorer,
-.sidebar.left .explorer .explorer-content { max-width:100% !important; }
-.sidebar.left .explorer .explorer-content {
-  overflow-x: hidden !important;      /* clip 대신 hidden */
-  scrollbar-gutter: stable !important;/* both-edges 금지 */
+/* === FIX: 변수 통일(—exp-* -> —x-*) & 다크모드 강제 === */
+
+/* 0) 라벨(제목) 색이 안 바뀌던 원인 제거: exp -> x */
+.sidebar.left .explorer :is(.desktop-explorer,.mobile-explorer) h2::after{
+  color: var(--x-text) !important;   /* 이전: var(--exp-text, #0f1116) */
 }
-/* WebKit 가로 스크롤 트랙 자체 무효화 */
+
+/* 1) 기본 색상도 변수로 강제 */
+.sidebar.left .explorer{
+  background: var(--x-bg) !important;
+  color: var(--x-text) !important;
+  border-color: var(--x-border) !important;
+}
+
+/* 2) hover/active도 모두 x-변수 사용 */
+.sidebar.left .explorer .folder-container:hover,
+.sidebar.left .explorer .explorer-content li > a:hover{
+  background: var(--x-hover) !important;
+}
+.sidebar.left .explorer .explorer-content li > a.active{
+  background: var(--x-active) !important;
+  color: var(--x-accent) !important; /* 이전에 고정색(#2563eb) 쓰지 않기 */
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--x-accent) 36%, transparent) !important;
+}
+.sidebar.left .explorer .explorer-content li > a.active::before{
+  background: var(--x-accent) !important;
+}
+
+/* 3) 다크모드 셀렉터를 폭넓게(어디에 달려 있어도 적용) */
+html[data-theme="dark"] .sidebar.left .explorer,
+body[data-theme="dark"] .sidebar.left .explorer,
+:root[data-theme="dark"] .sidebar.left .explorer{
+  background: var(--x-bg) !important;   /* #0f131a */
+  color: var(--x-text) !important;      /* #eef2f6 */
+  border-color: var(--x-border) !important; /* #2a3240 */
+  box-shadow: 0 12px 30px rgba(0,0,0,.55) !important;
+}
+html[data-theme="dark"] .sidebar.left .explorer .explorer-content,
+body[data-theme="dark"] .sidebar.left .explorer .explorer-content,
+:root[data-theme="dark"] .sidebar.left .explorer .explorer-content{
+  border-top-color: var(--x-sep) !important; /* #1c2432 */
+}
+html[data-theme="dark"] .sidebar.left .explorer .folder-container:hover,
+body[data-theme="dark"] .sidebar.left .explorer .folder-container:hover,
+:root[data-theme="dark"] .sidebar.left .explorer .folder-container:hover,
+html[data-theme="dark"] .sidebar.left .explorer .explorer-content li > a:hover,
+body[data-theme="dark"] .sidebar.left .explorer .explorer-content li > a:hover,
+:root[data-theme="dark"] .sidebar.left .explorer .explorer-content li > a:hover{
+  background: var(--x-hover) !important; /* #162031 */
+}
+html[data-theme="dark"] .sidebar.left .explorer .explorer-content li > a.active,
+body[data-theme="dark"] .sidebar.left .explorer .explorer-content li > a.active,
+:root[data-theme="dark"] .sidebar.left .explorer .explorer-content li > a.active{
+  background: var(--x-active) !important; /* #182642 */
+  color: var(--x-accent) !important;      /* #60a5fa */
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--x-accent) 40%, transparent) !important;
+}
+html[data-theme="dark"] .sidebar.left .explorer .explorer-content li > a.active::before,
+body[data-theme="dark"] .sidebar.left .explorer .explorer-content li > a.active::before,
+:root[data-theme="dark"] .sidebar.left .explorer .explorer-content li > a.active::before{
+  background: var(--x-accent) !important;
+}
+
+/* 4) 수평 스크롤 재차단(혹시 다시 생기면…) */
+.sidebar.left,
+.sidebar.left .explorer,
+.sidebar.left .explorer .explorer-content{
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+}
 .sidebar.left .explorer .explorer-content::-webkit-scrollbar:horizontal{ height:0 !important; }
 
-/* === 1) 라이트 모드 스크롤바(슬림/중립) === */
-.sidebar.left .explorer .explorer-content{
-  scrollbar-width: thin; /* Firefox */
-  scrollbar-color: color-mix(in srgb, var(--x-text) 28%, transparent) transparent;
-}
-.sidebar.left .explorer .explorer-content::-webkit-scrollbar{ width:10px; }
-.sidebar.left .explorer .explorer-content:hover::-webkit-scrollbar{ width:12px; }
-.sidebar.left .explorer .explorer-content::-webkit-scrollbar-track{
-  background: transparent; margin: 6px 0;
-}
-.sidebar.left .explorer .explorer-content::-webkit-scrollbar-thumb{
-  border-radius: 999px;
-  border: 3px solid transparent;
-  background-clip: padding-box;
-  background-color: color-mix(in srgb, var(--x-text) 28%, transparent);
-  transition: background-color .15s ease, border-color .15s ease;
-}
-.sidebar.left .explorer .explorer-content:hover::-webkit-scrollbar-thumb{
-  background-color: color-mix(in srgb, var(--x-text) 40%, transparent);
-}
-.sidebar.left .explorer .explorer-content::-webkit-scrollbar-thumb:active{
-  background-color: color-mix(in srgb, var(--x-accent) 70%, transparent);
-}
-
-/* === 2) 다크 모드 전반 톤 & 컨트라스트 === */
-[data-theme="dark"] .sidebar.left .explorer{
-  background: var(--x-bg);           /* #0f131a */
-  color: var(--x-text);              /* #eef2f6 */
-  border-color: var(--x-border);     /* #2a3240 */
-  box-shadow: 0 12px 30px rgba(0,0,0,.55);
-}
-[data-theme="dark"] .sidebar.left .explorer .explorer-content{
-  border-top-color: var(--x-sep);    /* #1c2432 */
-}
-
-/* hover/active를 다크 전용 색으로 보다 부드럽게 */
-[data-theme="dark"] .sidebar.left .explorer .folder-container:hover,
-[data-theme="dark"] .sidebar.left .explorer .explorer-content li > a:hover{
-  background: var(--x-hover);        /* #162031 */
-}
-[data-theme="dark"] .sidebar.left .explorer .explorer-content li > a.active{
-  background: var(--x-active);       /* #182642 */
-  color: var(--x-accent) !important; /* #60a5fa */
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--x-accent) 40%, transparent);
-}
-[data-theme="dark"] .sidebar.left .explorer .explorer-content li > a.active::before{
-  background: var(--x-accent);
-}
-
-/* === 3) 다크 모드 스크롤바(은은한 대비) === */
-[data-theme="dark"] .sidebar.left .explorer .explorer-content{
+/* 5) 다크 전용 스크롤바(쨍하지 않게) */
+html[data-theme="dark"] .sidebar.left .explorer .explorer-content,
+body[data-theme="dark"] .sidebar.left .explorer .explorer-content,
+:root[data-theme="dark"] .sidebar.left .explorer .explorer-content{
   scrollbar-width: thin;
   scrollbar-color: color-mix(in srgb, var(--x-text) 45%, transparent) transparent;
 }
-[data-theme="dark"] .sidebar.left .explorer .explorer-content::-webkit-scrollbar-thumb{
-  background-color: color-mix(in srgb, var(--x-text) 45%, transparent);
+html[data-theme="dark"] .sidebar.left .explorer .explorer-content::-webkit-scrollbar-thumb,
+body[data-theme="dark"] .sidebar.left .explorer .explorer-content::-webkit-scrollbar-thumb,
+:root[data-theme="dark"] .sidebar.left .explorer .explorer-content::-webkit-scrollbar-thumb{
+  border-radius: 999px;
   border: 3px solid transparent;
+  background-clip: padding-box;
+  background-color: color-mix(in srgb, var(--x-text) 45%, transparent);
 }
-[data-theme="dark"] .sidebar.left .explorer .explorer-content:hover::-webkit-scrollbar-thumb{
+html[data-theme="dark"] .sidebar.left .explorer .explorer-content:hover::-webkit-scrollbar-thumb,
+body[data-theme="dark"] .sidebar.left .explorer .explorer-content:hover::-webkit-scrollbar-thumb,
+:root[data-theme="dark"] .sidebar.left .explorer .explorer-content:hover::-webkit-scrollbar-thumb{
   background-color: color-mix(in srgb, var(--x-text) 65%, transparent);
-}
-[data-theme="dark"] .sidebar.left .explorer .explorer-content::-webkit-scrollbar-thumb:active{
-  background-color: color-mix(in srgb, var(--x-accent) 75%, transparent);
 }
