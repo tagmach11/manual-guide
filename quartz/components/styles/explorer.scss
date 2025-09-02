@@ -344,11 +344,12 @@ button.desktop-explorer:hover{ background: var(--exp-hover); }
   list-style: none; margin-top: 8px; padding: 6px 6px 10px;
   max-height: calc(100dvh - 160px); overflow: auto; border-top: 1px solid var(--exp-sep);
 }
-/* 스크롤바 미세 커스텀 */
+/*
+ 스크롤바 미세 커스텀 
 .explorer-content::-webkit-scrollbar{ width: 8px; }
 .explorer-content::-webkit-scrollbar-thumb{ background: var(--exp-border); border-radius: 999px; }
 .explorer-content:hover::-webkit-scrollbar-thumb{ background: color-mix(in srgb, var(--exp-border) 60%, var(--exp-text) 40%); }
-
+*/
 /* 기본 불릿/가짜 점 제거 */
 .explorer-content, .explorer-content ul{ list-style: none !important; }
 .explorer-content li::marker, .explorer-content li::before{ content: none !important; }
