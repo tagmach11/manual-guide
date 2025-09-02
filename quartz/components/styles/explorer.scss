@@ -430,3 +430,102 @@ html, body, .page, #quartz-body { overflow-x: hidden !important; }
   max-height: calc(var(--x-row) * var(--x-visible));
   padding-right: 10px;  /* 스크롤바 공간 */
 }
+
+/* ==== Explorer: 여백 제거 + 제목 바꾸기 + 토글 아이콘 숨김 ==== */
+
+/* 1) 상단 빈칸(패널 바깥 여백) 없애기 */
+.sidebar.left:has(.explorer) { padding-top: 0 !important; }
+
+/* 2) 헤더의 카드/그림자/여백 제거(텍스트만 보이게) */
+.sidebar.left .explorer h1,
+.sidebar.left .explorer h2,
+.sidebar.left .explorer h3 {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* 3) 토글(접기) 아이콘/표시 숨김 */
+.sidebar.left .explorer .fold,
+.sidebar.left .explorer :is(.desktop-explorer,.mobile-explorer) svg,
+.sidebar.left .explorer .lucide-chevron-down { display: none !important; }
+
+/* 4) 헤더 버튼은 클릭 불가(토글 없애므로) + 배경 제거 */
+.sidebar.left .explorer :is(.desktop-explorer,.mobile-explorer){
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  cursor: default !important;
+  pointer-events: none;          /* 더 이상 열고닫기 안 함 */
+  color: var(--exp-text, #0f1116) !important;
+}
+
+/* 5) 제목 텍스트 바꾸기 (원하는 라벨로 변경) */
+:root { --explorer-label: "메뉴"; }  /* ← 여기만 바꾸면 제목 변경됨 */
+
+.sidebar.left .explorer :is(.desktop-explorer,.mobile-explorer) h2{
+  position: relative;
+  color: transparent !important;   /* 원래 'Explorer' 숨기기 */
+}
+.sidebar.left .explorer :is(.desktop-explorer,.mobile-explorer) h2::after{
+  content: var(--explorer-label);
+  position: absolute; inset: 0;
+  color: var(--exp-text, #0f1116);
+  font-weight: 800;
+  letter-spacing: -.01em;
+}
+
+/* 6) 목록 위 불필요한 상단 여백 줄이기(경계선은 유지하고 싶으면 놔둬도 OK) */
+.sidebar.left .explorer .explorer-content{
+  margin-top: 6px !important;
+}
+/* ==== Explorer: 여백 제거 + 제목 바꾸기 + 토글 아이콘 숨김 ==== */
+
+/* 1) 상단 빈칸(패널 바깥 여백) 없애기 */
+.sidebar.left:has(.explorer) { padding-top: 0 !important; }
+
+/* 2) 헤더의 카드/그림자/여백 제거(텍스트만 보이게) */
+.sidebar.left .explorer h1,
+.sidebar.left .explorer h2,
+.sidebar.left .explorer h3 {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* 3) 토글(접기) 아이콘/표시 숨김 */
+.sidebar.left .explorer .fold,
+.sidebar.left .explorer :is(.desktop-explorer,.mobile-explorer) svg,
+.sidebar.left .explorer .lucide-chevron-down { display: none !important; }
+
+/* 4) 헤더 버튼은 클릭 불가(토글 없애므로) + 배경 제거 */
+.sidebar.left .explorer :is(.desktop-explorer,.mobile-explorer){
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  cursor: default !important;
+  pointer-events: none;          /* 더 이상 열고닫기 안 함 */
+  color: var(--exp-text, #0f1116) !important;
+}
+
+/* 5) 제목 텍스트 바꾸기 (원하는 라벨로 변경) */
+:root { --explorer-label: "메뉴"; }  /* ← 여기만 바꾸면 제목 변경됨 */
+
+.sidebar.left .explorer :is(.desktop-explorer,.mobile-explorer) h2{
+  position: relative;
+  color: transparent !important;   /* 원래 'Explorer' 숨기기 */
+}
+.sidebar.left .explorer :is(.desktop-explorer,.mobile-explorer) h2::after{
+  content: var(--explorer-label);
+  position: absolute; inset: 0;
+  color: var(--exp-text, #0f1116);
+  font-weight: 800;
+  letter-spacing: -.01em;
+}
+
+/* 6) 목록 위 불필요한 상단 여백 줄이기(경계선은 유지하고 싶으면 놔둬도 OK) */
+.sidebar.left .explorer .explorer-content{
+  margin-top: 6px !important;
+}
