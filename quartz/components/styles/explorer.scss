@@ -476,3 +476,70 @@ li:has(> .folder-outer:not(.open)) > .folder-container > .folder-icon{ transform
 .explorer-content li,
 .explorer-content a { min-width: 0; }
 .explorer-content a { word-break: break-word; }
+
+/* =========================
+   Explorer Drawer — 안정화 패치
+   ========================= */
+
+/* 1) 토글 상태 폭넓게 인식(여닫기 복구) */
+@media all and ($mobile){
+  /* 열림 */
+  .explorer:not(.collapsed) > .explorer-content,
+  .explorer.open > .explorer-content,
+  .explorer.is-open > .explorer-content,
+  .explorer[data-collapsed="false"] > .explorer-content {
+    transform: translateX(0) !important;
+    visibility: visible !important;
+  }
+  /* 닫힘 */
+  .explorer.collapsed > .explorer-content,
+  .explorer.closed > .explorer-content,
+  .explorer.is-closed > .explorer-content,
+  .explorer[data-collapsed="true"] > .explorer-content {
+    transform: translateX(-100%) !important;
+    visibility: hidden !important;
+  }
+
+  /* 오버레이가 버튼 클릭 막지 않도록 (문제 되면 끄기) */
+  .explorer::before{ pointer-events: none; }  /* 필요시 주석 해제해서 완전 제거: display:none */
+}
+
+/* 2) 세로 스크롤만 — 가로 스크롤 차단 + 높이 확실히 */
+html, body, .page, #quartz-body { overflow-x: hidden !important; }
+
+.explorer { overflow: visible !important; } /* 외곽은 스크롤 만들지 않음 */
+
+.explorer-content{
+  box-sizing: border-box;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  height: auto;                 /* 데스크톱에서 내부 스크롤 생기도록 */
+  max-height: calc(100dvh - 160px); /* 필요 시 조절 */
+}
+
+/* 모바일 드로어 레이어도 세로만 스크롤 */
+@media all and ($mobile){
+  .explorer > .explorer-content{
+    box-sizing: border-box;
+    width: min(86vw, 360px);
+    max-width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding-right: 12px;        /* 스크롤바 공간 보호 */
+  }
+}
+
+/* 3) 긴 텍스트가 폭을 밀어내지 못하게(가로 스크롤 방지) */
+.explorer-content ul,
+.explorer-content li,
+.explorer-content a { min-width: 0; }
+.explorer-content a { word-break: break-word; }
+
+/* 4) 남아 있는 가짜 점, 빈 버튼 방지(재확인) */
+.explorer-content, .explorer-content ul { list-style: none !important; }
+.explorer-content li::marker, .explorer-content li::before { content: none !important; }
+.explorer button:empty,
+.explorer button:not(:has(svg, h1, h2, h3, span)) { display: none !important; }
+
