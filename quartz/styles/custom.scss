@@ -801,3 +801,51 @@ html[data-theme="dark"]{
 
 
 
+/* ===== Scroll Stack (Toss-like) ===== */
+.scroll-stack{
+  /* JS에서 카드 개수로 채워줌 */
+  --count: 3;                 /* fallback */
+  --top: 10vh;                /* sticky 상단 여백 */
+  --gap: 26px;                /* 카드 간 간격 */
+  --radius: 24px;
+
+  /* 스크롤 길이: 카드가 많을수록 길게 */
+  height: calc(100vh + (var(--count) - 1) * 80vh);
+  position: relative;
+}
+
+.scroll-stack .stack{
+  position: sticky;
+  top: var(--top);
+  height: calc(100vh - var(--top) - 6vh);
+  border-radius: var(--radius);
+  perspective: 1200px;
+  overflow: visible;
+}
+
+.s-card{
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: clamp(24px, 5vw, 64px);
+  border-radius: var(--radius);
+  background: var(--bg, #0b5fff);
+  color: #fff;
+  box-shadow: 0 30px 80px rgba(0,0,0,.25);
+  transform-origin: 50% 70%;
+  will-change: transform, opacity;
+  transition: box-shadow .2s ease;
+}
+.s-card h2{ font-size: clamp(28px, 4vw, 54px); line-height: 1.1; margin: 0 0 .5em; font-weight: 800; }
+.s-card p { max-width: 46ch; opacity: .95; font-size: clamp(15px, 1.4vw, 18px); }
+
+/* 라이트/다크 가독성 조정 */
+:root{
+  --s-txt: #0f1116;
+}
+[data-theme="dark"]{
+  --s-txt: #e6ebf5;
+}
+.s-card[data-ink="dark"]{ color: var(--s-txt); }
+
+/* 수평 스크롤 방지 안전장치 */
+.scroll-stack, .scroll-stack *{ max-width:100%; overflow-x:clip; }
