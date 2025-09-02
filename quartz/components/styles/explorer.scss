@@ -529,3 +529,21 @@ html, body, .page, #quartz-body { overflow-x: hidden !important; }
 .sidebar.left .explorer .explorer-content{
   margin-top: 6px !important;
 }
+
+/* Explorer 리스트 앞 들여쓰기/마커 완전 제거 */
+.sidebar.left .explorer .explorer-content ul,
+.sidebar.left .explorer .explorer-content li{
+  list-style: none !important;
+  padding-inline-start: 0 !important; /* UL 기본 들여쓰기 제거 */
+  margin-inline-start: 0 !important;  /* Safari/Firefox 보정 */
+}
+
+.sidebar.left .explorer .explorer-content li::marker{
+  content: "" !important;   /* 마커 내용 제거 */
+  font-size: 0 !important;  /* 일부 브라우저 마커 박스 축소 */
+}
+
+/* 혹시 테마가 다시 list-style을 강제할 때 최후 수단 */
+.sidebar.left .explorer .explorer-content li{
+  display: block; /* list-item 공간 제거 */
+}
