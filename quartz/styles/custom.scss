@@ -810,7 +810,7 @@ html[data-theme="dark"]{
   --radius: 24px;
 
   /* 스크롤 길이: 카드가 많을수록 길게 */
-  height: calc(100vh + (var(--count) - 1) * 80vh);
+  height: calc(100vh + (var(--count) - 1) * var(--step, 80vh));
   position: relative;
 }
 
