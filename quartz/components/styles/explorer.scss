@@ -271,172 +271,141 @@ li:has(> .folder-outer:not(.open)) > .folder-container > svg {
 */
 
 /* ===========================
-   Explorer — Neo Style
-   카드형 메뉴와 톤/무드 맞춤
+   Explorer — Apple-like Neo Style
+   (붙여넣기만 하면 작동)
    =========================== */
 
-/* 토큰 */
+/* Tokens */
 :root{
   --exp-bg: #ffffff;
   --exp-text: #0f1116;
   --exp-muted: #6b7280;
-  --exp-border: #e6e8ee;
-  --exp-hover: #f3f6ff;    /* hover 배경 */
-  --exp-active: #e9f0ff;   /* 활성 배경 */
-  --exp-accent: #375ef6;   /* 포커스/포인트 */
-  --exp-shadow: 0 8px 24px rgba(16, 24, 40, 0.06);
-  --exp-shadow-hover: 0 14px 42px rgba(16, 24, 40, 0.12);
+  --exp-border: #e7eaf2;
+  --exp-sep: #eef1f6;
+  --exp-hover: #f5f7fe;
+  --exp-active: #eaf1ff;
+  --exp-accent: #3b82f6;
+  --exp-shadow: 0 8px 24px rgba(16,24,40,0.06);
+  --exp-shadow-hover: 0 14px 42px rgba(16,24,40,0.12);
 }
 [data-theme="dark"]{
   --exp-bg: #0f131a;
   --exp-text: #eef2f6;
   --exp-muted: #aeb6c2;
   --exp-border: #2a3240;
+  --exp-sep: #1c2432;
   --exp-hover: #162031;
   --exp-active: #182642;
   --exp-accent: #60a5fa;
-  --exp-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
-  --exp-shadow-hover: 0 18px 50px rgba(0, 0, 0, 0.65);
+  --exp-shadow: 0 12px 30px rgba(0,0,0,0.55);
+  --exp-shadow-hover: 0 18px 50px rgba(0,0,0,0.65);
 }
 
-/* 패널 자체를 카드처럼 */
-.sidebar.left:has(.explorer){
-  background: transparent;
-  padding: 10px;
-}
+/* 패널을 카드처럼 */
+.sidebar.left:has(.explorer){ background: transparent; padding: 10px; }
 .explorer{
   background: var(--exp-bg);
   border: 1px solid var(--exp-border);
-  border-radius: 18px;
+  border-radius: 20px;
   box-shadow: var(--exp-shadow);
-  padding: 12px 12px 14px;
+  padding: 12px;
   transition: box-shadow 0.18s ease, border-color 0.18s ease;
 }
-.explorer:hover{
-  box-shadow: var(--exp-shadow-hover);
-  border-color: transparent;
-}
+.explorer:hover{ box-shadow: var(--exp-shadow-hover); border-color: transparent; }
 
-/* 상단 버튼(탐색기 토글들) 정리 */
+/* ===== 헤더/토글 정리 ===== */
+
+/* 빈 버튼/내용 없는 버튼 제거 (회색 사각형 방지) */
+.explorer button:empty,
+.explorer button:not(:has(svg, h1, h2, h3, span)){ display: none !important; }
+
+/* 데스크톱/모바일 토글 분리 */
+@media all and not ($mobile){ .explorer button.mobile-explorer  { display: none !important; } }
+@media all and ($mobile)    { .explorer button.desktop-explorer { display: none !important; } }
+
+/* 토글 버튼 자체는 고스트 스타일 */
 button.mobile-explorer,
 button.desktop-explorer{
-  gap: 8px;
-  padding: 8px 10px;
-  border-radius: 10px;
-  color: var(--exp-text);
+  background: transparent; border: 0; padding: 6px 10px; border-radius: 10px;
+  color: var(--exp-text); display: flex; align-items: center; gap: 8px; cursor: pointer;
+  transition: background 0.15s ease;
 }
 button.mobile-explorer:hover,
-button.desktop-explorer:hover{
-  background: var(--exp-hover);
+button.desktop-explorer:hover{ background: var(--exp-hover); }
+
+/* Explorer 안의 제목들: 박스/그림자 제거하고 텍스트만 */
+.explorer h1, .explorer h2, .explorer h3{
+  margin: 0; padding: 0; background: transparent !important; box-shadow: none !important;
+  font-size: 0.95rem; font-weight: 800; letter-spacing: -0.01em; color: var(--exp-text);
 }
 
-/* 목록 영역 */
+/* ===== 목록 영역 ===== */
 .explorer-content{
-  margin-top: 8px;
-  padding-right: 6px;   /* 스크롤 여유 */
-  max-height: calc(100dvh - 160px);
+  list-style: none; margin-top: 8px; padding: 6px 6px 10px;
+  max-height: calc(100dvh - 160px); overflow: auto; border-top: 1px solid var(--exp-sep);
+}
+/* 스크롤바 미세 커스텀 */
+.explorer-content::-webkit-scrollbar{ width: 8px; }
+.explorer-content::-webkit-scrollbar-thumb{ background: var(--exp-border); border-radius: 999px; }
+.explorer-content:hover::-webkit-scrollbar-thumb{ background: color-mix(in srgb, var(--exp-border) 60%, var(--exp-text) 40%); }
+
+/* 기본 불릿/가짜 점 제거 */
+.explorer-content, .explorer-content ul{ list-style: none !important; }
+.explorer-content li::marker, .explorer-content li::before{ content: none !important; }
+
+/* 트리 여닫이 애니메이션(기존 grid-rows 유지) */
+.folder-outer{ display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.28s ease; }
+.folder-outer.open{ grid-template-rows: 1fr; }
+
+/* 하위 목록 인덴트 + 가이드라인 */
+.explorer-content .folder-outer > ul{
+  margin-left: 8px; padding-left: 12px; border-left: 1px solid var(--exp-border);
 }
 
-/* 스크롤바 미세 커스텀(웹킷 계열) */
-.explorer-content::-webkit-scrollbar{
-  width: 8px;
-}
-.explorer-content::-webkit-scrollbar-thumb{
-  background: var(--exp-border);
-  border-radius: 999px;
-}
-.explorer-content:hover::-webkit-scrollbar-thumb{
-  background: color-mix(in srgb, var(--exp-border) 60%, var(--exp-text) 40%);
-}
-
-/* 폴더 헤더(한 줄) */
+/* 폴더 행(한 줄) */
 .folder-container{
-  gap: 6px;
-  padding: 6px 8px;
-  border-radius: 10px;
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 10px; border-radius: 12px;
   transition: background 0.15s ease, color 0.15s ease;
+  user-select: none;
 }
-.folder-container:hover{
-  background: var(--exp-hover);
-}
+.folder-container:hover{ background: var(--exp-hover); }
 
-/* 폴더 아이콘(삼각형/체브론) */
-.folder-icon{
-  width: 18px;
-  height: 18px;
-  color: var(--exp-muted);
-  transition: transform 0.30s ease, color 0.15s ease;
-}
+/* 폴더 아이콘/체브론 */
+.folder-icon{ width: 18px; height: 18px; color: var(--exp-muted); transition: transform 0.30s ease, color 0.15s ease; flex-shrink: 0; }
 .folder-icon:hover{ color: var(--exp-accent); }
+li:has(> .folder-outer:not(.open)) > .folder-container > .folder-icon{ transform: rotate(-90deg); }
 
-/* 접힘 상태에서 화살표 회전은 기존 규칙 유지 */
-
-/* 폴더 라벨/링크 */
+/* 폴더 라벨/버튼 텍스트 */
 .folder-container div > a,
 .folder-container div > button span{
-  color: var(--exp-text);
-  font-weight: 700;
-  letter-spacing: -0.01em;
+  color: var(--exp-text); font-weight: 700; letter-spacing: -0.01em; line-height: 1.4;
 }
 .folder-container div > a:hover{ color: var(--exp-accent); }
 
-/* 서브 목록 인덴트 + 세로 가이드 라인 */
-.explorer-content .folder-outer > ul{
-  margin-left: 6px;
-  padding-left: 12px;
-  border-left: 1px solid var(--exp-border);
-}
-
-/* 파일/노트 링크 한 줄 스타일 */
+/* 파일/노트 링크 — pill 스타일 */
 .explorer-content ul li > a{
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 8px;
-  margin: 2px 0;
-  border-radius: 10px;
-  color: var(--exp-text);
-  opacity: 0.92;
-  text-decoration: none;
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 10px; margin: 2px 0; width: 100%;
+  border-radius: 12px; color: var(--exp-text); opacity: 0.92; text-decoration: none;
   transition: background 0.15s ease, color 0.15s ease, opacity 0.15s ease;
-  position: relative;
-  overflow: hidden;
+  white-space: nowrap; text-overflow: ellipsis; overflow: hidden; position: relative;
 }
-.explorer-content ul li > a:hover{
-  background: var(--exp-hover);
-  opacity: 1;
-}
+.explorer-content ul li > a:hover{ background: var(--exp-hover); opacity: 1; }
 
-/* 활성 링크(좌측 포커스 바 + 색) */
+/* 활성(현재 문서) 강조: 좌측 포커스 바 + 색 */
 .explorer-content ul li > a.active{
-  background: var(--exp-active);
-  color: var(--exp-accent);
-  opacity: 1;
+  background: var(--exp-active); color: var(--exp-accent); opacity: 1;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--exp-accent) 36%, transparent);
 }
 .explorer-content ul li > a.active::before{
-  content: "";
-  position: absolute;
-  left: 6px;
-  top: 18%;
-  bottom: 18%;
-  width: 3px;
-  border-radius: 2px;
-  background: var(--exp-accent);
+  content: ""; position: absolute; left: 6px; top: 22%; bottom: 22%;
+  width: 3px; border-radius: 2px; background: var(--exp-accent);
 }
 
-/* 텍스트가 길 때 줄임표 */
-.explorer-content ul li > a{
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-/* 모바일 패널(네가 가진 slide-in 구조를 식 유지) */
+/* ===== 모바일 튜닝 (네 기존 slide-in 구조 유지) ===== */
 @media all and ($mobile){
-  .explorer{
-    border-radius: 18px;
-    padding: 10px 12px 14px;
-  }
-  .explorer .explorer-content{
-    border-top: 1px solid var(--exp-border);
-  }
+  .sidebar.left:has(.explorer){ padding: 8px; }
+  .explorer{ border-radius: 20px; padding: 10px 12px 14px; }
+  .explorer .explorer-content{ height: calc(100dvh - 140px); }
 }
