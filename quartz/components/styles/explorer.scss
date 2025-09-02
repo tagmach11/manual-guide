@@ -276,332 +276,98 @@ li:has(> .folder-outer:not(.open)) > .folder-container > svg {
    =========================== */
 
 //* Tokens */
-:root{
-  --exp-bg: #ffffff;
-  --exp-text: #0f1116;
-  --exp-muted: #6b7280;
-  --exp-border: #e7eaf2;
-  --exp-sep: #eef1f6;
-  --exp-hover: #f5f7fe;
-  --exp-active: #eaf1ff;
-  --exp-accent: #3b82f6;
-  --exp-shadow: 0 8px 24px rgba(16,24,40,0.06);
-  --exp-shadow-hover: 0 14px 42px rgba(16,24,40,0.12);
-}
-[data-theme="dark"]{
-  --exp-bg: #0f131a;
-  --exp-text: #eef2f6;
-  --exp-muted: #aeb6c2;
-  --exp-border: #2a3240;
-  --exp-sep: #1c2432;
-  --exp-hover: #162031;
-  --exp-active: #182642;
-  --exp-accent: #60a5fa;
-  --exp-shadow: 0 12px 30px rgba(0,0,0,0.55);
-  --exp-shadow-hover: 0 18px 50px rgba(0,0,0,0.65);
-}
-
-/* 페이지 바깥 가로 스크롤 방지 */
-html, body, .page, #quartz-body { overflow-x: hidden !important; }
-
-/* 패널을 카드처럼 */
-.sidebar.left:has(.explorer){ background: transparent; padding: 10px; }
+/* ========= Explorer v2 (clean) ========= */
+/* 토큰(색/크기) */
 .explorer{
-  background: var(--exp-bg);
-  border: 1px solid var(--exp-border);
-  border-radius: 20px;
-  box-shadow: var(--exp-shadow);
-  padding: 12px;
-  transition: box-shadow 0.18s ease, border-color 0.18s ease;
-  overflow: visible; /* 외곽에서 스크롤 만들지 않음 */
+  --x-bg:#fff; --x-text:#0f1116; --x-muted:#6b7280;
+  --x-border:#e7eaf2; --x-sep:#eef1f6; --x-hover:#f5f7fe;
+  --x-active:#eaf1ff; --x-accent:#3b82f6;
+  --x-row:44px;          /* 1행 높이 */
+  --x-max-rows:6;        /* 데스크톱에서 보이는 행 수 */
+  --x-radius:18px; --x-shadow:0 8px 24px rgba(16,24,40,.06);
 }
-.explorer:hover{ box-shadow: var(--exp-shadow-hover); border-color: transparent; }
-
-/* ===== 헤더/토글 정리 ===== */
-
-/* 빈 버튼/내용 없는 버튼 제거 (회색 사각형 방지) */
-.explorer button:empty,
-.explorer button:not(:has(svg, h1, h2, h3, span)){ display: none !important; }
-
-/* 데스크톱/모바일 토글 분리 */
-@media all and not ($mobile){ .explorer button.mobile-explorer  { display: none !important; } }
-@media all and ($mobile)    { .explorer button.desktop-explorer { display: none !important; } }
-
-/* 토글 버튼 고스트 스타일 */
-button.mobile-explorer,
-button.desktop-explorer{
-  background: transparent; border: 0; padding: 6px 10px; border-radius: 10px;
-  color: var(--exp-text); display: flex; align-items: center; gap: 8px; cursor: pointer;
-  transition: background 0.15s ease;
-}
-button.mobile-explorer:hover,
-button.desktop-explorer:hover{ background: var(--exp-hover); }
-
-/* Explorer 안의 제목: 텍스트만 */
-.explorer h1, .explorer h2, .explorer h3{
-  margin: 0; padding: 0; background: transparent !important; box-shadow: none !important;
-  font-size: 0.95rem; font-weight: 800; letter-spacing: -0.01em; color: var(--exp-text);
+[data-theme="dark"] .explorer{
+  --x-bg:#0f131a; --x-text:#eef2f6; --x-muted:#aeb6c2;
+  --x-border:#2a3240; --x-sep:#1c2432; --x-hover:#162031;
+  --x-active:#182642; --x-accent:#60a5fa;
+  --x-shadow:0 12px 30px rgba(0,0,0,.55);
 }
 
-/* ===== 목록 영역 ===== */
+/* 패널 */
+.sidebar.left:has(.explorer){ background:transparent; padding:12px; }
+.explorer{
+  background:var(--x-bg);
+  color:var(--x-text);
+  border:1px solid var(--x-border);
+  border-radius:var(--x-radius);
+  box-shadow:var(--x-shadow);
+  padding:12px;
+  overflow:visible;         /* 바깥에서 스크롤 만들지 않음 */
+}
+
+/* 헤더(Quartz 기본 버튼 활용) */
+.explorer h1,.explorer h2,.explorer h3{ margin:0; font-size:.95rem; font-weight:800; }
+button.mobile-explorer, button.desktop-explorer{
+  background:transparent; border:0; padding:8px 12px; border-radius:10px;
+  display:flex; align-items:center; gap:8px; cursor:pointer; color:inherit;
+}
+button.mobile-explorer:hover, button.desktop-explorer:hover{ background:var(--x-hover); }
+
+/* 목록 */
 .explorer-content{
-  list-style: none;
-  margin-top: 8px;
-  padding: 6px 6px 10px;
-  max-height: calc(100dvh - 160px);
-  box-sizing: border-box;      /* padding 포함 폭 계산 */
-  overflow-y: auto !important; /* 세로만 스크롤 */
-  overflow-x: hidden !important; /* 가로 스크롤 차단 */
-  border-top: 1px solid var(--exp-sep);
+  list-style:none; margin-top:8px; padding:6px 6px 10px;
+  border-top:1px solid var(--x-sep);
+  box-sizing:border-box;
+  overflow-y:auto;           /* 세로만 */
+  overflow-x:hidden;         /* 가로 금지 */
+  max-height: calc(var(--x-row) * var(--x-max-rows) + 24px);  /* ≒ 6개 */
+}
+.explorer-content, .explorer-content ul{ list-style:none; }
+.explorer-content li::marker, .explorer-content li::before{ content:none; }
+
+/* 트리 토글 애니메이션 */
+.folder-outer{ display:grid; grid-template-rows:0fr; transition:grid-template-rows .25s ease; }
+.folder-outer.open{ grid-template-rows:1fr; }
+.explorer-content .folder-outer > ul{ margin-left:8px; padding-left:12px; border-left:1px solid var(--x-border); }
+
+/* 폴더/파일 라인 */
+.folder-container{ display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:12px; user-select:none; }
+.folder-container:hover{ background:var(--x-hover); }
+.folder-icon{ width:18px; height:18px; color:var(--x-muted); transition:transform .25s ease, color .15s ease; flex-shrink:0; }
+li:has(> .folder-outer:not(.open)) > .folder-container > .folder-icon{ transform:rotate(-90deg); }
+.folder-container a, .folder-container button span{ color:inherit; font-weight:700; }
+
+/* 파일 링크 */
+.explorer-content li > a{
+  display:flex; align-items:center; gap:8px;
+  padding:8px 10px; margin:2px 0; width:100%;
+  border-radius:12px; text-decoration:none; color:inherit; opacity:.92;
+  transition:background .15s ease, color .15s ease, opacity .15s ease;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0;
+}
+.explorer-content li > a:hover{ background:var(--x-hover); opacity:1; }
+.explorer-content li > a.active{
+  background:var(--x-active); color:var(--x-accent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--x-accent) 36%, transparent);
+  position:relative;
+}
+.explorer-content li > a.active::before{
+  content:""; position:absolute; left:6px; top:22%; bottom:22%; width:3px; border-radius:2px; background:var(--x-accent);
 }
 
-/* 기본 불릿/가짜 점 제거 */
-.explorer-content, .explorer-content ul{ list-style: none !important; }
-.explorer-content li::marker, .explorer-content li::before{ content: none !important; }
-
-/* 트리 여닫이 애니메이션 */
-.folder-outer{ display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.28s ease; }
-.folder-outer.open{ grid-template-rows: 1fr; }
-
-/* 하위 목록 인덴트 + 가이드라인 */
-.explorer-content .folder-outer > ul{
-  margin-left: 8px; padding-left: 12px; border-left: 1px solid var(--exp-border);
-}
-
-/* 폴더 행 */
-.folder-container{
-  display: flex; align-items: center; gap: 8px;
-  padding: 8px 10px; border-radius: 12px;
-  transition: background 0.15s ease, color 0.15s ease;
-  user-select: none;
-}
-.folder-container:hover{ background: var(--exp-hover); }
-
-/* 폴더 아이콘/체브론 */
-.folder-icon{ width: 18px; height: 18px; color: var(--exp-muted); transition: transform 0.30s ease, color 0.15s ease; flex-shrink: 0; }
-.folder-icon:hover{ color: var(--exp-accent); }
-li:has(> .folder-outer:not(.open)) > .folder-container > .folder-icon{ transform: rotate(-90deg); }
-
-/* 폴더 라벨/버튼 텍스트 */
-.folder-container div > a,
-.folder-container div > button span{
-  color: var(--exp-text); font-weight: 700; letter-spacing: -0.01em; line-height: 1.4;
-}
-.folder-container div > a:hover{ color: var(--exp-accent); }
-
-/* 파일/노트 링크 — pill 스타일 */
-.explorer-content ul li > a{
-  display: flex; align-items: center; gap: 8px;
-  padding: 8px 10px; margin: 2px 0; width: 100%;
-  border-radius: 12px; color: var(--exp-text); opacity: 0.92; text-decoration: none;
-  transition: background 0.15s ease, color 0.15s ease, opacity 0.15s ease;
-  white-space: nowrap; text-overflow: ellipsis; overflow: hidden; position: relative;
-  min-width: 0; /* 긴 제목이 폭을 밀지 않게 */
-}
-.explorer-content ul li > a:hover{ background: var(--exp-hover); opacity: 1; }
-
-/* 활성(현재 문서) 강조 */
-.explorer-content ul li > a.active{
-  background: var(--exp-active); color: var(--exp-accent); opacity: 1;
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--exp-accent) 36%, transparent);
-}
-.explorer-content ul li > a.active::before{
-  content: ""; position: absolute; left: 6px; top: 22%; bottom: 22%;
-  width: 3px; border-radius: 2px; background: var(--exp-accent);
-}
-
-/* ============== FIX 1: 본문 밀던 규칙 완전 무력화 ============== */
-@media all and ($mobile){
-  .page > #quartz-body,
-  .page > #quartz-body.lock-scroll{
-    transform: none !important;
-  }
-  .page > #quartz-body > *:not(.sidebar.left),
-  .page > #quartz-body.lock-scroll > *:not(.sidebar.left){
-    transform: none !important;
-    transition: none !important;
-  }
-  .page > #quartz-body.lock-scroll{ overflow: hidden !important; }
-}
-
-/* ============== FIX 2: 패널만 드로어로 (Apple-like) ============== */
-@media all and ($mobile){
-  .explorer{ position: relative; }
-
+/* 모바일: 드로어(오버레이) — .collapsed 기준 */
+@media (max-width: 900px){
+  .explorer{ position:relative; }
   .explorer > .explorer-content{
-    position: fixed;
-    top: 0; left: 0;
-    width: min(86vw, 360px);
-    height: 100dvh; max-height: 100dvh;
-    margin: 0; padding: 4rem 12px 1.5rem;
-    background: var(--exp-bg);
-    border-right: 1px solid var(--exp-border);
-    box-shadow: 0 18px 50px rgba(0,0,0,0.35);
-    transform: translateX(-100%);
-    visibility: hidden;
-    transition: transform 200ms ease, visibility 200ms ease;
-    z-index: 120;
-
-    box-sizing: border-box;     /* ← 추가: 패딩 포함 폭 계산 */
-    overflow-y: auto;           /* ← 세로만 스크롤 */
-    overflow-x: hidden;         /* ← 가로 스크롤 차단 */
+    position:fixed; top:0; left:0; z-index:120;
+    width:min(86vw, 360px);
+    height:100dvh; max-height:100dvh;
+    margin:0; padding:4rem 12px 1.5rem;
+    background:var(--x-bg); border-right:1px solid var(--x-border);
+    box-shadow:0 18px 50px rgba(0,0,0,.35);
+    display:none;                     /* 기본 닫힘 */
+    overflow-y:auto; overflow-x:hidden; box-sizing:border-box;
   }
-
-  .explorer:not(.collapsed) > .explorer-content{ transform: translateX(0); visibility: visible; }
-  .explorer.collapsed > .explorer-content{ transform: translateX(-100%); visibility: hidden; }
-
-  .explorer::before{
-    content:""; position: fixed; inset: 0;
-    background: rgba(0,0,0,0.35); opacity: 0; pointer-events: none;
-    transition: opacity 180ms ease; z-index:110;
-  }
-  .explorer:not(.collapsed)::before{ opacity: 1; pointer-events: auto; }
-
-  .explorer .mobile-explorer,
-  .explorer .desktop-explorer{ position: relative; z-index: 130; }
+  .explorer:not(.collapsed) > .explorer-content{ display:block !important; }
+  .explorer.collapsed        > .explorer-content{ display:none  !important; }
 }
-
-/* ============== FIX 3: 남는 점·빈 버튼/가로밀림 방지 ============== */
-.explorer-content, .explorer-content ul{ list-style: none !important; }
-.explorer-content li::marker, .explorer-content li::before{ content: none !important; }
-
-.explorer button:empty,
-.explorer button:not(:has(svg, h1, h2, h3, span)){ display: none !important; }
-
-@media all and not ($mobile){ .explorer button.mobile-explorer  { display: none !important; } }
-@media all and ($mobile)    { .explorer button.desktop-explorer { display: none !important; } }
-
-/* 긴 텍스트가 폭을 밀지 않도록 전역 안전장치 */
-.explorer-content ul,
-.explorer-content li,
-.explorer-content a { min-width: 0; }
-.explorer-content a { word-break: break-word; }
-
-/* =========================
-   Explorer Drawer — 안정화 패치
-   ========================= */
-
-/* 1) 토글 상태 폭넓게 인식(여닫기 복구) */
-@media all and ($mobile){
-  /* 열림 */
-  .explorer:not(.collapsed) > .explorer-content,
-  .explorer.open > .explorer-content,
-  .explorer.is-open > .explorer-content,
-  .explorer[data-collapsed="false"] > .explorer-content {
-    transform: translateX(0) !important;
-    visibility: visible !important;
-  }
-  /* 닫힘 */
-  .explorer.collapsed > .explorer-content,
-  .explorer.closed > .explorer-content,
-  .explorer.is-closed > .explorer-content,
-  .explorer[data-collapsed="true"] > .explorer-content {
-    transform: translateX(-100%) !important;
-    visibility: hidden !important;
-  }
-
-  /* 오버레이가 버튼 클릭 막지 않도록 (문제 되면 끄기) */
-  .explorer::before{ pointer-events: none; }  /* 필요시 주석 해제해서 완전 제거: display:none */
-}
-
-/* 2) 세로 스크롤만 — 가로 스크롤 차단 + 높이 확실히 */
-html, body, .page, #quartz-body { overflow-x: hidden !important; }
-
-.explorer { overflow: visible !important; } /* 외곽은 스크롤 만들지 않음 */
-
-.explorer-content{
-  box-sizing: border-box;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  height: auto;                 /* 데스크톱에서 내부 스크롤 생기도록 */
-  max-height: calc(100dvh - 160px); /* 필요 시 조절 */
-}
-
-/* 모바일 드로어 레이어도 세로만 스크롤 */
-@media all and ($mobile){
-  .explorer > .explorer-content{
-    box-sizing: border-box;
-    width: min(86vw, 360px);
-    max-width: 100vw;
-    height: 100dvh;
-    max-height: 100dvh;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    padding-right: 12px;        /* 스크롤바 공간 보호 */
-  }
-}
-
-/* 3) 긴 텍스트가 폭을 밀어내지 못하게(가로 스크롤 방지) */
-.explorer-content ul,
-.explorer-content li,
-.explorer-content a { min-width: 0; }
-.explorer-content a { word-break: break-word; }
-
-/* 4) 남아 있는 가짜 점, 빈 버튼 방지(재확인) */
-.explorer-content, .explorer-content ul { list-style: none !important; }
-.explorer-content li::marker, .explorer-content li::before { content: none !important; }
-.explorer button:empty,
-.explorer button:not(:has(svg, h1, h2, h3, span)) { display: none !important; }
-
-/* =========================================================
-   EXPLORER — 안정화 패치 (열고/닫기, 6개 제한, 가로 스크롤 제거)
-   ========================================================= */
-
-/* 0) 전역 가로 스크롤 완전 차단 */
-html, body, .page, #quartz-body { overflow-x: hidden !important; }
-
-/* 1) 데스크톱: 목록은 최대 6행 정도만 보이고 세로 스크롤 */
-:root { --exp-row-h: 44px; } /* 항목 한 줄 높이(필요하면 조정) */
-.explorer-content{
-  box-sizing: border-box;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  height: auto;
-  max-height: calc(6 * var(--exp-row-h) + 24px); /* ≒ 6개 + 여백 */
-}
-
-/* 긴 제목이 폭을 밀어내지 않도록 */
-.explorer-content ul,
-.explorer-content li,
-.explorer-content a { min-width: 0; }
-.explorer-content a { word-break: break-word; }
-
-/* 2) 모바일 드로어 — transform 기반 애니메이션 대신 display 토글로 단순화 */
-/* === REPLACE: 기존 @media ($mobile) 블록의 .explorer > .explorer-content 부분을 이걸로 교체 === */
-@media all and ($mobile){
-  .explorer { position: relative; }
-
-  .explorer > .explorer-content{
-    position: fixed;
-    top: 0; left: 0;
-    width: min(86vw, 360px);
-    height: 100dvh; max-height: 100dvh;
-    margin: 0; padding: 4rem 12px 1.5rem;
-    background: var(--exp-bg);
-    border-right: 1px solid var(--exp-border);
-    box-shadow: 0 18px 50px rgba(0,0,0,.35);
-
-    box-sizing: border-box;
-    overflow-y: auto !important;   /* 세로 스크롤만 */
-    overflow-x: hidden !important; /* 가로 스크롤 차단 */
-
-    display: none;                 /* 기본은 닫힘 */
-    z-index: 120;
-  }
-
-  /* 열림/닫힘 — 클래스 하나로 명확하게 */
-  .explorer:not(.collapsed) > .explorer-content { display: block !important; }
-  .explorer.collapsed        > .explorer-content { display: none  !important; }
-
-  /* 배경 스크림 제거(버튼 클릭 방해 방지) */
-  .explorer::before { display: none !important; }
-
-  /* 모바일에선 높이 제한 풀고 전체 높이 사용 */
-  .explorer:not(.collapsed) > .explorer-content { max-height: 100dvh; }
-}
-
-/* 3) 남아 있는 가짜 점/빈 버튼 재확인 */
-.explorer-content, .explorer-content ul { list-style: none !important; }
-.explorer-content li::marker, .explorer-content li::before { content: none !important; }
-.explorer button:empty,
-.explorer button:not(:has(svg, h1, h2, h3, span)) { display: none !important; }
