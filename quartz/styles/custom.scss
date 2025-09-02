@@ -1,5 +1,5 @@
 @use "./base.scss";
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Shadows+Into+Light&display=swap');
+
 /* =========================
    Quartz 4 Custom SCSS (FINAL)
    ========================= */
@@ -801,27 +801,3 @@ html[data-theme="dark"]{
 
 
 
-
-
-/*글꼴이에용*/
-/* 1. 구글 폰트 불러오기 */
-
-
-/* 2. 전역 변수 설정 */
-:root {
-  --body-font: 'Shadows Into Light', cursive; /* 손글씨 느낌 */
-  --header-font: 'Orbitron', sans-serif;      /* SF 스타일 */
-}
-
-/* 3. 본문 */
-body {
-  font-family: var(--body-font);
-  font-size: 1rem;
-  line-height: 1.7;
-}
-
-/* 4. 제목 */
-h1, h2, h3, h4, h5 {
-  font-family: var(--header-font);
-  letter-spacing: 0.5px;
-}
