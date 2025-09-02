@@ -270,221 +270,113 @@ li:has(> .folder-outer:not(.open)) > .folder-container > svg {
 }
 */
 
-/* ===========================
-   Explorer — Apple-like Neo Style
-   (붙여넣기만 하면 작동)
-   =========================== */
+/* ========== Explorer — Clean Minimal ========== */
 
-//* Tokens */
-/* ========= Explorer v2 (clean) ========= */
-/* 토큰(색/크기) */
-.explorer{
-  --x-bg:#fff; --x-text:#0f1116; --x-muted:#6b7280;
-  --x-border:#e7eaf2; --x-sep:#eef1f6; --x-hover:#f5f7fe;
-  --x-active:#eaf1ff; --x-accent:#3b82f6;
-  --x-row:44px;          /* 1행 높이 */
-  --x-max-rows:6;        /* 데스크톱에서 보이는 행 수 */
-  --x-radius:18px; --x-shadow:0 8px 24px rgba(16,24,40,.06);
-}
-[data-theme="dark"] .explorer{
-  --x-bg:#0f131a; --x-text:#eef2f6; --x-muted:#aeb6c2;
-  --x-border:#2a3240; --x-sep:#1c2432; --x-hover:#162031;
-  --x-active:#182642; --x-accent:#60a5fa;
-  --x-shadow:0 12px 30px rgba(0,0,0,.55);
-}
+/* 가로 스크롤 완전 차단 */
+html, body, .page, #quartz-body { overflow-x: hidden !important; }
 
-/* 패널 */
-.sidebar.left:has(.explorer){ background:transparent; padding:12px; }
-.explorer{
+/* 보여줄 줄 수 조절 (원하면 숫자만 바꾸세요) */
+:root { --x-row: 44px; --x-visible: 6; }
+
+/* 바깥 패널은 스크롤 안 만듦 */
+.sidebar.left { overflow: visible !important; }
+.sidebar.left .explorer{
+  --x-bg:#fff; --x-text:#0f1116;
+  --x-border:#e7eaf2; --x-sep:#eef1f6;
+  --x-hover:#f5f7fe; --x-active:#eaf1ff; --x-accent:#2563eb;
+
   background:var(--x-bg);
   color:var(--x-text);
   border:1px solid var(--x-border);
-  border-radius:var(--x-radius);
-  box-shadow:var(--x-shadow);
-  padding:12px;
-  overflow:visible;         /* 바깥에서 스크롤 만들지 않음 */
+  border-radius:18px;
+  padding:10px;
+  box-shadow:0 8px 24px rgba(16,24,40,.06);
+  overflow: hidden !important; /* 바깥은 스크롤 없음 */
 }
 
-/* 헤더(Quartz 기본 버튼 활용) */
-.explorer h1,.explorer h2,.explorer h3{ margin:0; font-size:.95rem; font-weight:800; }
-button.mobile-explorer, button.desktop-explorer{
-  background:transparent; border:0; padding:8px 12px; border-radius:10px;
-  display:flex; align-items:center; gap:8px; cursor:pointer; color:inherit;
+/* 다크 */
+[data-theme="dark"] .sidebar.left .explorer{
+  --x-bg:#0f131a; --x-text:#eef2f6;
+  --x-border:#2a3240; --x-sep:#1c2432;
+  --x-hover:#162031; --x-active:#182642; --x-accent:#60a5fa;
 }
-button.mobile-explorer:hover, button.desktop-explorer:hover{ background:var(--x-hover); }
 
-/* 목록 */
-.explorer-content{
-  list-style:none; margin-top:8px; padding:6px 6px 10px;
+/* 헤더 버튼 */
+.sidebar.left .explorer .mobile-explorer,
+.sidebar.left .explorer .desktop-explorer{
+  background:transparent !important; border:0 !important;
+  padding:8px 12px !important; border-radius:10px;
+  display:inline-flex; align-items:center; gap:8px; color:inherit; cursor:pointer;
+}
+.sidebar.left .explorer button:hover{ background:rgba(37,99,235,.08); }
+
+/* 링크 초기화(흐릿/밑줄 제거) */
+.sidebar.left .explorer a{
+  text-decoration:none !important; background:transparent !important;
+  box-shadow:none !important; border:0 !important; filter:none !important;
+  opacity:1 !important; color:inherit !important;
+}
+
+/* 목록 — **안쪽만** 세로 스크롤, 가로는 clip 로 완전 차단 */
+.sidebar.left .explorer .explorer-content{
+  margin-top:8px; padding:6px 6px 10px;
   border-top:1px solid var(--x-sep);
   box-sizing:border-box;
-  overflow-y:auto;           /* 세로만 */
-  overflow-x:hidden;         /* 가로 금지 */
-  max-height: calc(var(--x-row) * var(--x-max-rows) + 24px);  /* ≒ 6개 */
+  overflow-y:auto !important;
+  overflow-x:clip !important;        /* <- 가로 스크롤 완전 차단 */
+  height:auto;
+  max-height: calc(var(--x-row) * var(--x-visible) + 8px);
+  width:100% !important; max-width:100% !important;
 }
-.explorer-content, .explorer-content ul{ list-style:none; }
-.explorer-content li::marker, .explorer-content li::before{ content:none; }
+.sidebar.left .explorer .explorer-content *{ max-width:100%; } /* 내부 요소가 폭 밀지 못하게 */
 
-/* 트리 토글 애니메이션 */
-.folder-outer{ display:grid; grid-template-rows:0fr; transition:grid-template-rows .25s ease; }
-.folder-outer.open{ grid-template-rows:1fr; }
-.explorer-content .folder-outer > ul{ margin-left:8px; padding-left:12px; border-left:1px solid var(--x-border); }
+/* 가짜 불릿 제거 */
+.sidebar.left .explorer .explorer-content,
+.sidebar.left .explorer .explorer-content ul{ list-style:none !important; }
+.sidebar.left .explorer .explorer-content li::marker,
+.sidebar.left .explorer .explorer-content li::before{ content:none !important; }
 
-/* 폴더/파일 라인 */
-.folder-container{ display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:12px; user-select:none; }
-.folder-container:hover{ background:var(--x-hover); }
-.folder-icon{ width:18px; height:18px; color:var(--x-muted); transition:transform .25s ease, color .15s ease; flex-shrink:0; }
-li:has(> .folder-outer:not(.open)) > .folder-container > .folder-icon{ transform:rotate(-90deg); }
-.folder-container a, .folder-container button span{ color:inherit; font-weight:700; }
+/* 트리 여닫이 */
+.sidebar.left .explorer .folder-outer{ display:grid; grid-template-rows:0fr; transition:grid-template-rows .25s ease; }
+.sidebar.left .explorer .folder-outer.open{ grid-template-rows:1fr; }
+.sidebar.left .explorer .folder-outer > ul{ margin-left:8px; padding-left:12px; border-left:1px solid var(--x-border); }
+
+/* 라인 스타일 */
+.sidebar.left .explorer .folder-container{
+  display:flex; align-items:center; gap:8px;
+  padding:8px 10px; border-radius:12px; user-select:none;
+}
+.sidebar.left .explorer .folder-container:hover{ background:var(--x-hover); }
+.sidebar.left .explorer .folder-icon{ width:18px; height:18px; color:#6b7280; transition:transform .25s ease; flex-shrink:0; }
+.sidebar.left li:has(> .folder-outer:not(.open)) > .folder-container > .folder-icon{ transform:rotate(-90deg); }
 
 /* 파일 링크 */
-.explorer-content li > a{
+.sidebar.left .explorer .explorer-content li > a{
   display:flex; align-items:center; gap:8px;
   padding:8px 10px; margin:2px 0; width:100%;
-  border-radius:12px; text-decoration:none; color:inherit; opacity:.92;
-  transition:background .15s ease, color .15s ease, opacity .15s ease;
-  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0;
+  border-radius:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0;
 }
-.explorer-content li > a:hover{ background:var(--x-hover); opacity:1; }
-.explorer-content li > a.active{
-  background:var(--x-active); color:var(--x-accent);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--x-accent) 36%, transparent);
-  position:relative;
+.sidebar.left .explorer .explorer-content li > a:hover{ background:var(--x-hover); }
+.sidebar.left .explorer .explorer-content li > a.active{
+  background:var(--x-active); color:var(--x-accent) !important;
+  position:relative; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--x-accent) 36%, transparent);
 }
-.explorer-content li > a.active::before{
+.sidebar.left .explorer .explorer-content li > a.active::before{
   content:""; position:absolute; left:6px; top:22%; bottom:22%; width:3px; border-radius:2px; background:var(--x-accent);
 }
 
-/* 모바일: 드로어(오버레이) — .collapsed 기준 */
+/* 모바일: 기본은 Quartz 토글(.collapsed) 사용 – 별도 JS 없어도 동작 */
 @media (max-width: 900px){
-  .explorer{ position:relative; }
-  .explorer > .explorer-content{
+  .sidebar.left .explorer { position:relative; }
+  .sidebar.left .explorer .explorer-content{
     position:fixed; top:0; left:0; z-index:120;
-    width:min(86vw, 360px);
-    height:100dvh; max-height:100dvh;
+    width:min(86vw, 360px); height:100dvh; max-height:100dvh;
     margin:0; padding:4rem 12px 1.5rem;
     background:var(--x-bg); border-right:1px solid var(--x-border);
     box-shadow:0 18px 50px rgba(0,0,0,.35);
-    display:none;                     /* 기본 닫힘 */
-    overflow-y:auto; overflow-x:hidden; box-sizing:border-box;
+    display:none;                           /* 기본 닫힘 */
+    overflow-y:auto !important; overflow-x:clip !important;
   }
-  .explorer:not(.collapsed) > .explorer-content{ display:block !important; }
-  .explorer.collapsed        > .explorer-content{ display:none  !important; }
+  .sidebar.left .explorer:not(.collapsed) > .explorer-content{ display:block !important; }
+  .sidebar.left .explorer.collapsed        > .explorer-content{ display:none  !important; }
 }
-body { overflow-x: hidden; }
-
-/* ===== Explorer FIX v3: 토글 복구 + 색상 정상 + 세로스크롤만 ===== */
-
-/* 전역 가로 스크롤 방지 */
-html, body, .page, #quartz-body { overflow-x: hidden !important; }
-
-/* 보기 개수 제어(필요시 숫자만 바꾸면 됨) */
-:root { --exp-row-h: 42px; --exp-visible-rows: 7; } /* 7줄만 보이게 */
-
-.sidebar.left .explorer { 
-  background: var(--exp-bg, #fff);
-  color: var(--exp-text, #0f1116);
-  border: 1px solid var(--exp-border, #e7eaf2);
-  border-radius: 18px;
-  padding: 10px;
-  box-shadow: 0 8px 24px rgba(16,24,40,.06);
-  overflow: hidden !important;      /* 바깥은 스크롤 없음 */
-}
-
-/* 헤더 버튼(Explorer) */
-.sidebar.left .explorer button.mobile-explorer,
-.sidebar.left .explorer button.desktop-explorer{
-  background: transparent !important;
-  border: 0 !important;
-  padding: 8px 12px !important;
-  border-radius: 10px;
-  color: inherit !important;
-  display: inline-flex; align-items: center; gap: 8px;
-  cursor: pointer;
-}
-.sidebar.left .explorer button:hover{ background: rgba(59,130,246,.08); }
-
-/* 링크/텍스트가 희미해지는 테마 규칙들 초기화 */
-.sidebar.left .explorer a{
-  text-decoration: none !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  border: 0 !important;
-  filter: none !important;
-  opacity: 1 !important;
-  color: inherit !important;
-}
-
-/* 목록 영역: 세로만 스크롤, 가로는 강제 차단 */
-.sidebar.left .explorer .explorer-content{
-  margin-top: 8px; padding: 6px 6px 10px;
-  border-top: 1px solid var(--exp-sep, #eef1f6);
-  box-sizing: border-box;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  height: auto;
-  max-height: calc(var(--exp-row-h) * var(--exp-visible-rows) + 20px);
-  max-width: 100% !important;
-  width: 100% !important;
-  scrollbar-gutter: stable both-edges; /* 가로 흔들림 방지 */
-}
-
-/* 가짜 불릿/점 제거 */
-.sidebar.left .explorer .explorer-content,
-.sidebar.left .explorer .explorer-content ul{ list-style: none !important; }
-.sidebar.left .explorer .explorer-content li::marker,
-.sidebar.left .explorer .explorer-content li::before{ content: none !important; }
-
-/* 폴더/파일 줄 */
-.sidebar.left .explorer .folder-container{
-  display:flex; align-items:center; gap:8px;
-  padding: 8px 10px; border-radius: 12px;
-}
-.sidebar.left .explorer .folder-container:hover{ background: rgba(59,130,246,.08); }
-.sidebar.left .explorer .folder-icon{ width:18px; height:18px; color:#6b7280; transition: transform .25s ease; flex-shrink:0; }
-.sidebar.left li:has(> .folder-outer:not(.open)) > .folder-container > .folder-icon{ transform: rotate(-90deg); }
-
-/* 하위 목록 인덴트 */
-.sidebar.left .explorer .folder-outer{ display:grid; grid-template-rows:0fr; transition:grid-template-rows .25s ease; }
-.sidebar.left .explorer .folder-outer.open{ grid-template-rows:1fr; }
-.sidebar.left .explorer .folder-outer > ul{ margin-left:8px; padding-left:12px; border-left:1px solid #e7eaf2; }
-
-/* 파일 링크 아이템 */
-.sidebar.left .explorer .explorer-content li > a{
-  display:flex; align-items:center; gap:8px;
-  padding: 8px 10px; margin: 2px 0; width: 100%;
-  border-radius: 12px;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width:0;
-}
-.sidebar.left .explorer .explorer-content li > a:hover{ background: rgba(59,130,246,.08); }
-.sidebar.left .explorer .explorer-content li > a.active{
-  background: rgba(59,130,246,.12);
-  color: #2563eb !important;
-  position: relative;
-  box-shadow: inset 0 0 0 1px rgba(37,99,235,.25);
-}
-.sidebar.left .explorer .explorer-content li > a.active::before{
-  content:""; position:absolute; left:6px; top:22%; bottom:22%;
-  width:3px; border-radius:2px; background:#2563eb;
-}
-
-/* —— 모바일: 슬라이드 드로어 (display 토글) —— */
-@media (max-width: 900px){
-  .sidebar.left .explorer { position: relative; }
-
-  .sidebar.left .explorer .explorer-content{
-    position: fixed; inset: 0 auto 0 0;
-    width: min(86vw, 360px);
-    height: 100dvh; max-height: 100dvh;
-    background: var(--exp-bg, #fff);
-    border-right: 1px solid var(--exp-border, #e7eaf2);
-    box-shadow: 0 18px 50px rgba(0,0,0,.35);
-    padding: 4rem 12px 1.5rem;
-    display: none; /* 기본 닫힘 */
-  }
-  .sidebar.left .explorer.is-open > .explorer-content{ display:block !important; }
-}
-
-/* 빈 버튼 제거(회색 네모 방지) */
-.sidebar.left .explorer button:empty,
-.sidebar.left .explorer button:not(:has(svg, h1, h2, h3, span)){ display:none !important; }
