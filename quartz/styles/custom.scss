@@ -1,5 +1,5 @@
 @use "./base.scss";
-
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Shadows+Into+Light&display=swap');
 /* =========================
    Quartz 4 Custom SCSS (FINAL)
    ========================= */
@@ -19,7 +19,7 @@ $shadow: 0 10px 30px rgba(16, 24, 40, .08);
   border: 2px solid currentColor;
   text-decoration: none;
   margin-right: 10px;
-  transition: transform .12s ease, opacity .12s ease;
+  transition: transform 0.12s ease, opacity 0.12s ease;
   &:hover { transform: translateY(-1px); }
   &.primary { background: $primary; color: #fff; border-color: transparent; }
 }
@@ -47,7 +47,7 @@ $shadow: 0 10px 30px rgba(16, 24, 40, .08);
       margin: .1em 0 .3em;
       font-weight: 800;
     }
-    p { margin: .3em 0 1em; opacity: .9; }
+    p { margin: .3em 0 1em; opacity: 0.9; }
 
     .hero-img {
       width: 100%;
@@ -69,7 +69,7 @@ $shadow: 0 10px 30px rgba(16, 24, 40, .08);
     background: $accent;
     border-radius: 42% 58% 40% 60% / 60% 40% 60% 40%;
     filter: blur(2px);
-    opacity: .7;
+    opacity: 0.7;
     z-index: 0;
   }
 }
@@ -417,7 +417,7 @@ html[data-theme="dark"] {
   box-shadow: 0 6px 18px rgba(0,0,0,.22);
 }
 .pill-cards .legend .title{ font-weight:800; font-size:.95rem; }
-.pill-cards .legend .subtitle{ margin-top:4px; font-size:.82rem; opacity:.95; }
+.pill-cards .legend .subtitle{ margin-top:4px; font-size:.82rem; opacity:0.95; }
 
 /* 제목이 두 줄이 되어도 카드 모양 유지 */
 .pill-cards .legend .title, .pill-cards .legend .subtitle{
@@ -613,7 +613,7 @@ html[data-theme="dark"]{
   color:inherit; text-decoration:none; font-weight:700; font-size:.98rem;
   transition:color .15s ease, text-decoration-color .15s ease;
 }
-.neo-links a::after{ content:"→"; opacity:.65; transition:transform .15s ease, opacity .15s ease, color .15s ease; }
+.neo-links a::after{ content:"→"; opacity:0.65; transition:transform .15s ease, opacity 0.15s ease, color .15s ease; }
 .neo-links a:hover,
 .neo-links a:focus-visible{
   color:var(--neo-blue);
@@ -623,7 +623,7 @@ html[data-theme="dark"]{
 .neo-links a:hover::after,
 .neo-links a:focus-visible::after{
   transform:translateX(2px);
-  opacity:.95;
+  opacity:0.95;
   color:var(--neo-blue);
 }
 
@@ -690,9 +690,9 @@ html[data-theme="dark"]{
 [data-theme="dark"] .neo-icon svg { stroke: var(--neo-icon-stroke); }
 
 /* 리스트 화살표도 파란색으로 동기화 */
-.neo-cards .neo-links a::after { content: ""; opacity: .75; transition: transform .15s ease, opacity .15s ease, color .15s ease; }
+.neo-cards .neo-links a::after { content: ""; opacity: 0.75; transition: transform .15s ease, opacity 0.15s ease, color .15s ease; }
 .neo-cards .neo-links a:hover::after,
-.neo-cards .neo-links a:focus-visible::after { transform: translateX(2px); opacity: .95; color: var(--neo-blue); }
+.neo-cards .neo-links a:focus-visible::after { transform: translateX(2px); opacity: 0.95; color: var(--neo-blue); }
 
 /* (옵션) 카드 안의 모든 링크는 항상 굵게 */
 .neo-cards .neo-links a { font-weight: 700; }
@@ -805,7 +805,7 @@ html[data-theme="dark"]{
 
 /*글꼴이에용*/
 /* 1. 구글 폰트 불러오기 */
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Shadows+Into+Light&display=swap');
+
 
 /* 2. 전역 변수 설정 */
 :root {
