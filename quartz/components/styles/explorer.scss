@@ -400,3 +400,19 @@ html, body, .page, #quartz-body { overflow-x: hidden !important; }
   background-color: color-mix(in srgb, var(--x-accent) 70%, transparent);
 }
 .sidebar.left .explorer .explorer-content::-webkit-scrollbar-corner{ background:transparent; }
+
+/* === Explorer 가로 스크롤 핫픽스 === */
+.sidebar.left .explorer,
+.sidebar.left .explorer .explorer-content {
+  max-width: 100% !important;
+}
+
+.sidebar.left .explorer .explorer-content {
+  overflow-x: hidden !important;      /* clip 대신 호환성 좋은 hidden */
+  scrollbar-gutter: stable !important;/* both-edges 제거 */
+}
+
+/* WebKit에서 혹시 수평바가 남으면 트랙 자체를 0으로 */
+.sidebar.left .explorer .explorer-content::-webkit-scrollbar:horizontal{
+  height: 0 !important;
+}
