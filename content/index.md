@@ -21,3 +21,46 @@ date: 2025-08-20
   </div>
 </section>
 
+<script>
+(() => {
+  const sections = document.querySelectorAll('.scroll-stack');
+  if (!sections.length) return;
+
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const throttled = (fn => {
+    let t = false;
+    return () => { if (!t) { requestAnimationFrame(()=>{ fn(); t=false; }); t = true; } }
+  });
+
+  sections.forEach(section => {
+    const cards = section.querySelectorAll('.s-card');
+    const count = cards.length;
+    section.style.setProperty('--count', count);
+
+    const update = () => {
+      const rect = section.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+
+      // 섹션 진행도 0~1
+      const progress = clamp((vh - rect.top) / (rect.height - vh), 0, 1);
+
+      cards.forEach((card, i) => {
+        const t = i - progress * (count - 1);          // 스택 내 상대 위치
+        const y = t * 26;                               // 카드 간 간격(px)
+        const scale = 1 - clamp((i - progress) * 0.04, 0, 0.15);
+        const rot = clamp((i - progress) * -2.5, -6, 6);
+        const z = 1000 - Math.abs(i - progress) * 10;
+
+        card.style.transform = `translateY(${y}px) scale(${scale}) rotate(${rot}deg)`;
+        card.style.opacity = 1 - clamp((i - progress) * 0.08, 0, 0.45);
+        card.style.zIndex = z | 0;
+      });
+    };
+
+    const onScroll = throttled(update);
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+  });
+})();
+</script>
