@@ -403,77 +403,89 @@ li:has(> .folder-outer:not(.open)) > .folder-container > .folder-icon{ transform
   width: 3px; border-radius: 2px; background: var(--exp-accent);
 }
 
-/* ===== 모바일 튜닝 (네 기존 slide-in 구조 유지) ===== */
+/* ============== FIX 1: 본문 밀던 규칙 완전 무력화 ============== */
+/* 모바일에서 #quartz-body 자식들을 translate 하던 과거 규칙을 끕니다. */
 @media all and ($mobile){
-  .sidebar.left:has(.explorer){ padding: 8px; }
-  .explorer{ border-radius: 20px; padding: 10px 12px 14px; }
-  .explorer .explorer-content{ height: calc(100dvh - 140px); }
-}
-
-/* ===========================
-   FIX: Double slide 제거 & 토글 안정화
-   =========================== */
-
-/* 1) 모바일에서 본문 밀기(translateX) 제거 → 패널만 움직이게 */
-@media all and ($mobile) {
-  .page > #quartz-body > :not(.sidebar.left:has(.explorer)),
-  .page > #quartz-body.lock-scroll > :not(.sidebar.left:has(.explorer)) {
+  .page > #quartz-body,
+  .page > #quartz-body.lock-scroll{
+    transform: none !important;
+  }
+  .page > #quartz-body > *:not(.sidebar.left),
+  .page > #quartz-body.lock-scroll > *:not(.sidebar.left){
     transform: none !important;
     transition: none !important;
   }
+  /* 드로어가 열렸을 때 배경 스크롤만 막기 */
+  .page > #quartz-body.lock-scroll{ overflow: hidden !important; }
 }
 
-/* 2) 패널 슬라이드만 유지 (가시성/전환 확실하게) */
-@media all and ($mobile) {
-  .explorer {
+/* ============== FIX 2: 패널만 드로어로 (Apple-like) ============== */
+@media all and ($mobile){
+  .explorer{
     position: relative;
   }
 
-  /* 패널은 화면 좌측에서 들어왔다 나가는 오버레이 */
-  .explorer > .explorer-content {
-    box-sizing: border-box;
-    position: absolute;
-    inset: 0 auto 0 0;        /* left 고정 */
-    width: 100vw;
-    max-width: 100vw;
+  /* 사이드 드로어 */
+  .explorer > .explorer-content{
+    position: fixed;       /* 본문과 분리된 독립 레이어 */
+    top: 0; left: 0;
+    width: min(86vw, 360px);
     height: 100dvh;
     max-height: 100dvh;
     margin: 0;
+    padding: 4rem 12px 1.5rem;      /* 네가 쓰던 여백 느낌 유지 */
     background: var(--exp-bg);
-    border-top: 0;            /* 상단 구분선 제거(선택) */
-    transform: translateX(-100%);   /* 기본은 숨김 */
+    border-right: 1px solid var(--exp-border);
+    box-shadow: 0 18px 50px rgba(0,0,0,0.35);
+    transform: translateX(-100%);  /* 기본은 숨김 */
     visibility: hidden;
     transition: transform 200ms ease, visibility 200ms ease;
-    z-index: 100;             /* 버튼보다 아래, 본문보다 위 */
-    padding: 4rem 0 2rem 0;   /* 네가 쓰던 여백 유지 */
+    z-index: 120;                   /* 본문 위 */
   }
 
-  /* 열렸을 때 */
-  .explorer:not(.collapsed) > .explorer-content {
+  /* 열림/닫힘은 .collapsed 로 제어(기존 클래스 그대로 사용) */
+  .explorer:not(.collapsed) > .explorer-content{
     transform: translateX(0);
     visibility: visible;
   }
-
-  /* 닫혔을 때 */
-  .explorer.collapsed > .explorer-content {
+  .explorer.collapsed > .explorer-content{
     transform: translateX(-100%);
     visibility: hidden;
   }
 
-  /* 토글 버튼이 패널 위로 오게 */
+  /* 드로어 뒤 스크림(배경 어둡게) — 클릭 차단 용도 */
+  .explorer::before{
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    opacity: 0;
+    pointer-events: none;  /* CSS만으로는 닫기 못하지만, 배경 클릭 차단 */
+    transition: opacity 180ms ease;
+    z-index: 110;
+  }
+  .explorer:not(.collapsed)::before{
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* 토글 버튼은 드로어보다 위로 */
   .explorer .mobile-explorer,
-  .explorer .desktop-explorer {
+  .explorer .desktop-explorer{
     position: relative;
-    z-index: 101;
+    z-index: 130;
   }
 }
 
-/* 3) 빈 토글/가짜 버튼 안전장치 (겹침으로 인한 클릭 불가 방지) */
-.explorer button:empty,
-.explorer button:not(:has(svg, h1, h2, h3, span)) {
-  display: none !important;
-}
+/* ============== FIX 3: 남는 점·빈 버튼 제거 ============== */
+/* 가짜 점/불릿 제거 */
+.explorer-content, .explorer-content ul{ list-style: none !important; }
+.explorer-content li::marker, .explorer-content li::before{ content: none !important; }
 
-/* 4) 데스크톱/모바일 토글 버튼 확실히 분리 */
-@media all and not ($mobile) { .explorer button.mobile-explorer  { display: none !important; } }
-@media all and ($mobile)     { .explorer button.desktop-explorer { display: none !important; } }
+/* 내용 없는 토글 버튼 숨김 */
+.explorer button:empty,
+.explorer button:not(:has(svg, h1, h2, h3, span)){ display: none !important; }
+
+/* 데스크톱/모바일 토글 확실히 분리 */
+@media all and not ($mobile){ .explorer button.mobile-explorer  { display: none !important; } }
+@media all and ($mobile)    { .explorer button.desktop-explorer { display: none !important; } }
