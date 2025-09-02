@@ -370,3 +370,63 @@ html, body, .page, #quartz-body { overflow-x: hidden !important; }
     padding-right:12px;
   }
 }
+/* === 1) 텍스트/링크가 흐릿해 보이는 것 제거 === */
+.sidebar.left .explorer .explorer-content li > a{
+  color: var(--x-text, var(--dark, #0f1116)) !important;
+  opacity: 1 !important;               /* Quartz 기본 0.75 제거 */
+  text-decoration: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* 제목/버튼 회색 박스 제거(텍스트만 보이게) */
+.sidebar.left .explorer :where(h1,h2,h3){
+  margin: 0; padding: 0;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.sidebar.left .explorer :is(.desktop-explorer,.mobile-explorer){
+  background: transparent !important;
+  border: 0 !important;
+  color: var(--x-text, #0f1116) !important;
+  padding: 8px 12px;
+  border-radius: 10px;
+}
+.sidebar.left .explorer :is(.desktop-explorer,.mobile-explorer):hover{
+  background: var(--x-hover, #f5f7fe) !important;
+}
+
+/* === 2) 토글 클릭 막는 레이어 방지 (모바일·데스크톱 모두) === */
+/* 헤더 버튼이 항상 콘텐츠보다 위에 올라오도록 보장 */
+.sidebar.left .explorer :is(.desktop-explorer,.mobile-explorer){ position: relative; z-index: 102; }
+/* 리스트 영역은 그 아래에서만 클릭 받기 */
+.sidebar.left .explorer .explorer-content{ position: relative; z-index: 100; }
+
+/* 모바일에서 닫힌 상태일 땐 리스트가 클릭을 가로채지 않도록 */
+@media (max-width: 900px){
+  .sidebar.left .explorer.collapsed > .explorer-content{
+    pointer-events: none;
+  }
+  .sidebar.left .explorer:not(.collapsed) > .explorer-content{
+    pointer-events: auto;
+  }
+}
+
+/* === 3) 가로 스크롤 재발 방지(마지막 안전장치) === */
+.sidebar.left,
+.sidebar.left .explorer,
+.sidebar.left .explorer .explorer-content{
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+}
+.sidebar.left .explorer .explorer-content *{
+  min-width: 0; max-width: 100%;
+  white-space: nowrap; text-overflow: ellipsis; overflow: hidden;
+}
+
+/* === 4) 보기 줄 수(필요하면 숫자만) === */
+:root{ --x-row: 44px; --x-visible: 6; }
+.sidebar.left .explorer .explorer-content{
+  max-height: calc(var(--x-row) * var(--x-visible));
+  padding-right: 10px;  /* 스크롤바 공간 */
+}
