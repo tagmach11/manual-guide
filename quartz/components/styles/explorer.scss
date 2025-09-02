@@ -543,3 +543,65 @@ html, body, .page, #quartz-body { overflow-x: hidden !important; }
 .explorer button:empty,
 .explorer button:not(:has(svg, h1, h2, h3, span)) { display: none !important; }
 
+/* =========================================================
+   EXPLORER — 안정화 패치 (열고/닫기, 6개 제한, 가로 스크롤 제거)
+   ========================================================= */
+
+/* 0) 전역 가로 스크롤 완전 차단 */
+html, body, .page, #quartz-body { overflow-x: hidden !important; }
+
+/* 1) 데스크톱: 목록은 최대 6행 정도만 보이고 세로 스크롤 */
+:root { --exp-row-h: 44px; } /* 항목 한 줄 높이(필요하면 조정) */
+.explorer-content{
+  box-sizing: border-box;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  height: auto;
+  max-height: calc(6 * var(--exp-row-h) + 24px); /* ≒ 6개 + 여백 */
+}
+
+/* 긴 제목이 폭을 밀어내지 않도록 */
+.explorer-content ul,
+.explorer-content li,
+.explorer-content a { min-width: 0; }
+.explorer-content a { word-break: break-word; }
+
+/* 2) 모바일 드로어 — transform 기반 애니메이션 대신 display 토글로 단순화 */
+/* === REPLACE: 기존 @media ($mobile) 블록의 .explorer > .explorer-content 부분을 이걸로 교체 === */
+@media all and ($mobile){
+  .explorer { position: relative; }
+
+  .explorer > .explorer-content{
+    position: fixed;
+    top: 0; left: 0;
+    width: min(86vw, 360px);
+    height: 100dvh; max-height: 100dvh;
+    margin: 0; padding: 4rem 12px 1.5rem;
+    background: var(--exp-bg);
+    border-right: 1px solid var(--exp-border);
+    box-shadow: 0 18px 50px rgba(0,0,0,.35);
+
+    box-sizing: border-box;
+    overflow-y: auto !important;   /* 세로 스크롤만 */
+    overflow-x: hidden !important; /* 가로 스크롤 차단 */
+
+    display: none;                 /* 기본은 닫힘 */
+    z-index: 120;
+  }
+
+  /* 열림/닫힘 — 클래스 하나로 명확하게 */
+  .explorer:not(.collapsed) > .explorer-content { display: block !important; }
+  .explorer.collapsed        > .explorer-content { display: none  !important; }
+
+  /* 배경 스크림 제거(버튼 클릭 방해 방지) */
+  .explorer::before { display: none !important; }
+
+  /* 모바일에선 높이 제한 풀고 전체 높이 사용 */
+  .explorer:not(.collapsed) > .explorer-content { max-height: 100dvh; }
+}
+
+/* 3) 남아 있는 가짜 점/빈 버튼 재확인 */
+.explorer-content, .explorer-content ul { list-style: none !important; }
+.explorer-content li::marker, .explorer-content li::before { content: none !important; }
+.explorer button:empty,
+.explorer button:not(:has(svg, h1, h2, h3, span)) { display: none !important; }
