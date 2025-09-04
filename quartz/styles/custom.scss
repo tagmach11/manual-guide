@@ -705,7 +705,8 @@ html[data-theme="dark"]{
 /* 주문결제 카드만 크기 맞춤 */
 .neo-card.small {
   min-width: 340px;   /* 다른 카드들과 최소 크기 맞추기 */
-  max-width: 400px;   /* 필요 시 최대 폭 제한 */
+  max-width: 400px;
+  height: 350px;   /* 필요 시 최대 폭 제한 */
 }
 
 
