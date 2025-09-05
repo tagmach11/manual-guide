@@ -1056,3 +1056,13 @@ article.popover-hint h4 + ul{
 @media (prefers-reduced-motion: reduce){
   .page main.content h4 + ul > li{ transition:none; }
 }
+
+
+/* 카드 스타일 (라이트/다크 모두) */
+.markdown-preview-view h4 + ul > li {
+  border: 1px solid var(--qz-border);      /* 얇은 경계선 */
+  background: var(--background-primary);   /* 기본 배경색 (라이트/다크 자동 전환) */
+  border-radius: 12px;                     /* 모서리 둥글게 */
+  padding: 14px;
+  margin: 6px 0;
+}
