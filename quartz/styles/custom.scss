@@ -858,8 +858,10 @@ html[data-theme="dark"]{
 
 
 
-/*아이콘 형태*/
-/* ===== 섹션 제목(탭 라벨) ===== */
+//* 브랜드 포인트 색 (원하는 색으로 바꿔도 됨) */
+:root { --brand-accent: #22b8b0; } /* 티파니/민트 느낌 */
+
+/* ── 탭 라벨(섹션 제목) ───────────────────────── */
 .markdown-preview-view h4{
   position: relative;
   display: inline-block;
@@ -871,56 +873,70 @@ html[data-theme="dark"]{
   border: 1px solid var(--background-modifier-border);
   border-radius: 12px;
   z-index: 2;
+  box-shadow: 0 1px 0 rgba(0,0,0,.04);
 }
 
-/* ===== 제목 바로 다음 목록을 '박스'로 ===== */
+/* ── 바깥 박스(제목 다음 리스트) ───────────────── */
 .markdown-preview-view h4 + ul{
+  position: relative;
   list-style: none;
-  margin: -12px 0 26px;          /* 탭 라벨이 테두리 위로 살짝 겹치게 */
-  padding: 22px 18px 18px;
+  margin: -12px 0 26px;            /* 탭이 겹쳐 보이게 */
+  padding: 28px 24px;               /* 안쪽 프레임과 칩 여백 */
   border: 1px solid var(--background-modifier-border);
   border-radius: 14px;
   background: var(--background-primary);
+  box-shadow: 0 2px 0 rgba(0,0,0,.02);
+}
 
+/* ── 안쪽 파란 프레임(중메뉴 묶음) ─────────────── */
+.markdown-preview-view h4 + ul::before{
+  content: "";
+  position: absolute;
+  inset: 18px 22px;                 /* 바깥 박스와의 간격(상우좌하) */
+  border: 2px solid var(--brand-accent);
+  border-radius: 10px;
+  pointer-events: none;             /* 클릭 간섭 없음 */
+  opacity: .9;                      /* 필요시 0.7~1 조절 */
+}
+
+/* ── 칩(아이콘 + 캡션) 레이아웃 ───────────────── */
+.markdown-preview-view h4 + ul{
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); /* 칩 5~8개/행 반응형 */
-  gap: 14px 22px;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 14px 20px;
   align-items: start;
 }
 .markdown-preview-view h4 + ul > li{ list-style: none; text-align: center; }
 
-/* ===== 칩(아이콘 + 캡션) ===== */
 .markdown-preview-view h4 + ul > li > a{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  text-decoration: none !important;
-  color: var(--text-normal);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  text-decoration: none !important; color: var(--text-normal);
 }
 
-/* 아이콘 타일(작은 둥근 사각 배경 + 아이콘) */
+/* 아이콘 타일 */
 .markdown-preview-view h4 + ul > li > a > img{
-  width: 36px;                   /* 아이콘 크기 */
-  height: 36px;
+  width: 36px; height: 36px;        /* 아이콘 크기 (32~40로 조절 가능) */
   object-fit: contain;
-  padding: 10px;                 /* 타일 내부 여백 */
+  padding: 10px;                     /* 타일 내부 여백 */
   background: var(--background-secondary);
   border: 1px solid var(--background-modifier-border);
   border-radius: 12px;
-  box-shadow: 0 1px 0 rgba(0,0,0,.04), inset 0 0 0 1px rgba(255,255,255,.5);
+  box-shadow: 0 1px 0 rgba(0,0,0,.04), inset 0 0 0 1px rgba(255,255,255,.55);
   transition: transform .15s ease, box-shadow .15s ease;
 }
 .markdown-preview-view h4 + ul > li > a:hover > img{
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(0,0,0,.06), inset 0 0 0 1px rgba(255,255,255,.6);
+  box-shadow: 0 2px 10px rgba(0,0,0,.06), inset 0 0 0 1px rgba(255,255,255,.65);
 }
 
-/* 캡션(한 줄만) */
-.markdown-preview-view .card-label{ display: none; }         /* 왼쪽 스타일은 라벨 숨김 */
+/* 텍스트: 왼쪽 스타일은 라벨 숨기고, 캡션만 */
+.markdown-preview-view .card-label{ display: none; }
 .markdown-preview-view .card-desc{
-  display: block;
-  font-size: .78rem;
-  color: var(--text-muted);
-  line-height: 1.25;
+  display: block; font-size: .78rem; color: var(--text-muted); line-height: 1.25;
+}
+
+/* ── 반응형(모바일에서 프레임 안쪽 여백 살짝 줄이기) ── */
+@media (max-width: 560px){
+  .markdown-preview-view h4 + ul{ padding: 22px 14px; }
+  .markdown-preview-view h4 + ul::before{ inset: 14px; }
 }
