@@ -980,11 +980,9 @@ article.popover-hint h4 + ul{
 
 
 
-
-/* Quartz 4.5 Light/Dark 훅에 맞춘 토큰 */
+/* ================= Quartz 4.5 Light/Dark ================= */
 :root,
-[data-theme="light"],
-.theme-light{
+[data-theme="light"]{
   --card-bg:#ffffff;
   --card-fg:#0f172a;
   --card-muted:#334155;
@@ -992,11 +990,10 @@ article.popover-hint h4 + ul{
   --card-border:rgba(15,23,42,.12);
   --card-shadow:0 1px 2px rgba(0,0,0,.06), 0 8px 24px rgba(0,0,0,.08);
   --card-ring:rgba(34,184,176,.35);
+  --card-thumb:80px;   /* 썸네일 80x80 */
+  --card-radius:16px; --card-gap:16px; --card-pad:18px;
 }
-
-[data-theme="dark"],
-.theme-dark,
-.dark{
+[data-theme="dark"]{
   --card-bg:#0f172a;
   --card-fg:#e2e8f0;
   --card-muted:#e5e7eb;
@@ -1004,4 +1001,58 @@ article.popover-hint h4 + ul{
   --card-border:rgba(255,255,255,.14);
   --card-shadow:0 1px 2px rgba(0,0,0,.40), 0 8px 24px rgba(0,0,0,.50);
   --card-ring:rgba(34,184,176,.55);
+}
+
+/* ================= Scope: 본문만, 백링크 제외 ================= */
+/* Quartz 기본 구조: .page > main.content …  */
+.page main.content h4 + ul{
+  list-style:none; margin:0; padding:0;
+  display:grid; gap:var(--card-gap);
+  grid-template-columns:repeat(auto-fill, minmax(220px,1fr));
+}
+/* 백링크 영역 초기화(혹시 h4+ul 구조가 있어도 카드화 막기) */
+#backlinks h4 + ul,
+#backlinks ul{
+  all:unset; display:block; list-style:disc; margin-left:1.25rem;
+}
+
+/* ================= Card ================= */
+.page main.content h4 + ul > li{
+  background:var(--card-bg); color:var(--card-fg);
+  border:1px solid var(--card-border);
+  border-radius:var(--card-radius);
+  padding:var(--card-pad);
+  box-shadow:var(--card-shadow);
+  text-align:center; min-height:180px;
+  transition:transform .12s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.page main.content h4 + ul > li:hover,
+.page main.content h4 + ul > li:focus-within{
+  transform:translateY(-2px);
+  box-shadow:0 0 0 3px var(--card-ring), var(--card-shadow);
+}
+
+/* 링크/썸네일 */
+.page main.content h4 + ul a{
+  text-decoration:none; color:inherit;
+  display:inline-grid; place-items:center;
+}
+.page main.content h4 + ul img{
+  width:var(--card-thumb); height:var(--card-thumb); object-fit:contain;
+}
+
+/* 라벨/설명 */
+.card-label{
+  display:block; margin-top:10px;
+  font-weight:700; font-size:.9rem; color:var(--card-muted);
+}
+.card-desc{
+  display:block; margin-top:6px;
+  font-size:.86rem; line-height:1.35; color:var(--card-subtle);
+  display:-webkit-box; -webkit-box-orient:vertical; overflow:hidden;
+}
+
+/* 모션 최소화 */
+@media (prefers-reduced-motion: reduce){
+  .page main.content h4 + ul > li{ transition:none; }
 }
