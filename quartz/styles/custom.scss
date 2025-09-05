@@ -939,20 +939,18 @@ article.popover-hint h4 + ul > li > a:hover > img{
 .theme-dark .card-desc{ color: rgba(255,255,255,.78); }
 .theme-dark a{ color: inherit; }           /* 링크 색으로 인해 대비 꺾이는 것 방지 */
 
-/* 기본 아이콘 크기/호버 유지 */
-article.popover-hint h4 + ul > li > a > img{
-  width:36px; height:36px; padding:10px; object-fit:contain;
-  transition: transform .15s ease, box-shadow .15s ease;
+/* 한 개만 있는 카드에서 아이콘이 작아 보이는 걸 보정 */
+article.popover-hint h4 + ul > li:only-child > a > img{
+  transform: scale(var(--qz-single-scale, 1.22));  /* 1.15~1.30 사이로 취향 조절 */
+}
+article.popover-hint h4 + ul > li:only-child > a:hover > img{
+  transform: scale(var(--qz-single-scale, 1.22)) translateY(-1px);
 }
 
-/* 여백이 커서 작게 보이는 아이콘만 스케일 보정 */
-article.popover-hint h4 + ul > li > a > img[src*="배너.gif"],
-article.popover-hint h4 + ul > li > a > img[src*="자동알림.gif"]{
-  transform: scale(1.22); /* 필요시 1.15~1.30 사이에서 조절 */
+/* (선택) 한 개일 땐 가운데 정렬 느낌 강화 */
+article.popover-hint h4 + ul{
+  justify-items: start;
 }
-
-/* 호버 시에도 보정값 유지 */
-article.popover-hint h4 + ul > li > a:hover > img[src*="배너.gif"],
-article.popover-hint h4 + ul > li > a:hover > img[src*="자동알림.gif"]{
-  transform: scale(1.22) translateY(-1px);
+article.popover-hint h4 + ul:has(> li:only-child){
+  justify-items: center; /* 지원 브라우저에서만 적용됨(Chrome/Safari 최신) */
 }
