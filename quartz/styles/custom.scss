@@ -1057,12 +1057,17 @@ article.popover-hint h4 + ul{
   .page main.content h4 + ul > li{ transition:none; }
 }
 
-
-/* 카드 스타일 (라이트/다크 모두) */
-.markdown-preview-view h4 + ul > li {
-  border: 1px solid var(--qz-border);      /* 얇은 경계선 */
-  background: var(--background-primary);   /* 기본 배경색 (라이트/다크 자동 전환) */
-  border-radius: 12px;                     /* 모서리 둥글게 */
+/* ===== 메뉴/팝업/배너/게시판/템플릿/메인화면표시/분석 카드 ===== */
+article.popover-hint.app-cards h4 + ul > li {
+  border: 1px solid var(--qz-border);      /* 테두리 */
+  background: var(--background-primary);   /* 라이트/다크 자동 대응 */
+  border-radius: 12px;
   padding: 14px;
-  margin: 6px 0;
+  transition: background .2s ease, border-color .2s ease;
+}
+
+/* hover 시 강조 */
+article.popover-hint.app-cards h4 + ul > li:hover {
+  background: var(--background-secondary);
+  border-color: var(--qz-brand-accent);
 }
