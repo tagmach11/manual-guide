@@ -954,3 +954,24 @@ article.popover-hint h4 + ul{
 article.popover-hint h4 + ul:has(> li:only-child){
   justify-items: center; /* 지원 브라우저에서만 적용됨(Chrome/Safari 최신) */
 }
+
+/* === 모든 메뉴 아이콘 80x80로 고정 === */
+:root { --menu-icon-size: 80px; }
+
+article.popover-hint h4 + ul > li > a > img{
+  width:  var(--menu-icon-size) !important;
+  height: var(--menu-icon-size) !important;
+  padding: 0 !important;                 /* 내부 여백 제거 */
+  background: transparent !important;    /* 배경/테두리 없앰(아이콘 파일 자체를 그대로) */
+  border: 0 !important;
+  box-shadow: none !important;
+  object-fit: contain;
+}
+
+/* 아이콘 커졌으니 그리드 폭도 살짝 넉넉하게 */
+article.popover-hint h4 + ul{
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 18px 22px;
+}
+
+.card-desc{ margin-top: 6px; }
