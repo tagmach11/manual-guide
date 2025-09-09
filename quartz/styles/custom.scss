@@ -980,3 +980,15 @@ article.popover-hint h4 + ul{
   .page main.content h4 + ul > li{ transition:none; }
 }
 
+
+
+
+
+
+
+/* 로고 색상 왜곡 방지 */
+footer img, .sidebar img, .content img {
+  filter: none !important;
+  opacity: 1 !important;
+  mix-blend-mode: normal !important;
+}
