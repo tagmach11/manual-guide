@@ -366,7 +366,7 @@ html, body, .page, #quartz-body { overflow-x: hidden !important; }
   font-weight: 700;
 }
 .sidebar.left .explorer .explorer-content li > a.active::before{
-  content:""; position:absolute; left:6px; top:22%; bottom:22%; width:3px; border-radius:2px; background:var(--x-accent);
+  content:none; position:absolute; left:6px; top:22%; bottom:22%; width:3px; border-radius:2px; background:var(--x-accent);
 }
 
 /* 모바일: 원본 드로어 토글 동작 유지(위치/transform 건드리지 않음) */
