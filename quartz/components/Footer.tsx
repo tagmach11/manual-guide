@@ -28,3 +28,4 @@ export default ((opts?: Options) => {
   Footer.css = style
   return Footer
 }) satisfies QuartzComponentConstructor
+
