@@ -14,9 +14,9 @@ export default ((opts?: Options) => {
     return (
       <footer class={`${displayClass ?? ""}`}>
         <p>
-          {i18n(cfg.locale).components.footer.createdWith}{" "}
+        
           <a href="https://lx2.4csoft.com/">
-  <img src="/Users/user/Downloads/lx2_logo2.png" alt="LX2 로고" height="32" />
+  <img src="/Volumes/4csoft/manual-guide/content/_etc/lx2_logo2.png" alt="LX2 로고" height="32" />
 </a>
 </p>
         <ul>
