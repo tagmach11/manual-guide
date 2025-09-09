@@ -15,8 +15,10 @@ export default ((opts?: Options) => {
       <footer class={`${displayClass ?? ""}`}>
         <p>
           {i18n(cfg.locale).components.footer.createdWith}{" "}
-          <a href="https://lx2.4csoft.com/">LX2 메뉴얼 </a> © {year}
-        </p>
+          <a href="https://lx2.4csoft.com/">
+  <img src="/Users/user/Downloads/lx2_logo2.png" alt="LX2 로고" height="32" />
+</a>
+</p>
         <ul>
         </ul>
       </footer>
