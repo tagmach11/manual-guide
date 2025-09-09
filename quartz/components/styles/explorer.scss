@@ -350,13 +350,13 @@ html, body, .page, #quartz-body { overflow-x: hidden !important; }
   padding:8px 10px; margin:2px 0; width:100%;
   border-radius:12px; color:var(--x-text) !important; opacity:1 !important;
   transition:background .15s ease, color .15s ease, opacity .15s ease;
-  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0;
+  
 }
 .sidebar.left .explorer .explorer-content li > a:hover{ background:var(--x-hover); }
 .sidebar.left .explorer .explorer-content li > a.active{
   background:var(--x-active); color:var(--x-accent) !important;
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--x-accent));
-  
+  position:relative;
 }
 .sidebar.left .explorer .explorer-content li > a.active::before{
   content:""; position:absolute; left:6px; top:22%; bottom:22%; width:3px; border-radius:2px; background:var(--x-accent);
