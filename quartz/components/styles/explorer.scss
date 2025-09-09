@@ -323,7 +323,7 @@ html, body, .page, #quartz-body { overflow-x: hidden !important; }
   margin-top:6px !important; padding:6px 6px 10px;
   border-top:1px solid var(--x-sep); box-sizing:border-box;
   overflow-y:auto !important; overflow-x:clip !important;
-  max-height: calc(var(--x-row) * var(--x-visible));
+  max-height: none;
   width:100%; max-width:100%; padding-right:10px;       /* 스크롤바 여유 */
   scrollbar-gutter: stable both-edges;
 }
@@ -493,3 +493,13 @@ body[data-theme="dark"] .sidebar.left .explorer .explorer-content:hover::-webkit
 :root[data-theme="dark"] .sidebar.left .explorer .explorer-content:hover::-webkit-scrollbar-thumb{
   background-color: color-mix(in srgb, var(--x-text) 65%, transparent);
 }
+
+/* 사이드바랑 본문 정렬 맞추기 */
+.sidebar.left {
+  padding-top: 24px !important;   /* 카드 위쪽 여백만큼 맞춰줌 */
+}
+
+.page main.content {
+  margin-top: 0 !important;       /* 불필요한 위쪽 여백 제거 */
+}
+
