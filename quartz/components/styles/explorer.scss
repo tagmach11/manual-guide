@@ -492,12 +492,7 @@ body[data-theme="dark"] .sidebar.left .explorer .explorer-content:hover::-webkit
   background-color: color-mix(in srgb, var(--x-text) 65%, transparent);
 }
 
-/* 사이드바랑 본문 정렬 맞추기 */
-.sidebar.left {
-  padding-top: 24px !important;   /* 카드 위쪽 여백만큼 맞춰줌 */
+.page {
+  display: flex;
+  align-items: flex-start;  /* 상단 기준 맞추기 */
 }
-
-.page main.content {
-  margin-top: 0 !important;       /* 불필요한 위쪽 여백 제거 */
-}
-
