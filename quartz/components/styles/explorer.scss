@@ -290,7 +290,7 @@ li:has(> .folder-outer:not(.open)) > .folder-container > svg {
 html, body, .page, #quartz-body { overflow-x: hidden !important; }
 
 /* 패널 */
-.sidebar.left { overflow: visible !important; margin-top: 70px;}
+.sidebar.left { overflow: visible !important; margin-top: 80px;}
 .sidebar.left .explorer{
   background:var(--x-bg); color:var(--x-text);
   border:1px solid var(--x-border); border-radius:18px;
