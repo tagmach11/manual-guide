@@ -986,9 +986,11 @@ article.popover-hint h4 + ul{
 
 
 
-/* 로고 색상 왜곡 방지 */
-footer img, .sidebar img, .content img {
+/* Footer 로고 전용 */
+footer img {
   filter: none !important;
   opacity: 1 !important;
   mix-blend-mode: normal !important;
+  color-adjust: exact !important;     /* 브라우저 색상 보정 차단 */
+  -webkit-print-color-adjust: exact !important;
 }
