@@ -14,11 +14,11 @@ export default ((opts?: Options) => {
     return (
       <footer class={`${displayClass ?? ""}`}>
         <p>
-        
+
           <a href="https://lx2.4csoft.com/">
-  <img src="/_etc/lx2.png" alt="LX2 로고" height="100" />
-</a>
-</p>
+            <img src="/_etc/lx2.png" alt="LX2 로고" height="100" />
+          </a>
+        </p>
         <ul>
         </ul>
       </footer>

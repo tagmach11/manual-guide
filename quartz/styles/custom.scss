@@ -994,3 +994,65 @@ footer img {
   color-adjust: exact !important;     /* 브라우저 색상 보정 차단 */
   -webkit-print-color-adjust: exact !important;
 }
+
+
+
+/*슬라이드 테스트*/
+.slider {
+  position: relative;
+  width: 100%;
+  max-width: 600px; /* 슬라이드 가로 크기 */
+  margin: auto;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+.slides {
+  display: flex;
+  width: 300%;
+  transition: transform 0.6s ease;
+}
+
+.card {
+  flex: 1 0 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+#s1:checked ~ .slides { transform: translateX(0%); }
+#s2:checked ~ .slides { transform: translateX(-100%); }
+#s3:checked ~ .slides { transform: translateX(-200%); }
+
+.nav {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.nav label {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: gray;
+  margin: 0 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#s1:checked ~ .nav label[for="s1"],
+#s2:checked ~ .nav label[for="s2"],
+#s3:checked ~ .nav label[for="s3"] {
+  background: var(--interactive-accent);
+}
