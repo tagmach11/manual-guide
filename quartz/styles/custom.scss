@@ -1010,92 +1010,55 @@ footer img {
 /*슬라이드 테스트*/
 
 .lx2-slider {
-  position: relative;
   width: 100%;
-  max-width: 720px;
+  max-width: 540px;   /* 크기 조정 */
   margin: 0 auto;
-  overflow: hidden;
   text-align: center;
+  font-family: system-ui;
 
-  input[type="radio"] { display: none; }
-
-  .lx2-slides {
-    display: flex;
-    width: 400%;
-    transition: transform 0.5s ease-in-out;
+  .lx2-caption {
+    font-weight: 700;
+    margin-bottom: 6px;
   }
 
-  .lx2-slide {
-    flex: 0 0 100%;
-    img {
-      width: 100%;
-      aspect-ratio: 16/9;
-      object-fit: cover;
-      border-radius: 12px;
+  .lx2-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 8px;
+
+    &::-webkit-scrollbar { display: none; }
+
+    .lx2-slide {
+      flex: 0 0 100%;
+      scroll-snap-align: center;
+
+      img {
+        width: 100%;
+        height: auto;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,.15);
+      }
     }
   }
-
-  /* 상단 제목 */
-  .lx2-caption {
-    margin: 10px 0;
-    font-weight: 700;
-    font-size: 1.1rem;
-    .title { display: none; }
-  }
-  #s1:checked ~ .lx2-caption .t1,
-  #s2:checked ~ .lx2-caption .t2,
-  #s3:checked ~ .lx2-caption .t3,
-  #s4:checked ~ .lx2-caption .t4 {
-    display: inline-block;
-  }
-
-  /* 슬라이드 전환 */
-  #s1:checked ~ .lx2-slides { transform: translateX(0%); }
-  #s2:checked ~ .lx2-slides { transform: translateX(-100%); }
-  #s3:checked ~ .lx2-slides { transform: translateX(-200%); }
-  #s4:checked ~ .lx2-slides { transform: translateX(-300%); }
 
   /* 도트 */
   .lx2-dots {
     display: flex;
     justify-content: center;
-    gap: 8px;
-    margin-top: 10px;
-    label {
-      width: 10px;
-      height: 10px;
+    gap: 6px;
+    margin-top: 6px;
+
+    span {
+      width: 10px; height: 10px;
       border-radius: 50%;
       background: #d1d5db;
-      cursor: pointer;
     }
-  }
-  #s1:checked ~ .lx2-dots label[for="s1"],
-  #s2:checked ~ .lx2-dots label[for="s2"],
-  #s3:checked ~ .lx2-dots label[for="s3"],
-  #s4:checked ~ .lx2-dots label[for="s4"] {
-    background: #3b82f6;
   }
 
-  /* 화살표 */
-  .lx2-arrows {
-    position: absolute;
-    top: 50%;
-    left: 0; right: 0;
-    display: flex;
-    justify-content: space-between;
-    transform: translateY(-50%);
-    padding: 0 10px;
-    label {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: rgba(255,255,255,.9);
-      box-shadow: 0 2px 8px rgba(0,0,0,.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      cursor: pointer;
-    }
+  /* 다크모드 */
+  [data-theme="dark"] & .lx2-dots span {
+    background: #374151;
   }
 }
