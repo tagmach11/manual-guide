@@ -1107,3 +1107,41 @@ footer img {
 .lx2-hero .card::before,
 .lx2-hero .card::after { content:none !important; display:none !important; background:none !important; }
 .lx2-hero a{ color:inherit !important; text-decoration:none !important; }
+
+
+/* === 간격 압축 패치 === */
+
+/* 좌/우 열 사이 간격(텍스트 ↔ 카드) 더 촘촘하게 */
+.lx2-hero__inner{
+  gap: clamp(12px, 2.2vw, 32px); /* 기존: clamp(20px,4vw,64px) */
+}
+
+/* 카드 스택 폭/간격 살짝 줄이기 */
+.lx2-cards{
+  width: clamp(420px, 34vw, 520px); /* 기존: clamp(460px,38vw,560px) */
+  gap: 10px;                        /* 기존: 14px */
+}
+
+/* 카드 여백/둥근값/아이콘 크기 약간 감소 */
+.card{
+  padding: 14px 16px;               /* 기존: 16px 18px */
+  border-radius: 16px;              /* 기존: 18px */
+}
+.card .ico{
+  width: 40px; height: 40px;        /* 기존: 44px */
+}
+.card .ico svg{
+  width: 20px; height: 20px;        /* 기존: 22px */
+}
+/* 본문 글자도 살짝만 축소해 더 붙어 보이게 */
+.card .ko{ font-size: 14px; }        /* 기존: 15px */
+.card .en{ font-size: 10.5px; }      /* 기존: 11px */
+
+/* 화면 높이가 작을 때는 더 타이트하게 */
+@media (max-height: 780px){
+  .lx2-hero__inner{ gap: clamp(10px, 1.8vw, 24px); }
+  .lx2-cards{ gap: 8px; }
+  .card{ padding: 12px 14px; }
+  .card .ico{ width: 38px; height: 38px; }
+  .card .ico svg{ width: 18px; height: 18px; }
+}
