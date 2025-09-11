@@ -998,161 +998,137 @@ footer img {
 
 
 /* ---- 안전 장치 ---- */
-*,
-*::before,
-*::after { box-sizing: border-box; }
-
-/* ===== Hero 레이아웃 ===== */
-.lx2-hero {
-  /* 오른쪽 카드 영역 목표폭: 320~460 사이에서 반응 */
-  --art-w: clamp(320px, 40vw, 460px);
-  --gap: clamp(16px, 4vw, 56px);
-}
-
-.lx2-hero__inner{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap: var(--gap);
-  flex-wrap: wrap;                 /* 좁은 화면에서 줄바꿈 허용 */
-}
-
-/* 왼쪽 텍스트 */
-.lx2-hero__content{
-  flex: 1 1 420px;                 /* 줄어들 수 있고, 기본 폭 420px */
-  min-width: 0;                    /* 긴 단어/nowrap 시 오버플로 방지 */
-}
-
-/* 1줄 고정 + 뷰포트에 맞춰 자동 축소 */
-.lx2-hero__title-kr{
-  margin: 0 0 .35rem;
-  font-weight: 800;
-  font-size: clamp(1rem, 1.1rem + 0.7vw, 1.35rem);
-  letter-spacing: -.02em;
-  white-space: nowrap;             /* 1줄 유지 */
+/* ============ HERO ============ */
+.lx2-hero{
+  --bg-deep: #0a2a6b;
+  --text: #ffffff;
+  position: relative;
   overflow: hidden;
-  text-overflow: ellipsis;
+  background:
+    radial-gradient(1200px 1200px at 70% 45%, rgba(255,255,255,.06), transparent 40%),
+    linear-gradient(180deg, #0d2f7e, #05245f 70%);
+  color: var(--text);
+  padding: clamp(32px,4vw,56px) 24px;
+  min-height: 520px;
+}
+
+/* 동심원 웨이브 */
+.lx2-hero::before{
+  content:"";
+  position:absolute; inset:-10% -20%;
+  background:
+    repeating-radial-gradient( circle at 75% 50%,
+      rgba(255,255,255,.08) 0 1px, transparent 1px 40px);
+  opacity:.35;
+  pointer-events:none;
+}
+
+/* 그리드 레이아웃 */
+.lx2-hero__inner{
+  max-width: 1180px; margin:0 auto;
+  display:grid; align-items:center;
+  grid-template-columns: 1fr 520px;
+  gap: clamp(24px,4vw,56px);
+}
+
+/* LEFT */
+.lx2-hero__title-kr{
+  margin:0 0 6px;
+  font-weight: 900;
+  letter-spacing:-.02em;
+  font-size: clamp(22px, 2.8vw, 40px);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 
 .lx2-hero__brand{
-  margin: 0 0 .6rem;
-  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  margin:0 0 12px;
   font-weight: 900;
-  line-height: 1;
-  white-space: nowrap;             /* 1줄 유지 */
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height:.95;
+  font-size: clamp(64px, 10vw, 128px);
+  letter-spacing:-.02em;
 }
 
 .lx2-hero__sub{
-  margin: 0 0 1.1rem;
-  font-size: clamp(.85rem, .8rem + .3vw, .95rem);
-  color:#d1d5db;
-  white-space: nowrap;             /* 1줄 유지 */
-  overflow: hidden;
-  text-overflow: ellipsis;
+  margin:0 0 18px;
+  font-size: clamp(14px, 1.6vw, 18px);
+  opacity:.92;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 
 .lx2-hero__cta{
   display:inline-block;
-  padding:.55rem 1.25rem;
-  border:1px solid #fff;
-  border-radius:10px;
-  color:#fff;
-  text-decoration:none;
-  font-size:.92rem;
+  padding:.7rem 1.4rem;
+  border:1px solid rgba(255,255,255,.9);
+  border-radius: 999px;
+  color:#fff; text-decoration:none;
+  font-weight:700;
+  transition: background .2s ease, color .2s ease, transform .15s;
 }
+.lx2-hero__cta:hover{ background:#fff; color:#0b1d50; transform: translateY(-1px); }
 
-/* 오른쪽 카드 영역 */
-.lx2-hero__art{
-  flex: 0 1 var(--art-w);
-  min-width: var(--art-w);
-  max-width: var(--art-w);
+/* RIGHT – 카드(퍼즐 느낌) */
+.lx2-hero__art{ display:flex; justify-content:center; }
+
+.lx2-puzzle{
+  width:min(560px, 100%);
+  display:grid; grid-template-columns: repeat(2,1fr);
+  gap:16px;
+  filter: drop-shadow(0 10px 24px rgba(0,0,0,.25));
 }
-
-/* ===== 카드 2×2 ===== */
-.lx2-cards{
+.pz{
+  min-height: 96px;
+  border-radius: 20px;
+  padding: 16px 16px;
   display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap:14px;
-}
-
-/* 카드 공통 */
-.card{
-  display:grid;
-  grid-template-columns: 44px 1fr;    /* 아이콘 작게, 텍스트 크게 */
+  grid-template-columns: 44px 1fr;
   align-items:center;
-  gap:12px;
-  padding:16px 18px;
-  border-radius:16px;
-  background: linear-gradient(135deg, #f3f6ff 0%, #e8edff 100%);
-  box-shadow: 0 8px 22px rgba(0,0,0,.12);
-  transition: transform .18s ease, box-shadow .18s ease;
-}
-.card:hover{
-  transform: translateY(-3px);
-  box-shadow: 0 12px 26px rgba(0,0,0,.16);
-}
-
-/* 아이콘: 심플 라인 SVG */
-.card__icon{
-  width:44px;height:44px;
-  border-radius:12px;
-  display:grid; place-items:center;
-  background: rgba(255,255,255,.55);
+  column-gap: 12px;
   color:#0b1140;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.35), inset 0 -26px 40px rgba(0,0,0,.08);
+  transition: transform .15s ease, box-shadow .15s ease;
+  position:relative;
 }
-.card__icon svg{ width:22px; height:22px; }
-
-/* 텍스트 */
-.card__text{ display:flex; flex-direction:column; }
-.card__text .ko{
-  font-size: 1.02rem;
-  font-weight: 700;
-  color:#141b38;
-  letter-spacing:-.01em;
+.pz::after{
+  content:"";
+  position:absolute; inset:0;
+  background: linear-gradient(180deg, rgba(255,255,255,.28), transparent 38%);
+  pointer-events:none;
 }
-.card__text .en{
-  font-size: .72rem;
-  color:#4b5563;
-  letter-spacing:.06em;
-  margin-top:2px;
+.pz:hover{ transform: translateY(-3px); box-shadow: inset 0 1px 0 rgba(255,255,255,.35), inset 0 -30px 48px rgba(0,0,0,.12); }
+
+/* 아이콘 캡슐 */
+.pz-icon{
+  width:44px; height:44px; border-radius:14px;
+  display:grid; place-items:center;
+  background: rgba(255,255,255,.35);
 }
+.pz-icon svg{ width:22px; height:22px; fill:#0b1140; }
 
-/* 카드별 색상 */
-.c-edu { background: linear-gradient(135deg,#e7f2ff,#cfe4ff); }
-.c-tech{ background: linear-gradient(135deg,#eee9ff,#ded6ff); }
-.c-eff { background: linear-gradient(135deg,#e6ffe9,#c9f7d2); }
-.c-sec { background: linear-gradient(135deg,#e9f0ff,#d6e3ff); }
-
-/* ===== 더 좁은 화면 보호 장치 ===== */
-@media (max-width: 820px){
-  .lx2-hero__art{ --art-w: clamp(300px, 60vw, 420px); }
-  .card{ padding:14px 16px; }
-  .card__icon{ width:40px;height:40px; }
-  .card__icon svg{ width:20px;height:20px; }
+/* 레이블 */
+.pz-label .ko{
+  font-size: 16px; font-weight: 900; letter-spacing:-.01em;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.pz-label .en{
+  margin-top:3px; font-size:11px; letter-spacing:.12em;
+  color:#1b2555; opacity:.9;
 }
 
-@media (max-width: 600px){
-  .lx2-hero__inner{ gap: 20px; }
-  .lx2-hero__content{ flex-basis: 100%; } /* 위쪽에 먼저, 아래 카드가 다음 줄로 */
-  .lx2-hero__art{ min-width: 100%; max-width: 100%; }
+/* 카드 색상 */
+.pz-edu { background: linear-gradient(180deg,#cfe7ff 0%, #78aaff 100%); }
+.pz-tech{ background: linear-gradient(180deg,#d6cdfd 0%, #a395ff 100%); }
+.pz-eff { background: linear-gradient(180deg,#d2f6b4 0%, #86d06a 100%); }
+.pz-sec { background: linear-gradient(180deg,#cfe0ff 0%, #89adff 100%); }
+
+/* RESPONSIVE */
+@media (max-width: 1080px){
+  .lx2-hero__inner{ grid-template-columns: 1fr 480px; }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*슬라이드 테스트*/
-
+@media (max-width: 920px){
+  .lx2-hero__inner{ grid-template-columns: 1fr; }
+  .lx2-hero__art{ justify-content:flex-start; }
+}
+@media (max-width: 480px){
+  .px-hero__sub{ font-size: 13px; }
+  .lz2-puzzle .ko{ font-size: 15px; }
+}

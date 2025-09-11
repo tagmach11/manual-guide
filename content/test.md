@@ -7,52 +7,49 @@
       <a class="lx2-hero__cta" href="/admin">자세히보기</a>
     </div>
     <div class="lx2-hero__art">
-      <div class="lx2-cards">
-        <div class="card c-edu">
-          <div class="card__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M6 3l12 12-5 1.5 1.5 5L12 19l-1.5-5L6 3z"/>
+      <div class="lx2-puzzle">
+        <div class="pz pz-edu">
+          <span class="pz-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 3l8 8-3 1 3 7-2.3 1-3-7-3 3V3z"/>
             </svg>
-          </div>
-          <div class="card__text">
-            <span class="ko">최적의 학습 경험</span>
-            <span class="en">EDUCATION</span>
+          </span>
+          <div class="pz-label">
+            <div class="ko">최적의 학습 경험</div>
+            <div class="en">EDUCATION</div>
           </div>
         </div>
-        <div class="card c-tech">
-          <div class="card__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5 12a11 11 0 0 1 14 0"/>
-              <path d="M8.5 15.5a6 6 0 0 1 7 0"/>
-              <circle cx="12" cy="19" r="1.5"/>
+        <div class="pz pz-tech">
+          <span class="pz-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 18.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm-6-6a9 9 0 0112 0l1.4-1.4a11 11 0 00-14.8 0L6 12.5zm2.8 2.8a6 6 0 016.4 0l1.4-1.4a8 8 0 00-9.2 0l1.4 1.4z"/>
             </svg>
-          </div>
-          <div class="card__text">
-            <span class="ko">검증된 기술</span>
-            <span class="en">TECHNOLOGY</span>
+          </span>
+          <div class="pz-label">
+            <div class="ko">검증된 기술</div>
+            <div class="en">TECHNOLOGY</div>
           </div>
         </div>
-        <div class="card c-eff">
-          <div class="card__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M3 10h18M4.5 14h15M7 6l2 12M15 6l2 12M11 6l2 12"/>
+        <div class="pz pz-eff">
+          <span class="pz-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 7h3l2 7 2-7h2l2 7 2-7h3l-4 10h-2l-2-6-2 6H7L3 7zm0 9h18v2H3z"/>
             </svg>
-          </div>
-          <div class="card__text">
-            <span class="ko">압도적 가성비</span>
-            <span class="en">EFFICIENCY</span>
+          </span>
+          <div class="pz-label">
+            <div class="ko">압도적 가성비</div>
+            <div class="en">EFFICIENCY</div>
           </div>
         </div>
-        <div class="card c-sec">
-          <div class="card__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="4.5" y="11" width="15" height="9" rx="2"/>
-              <path d="M8 11V8a4 4 0 0 1 8 0v3"/>
+        <div class="pz pz-sec">
+          <span class="pz-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7 10V8a5 5 0 0110 0v2h1a2 2 0 012 2v7a2 2 0 01-2 2H6a2 2 0 01-2-2v-7a2 2 0 012-2h1zm2 0h6V8a3 3 0 10-6 0v2z"/>
             </svg>
-          </div>
-          <div class="card__text">
-            <span class="ko">가장 안정적인 시스템</span>
-            <span class="en">SECURITY</span>
+          </span>
+          <div class="pz-label">
+            <div class="ko">가장 안정적인 시스템</div>
+            <div class="en">SECURITY</div>
           </div>
         </div>
       </div>
