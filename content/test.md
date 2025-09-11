@@ -1,13 +1,11 @@
 <section class="lx2-hero">
 <div class="lx2-hero__inner">
-  <!-- 왼쪽 텍스트 영역 -->
   <div class="lx2-hero__content">
     <h2 class="lx2-hero__title-kr">통합학습관리시스템</h2>
     <h1 class="lx2-hero__brand">LX 2</h1>
     <p class="lx2-hero__sub">
       수많은 기관에 적용되어 운영중인 가장 안정적인 통합 교육시스템
     </p>
-    <!-- 관리자 페이지 링크로 교체하세요 -->
     <a class="lx2-hero__cta" href="/admin">자세히보기</a>
   </div>
   <div class="lx2-hero__art">
