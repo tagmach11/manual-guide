@@ -997,18 +997,16 @@ footer img {
 
 
 
-/* ---- 안전 장치 ---- */
 /* ============ HERO ============ */
-/* 1) 그리드 열을 수축 가능하게: 오른쪽 열이 컨테이너보다 크면 자동으로 줄어듦 */
-/* 레이아웃: 좌/우 2열, 우측 폭은 뷰포트에 맞춰 자동 수축 */
-/* ===== 1) 섹션을 한 화면에 딱 맞게 ===== */
-/* 1) Hero 컨테이너 (한 화면 가득 + 가운데 정렬) */
-/* ===== 배경(그라디언트 + 동심원) ===== */
 .lx2-hero{
   --deep:#061a44; --mid:#0a2a6b; --glow:#0e3a8a;
   --ring:rgba(255,255,255,.06); --ring-gap:64px;
   --focus-x:70%; --focus-y:62%;
-  min-height:100svh; height:100dvh; display:grid; align-items:center;
+
+  min-height:100svh;
+  height:100dvh;
+  display:grid; align-items:center;
+
   position:relative; isolation:isolate; overflow:hidden;
   background:
     radial-gradient(1600px 1400px at var(--focus-x) var(--focus-y),
@@ -1029,39 +1027,44 @@ footer img {
   mix-blend-mode:screen;
 }
 
-/* ===== 레이아웃 ===== */
+/* ============ 그리드 레이아웃 ============ */
 .lx2-hero__inner{
   width:min(1200px,92vw); margin-inline:auto;
-  display:grid; grid-template-columns:1fr auto; align-items:center;
-  gap:clamp(24px,5vw,72px);
+  display:grid;
+  grid-template-columns: minmax(0,1fr) minmax(300px,38vw); /* 왼쪽/오른쪽 안정 */
+  align-items:center;
+  gap:clamp(20px,4vw,64px);
   padding:clamp(24px,6vw,72px);
+  position:relative; z-index:0;
 }
+
+/* 왼쪽 텍스트 */
 .lx2-hero__content>*{margin:0}
 .lx2-hero__content>*+*{margin-top:clamp(8px,1.4vh,14px)}
-
 .lx2-hero__title-kr{font-size:clamp(22px,2.4vw,36px);font-weight:800;white-space:nowrap;color:#fff}
-.lx2-hero__brand{font-size:clamp(48px,7.6vw,120px);font-weight:900;line-height:1;color:#fff}
+.lx2-hero__brand{font-size:clamp(48px,7.2vw,96px);font-weight:900;line-height:1;color:#fff}
 .lx2-hero__cta{
   display:inline-block;margin-top:clamp(10px,1.6vh,16px);
   padding:.6rem 1.2rem;border:1px solid #fff;border-radius:10px;color:#fff;text-decoration:none
 }
 
-/* ===== 카드뷰 2×2 ===== */
+/* ============ 카드 2×2 ============ */
 .lx2-cards{
-  /* 가로 과하게 길어지지 않도록 폭 제한 */
-  width:clamp(460px, 38vw, 560px);
-  display:grid; grid-template-columns:repeat(2, minmax(0,1fr));
-  gap:14px; filter:drop-shadow(0 18px 40px rgba(0,0,0,.28));
+  width:clamp(460px,38vw,560px);
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+  filter:drop-shadow(0 18px 40px rgba(0,0,0,.28));
+  position:relative; z-index:1;
 }
 .card{
-  min-width:0; /* 텍스트 줄바꿈/말줄임 허용 */
+  min-width:0;
   display:flex; align-items:center; gap:12px;
   padding:16px 18px; border-radius:18px;
   background:linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.08));
   border:1px solid rgba(255,255,255,.16);
   box-shadow:0 10px 26px rgba(0,0,0,.22);
-  text-decoration:none; color:#fff;
-  transition:.18s ease; transition-property:transform, box-shadow, background;
+  color:#fff; text-decoration:none;
+  transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
   backdrop-filter:saturate(140%) blur(2px);
 }
 .card:hover{ transform:translateY(-3px); box-shadow:0 14px 34px rgba(0,0,0,.28) }
@@ -1072,7 +1075,7 @@ footer img {
   background:rgba(255,255,255,.9);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.6), 0 6px 16px rgba(0,0,0,.12);
 }
-.card .ico svg{ width:22px; height:22px; color:#0b1140 }
+.card .ico svg{ width:22px; height:22px; color:#0b1140; display:block }
 .card .txt{ display:flex; flex-direction:column; min-width:0 }
 .card .ko{
   font-weight:800; font-size:15px; letter-spacing:-.2px; white-space:nowrap;
@@ -1080,102 +1083,27 @@ footer img {
 }
 .card .en{ margin-top:2px; font-size:11px; letter-spacing:.12em; opacity:.85 }
 
-/* 포인트 톤(살짝 상이) */
+/* 포인트 색조(미묘하게만) */
 .card.edu { background:linear-gradient(180deg,#cfe7ff22,#78aaff22) }
 .card.tech{ background:linear-gradient(180deg,#d6cdfd22,#a395ff22) }
 .card.eff { background:linear-gradient(180deg,#d2f6b422,#86d06a22) }
 .card.sec { background:linear-gradient(180deg,#cfe0ff22,#89adff22) }
 
-/* 반응형: 좁을 경우 1열 스택 */
-@media (max-width:880px){
+/* ============ 반응형 ============ */
+@media (max-width:1100px){
   .lx2-hero__inner{ grid-template-columns:1fr; }
-  .lx2-cards{ width:100%; grid-template-columns:1fr 1fr; }
+  .lx2-cards{ width:min(560px,100%); }
+}
+@media (max-width:880px){
+  .lx2-cards{ grid-template-columns:1fr 1fr; }
 }
 @media (max-width:560px){
   .lx2-cards{ grid-template-columns:1fr; }
 }
 
-/* =========================
-   HERO 범위 전역-규칙 무력화 핫픽스
-   (테마가 링크/아이콘에 붙이는 장식 차단)
-   ========================= */
-
-/* 1) 링크 뒤에 붙는 화살표/아이콘 제거 */
+/* ============ 테마 충돌 예방(Obsidian 등) ============ */
 .lx2-hero a::after,
 .lx2-hero a.external-link::after,
 .lx2-hero .card::before,
-.lx2-hero .card::after {
-  content: none !important;
-  display: none !important;
-  background: none !important;
-}
-
-/* 2) 전역 svg 크기/정렬 재정의 (확대 방지) */
-.lx2-hero svg {
-  width: auto !important;
-  height: auto !important;
-  max-width: none !important;
-  max-height: none !important;
-  display: block;        /* 인라인 갭 제거 */
-}
-
-/* 3) 카드 아이콘 크기 강제(테마 오버라이드 무력화) */
-.lx2-hero .card .ico { 
-  width: 44px !important; 
-  height: 44px !important; 
-  overflow: hidden; 
-}
-.lx2-hero .card .ico svg {
-  width: 22px !important;
-  height: 22px !important;
-  color: #0b1140 !important;
-}
-
-/* 4) 카드 스택이 배경 위로 확실히 올라오도록 */
-.lx2-hero__inner { position: relative; z-index: 0; }
-.lx2-hero .lx2-cards { position: relative; z-index: 1; }
-
-/* 5) 링크 밑줄·색상 전역 규칙 무력화 */
-.lx2-hero a { 
-  text-decoration: none !important; 
-  color: inherit !important; 
-}
-/* 1) 오른쪽 열을 항상 화면 안에 들어오게: 두 열 비율 재정의 */
-.lx2-hero__inner{
-  /* 왼쪽은 줄어들 수 있게, 오른쪽은 최소~최대 폭을 명시 */
-  grid-template-columns: minmax(0, 1fr) minmax(300px, 38vw);
-  gap: clamp(20px, 4vw, 64px);
-}
-
-/* 오른쪽 카드/퍼즐 컨테이너 폭을 그리드 열에 맞춰서 */
-.lx2-puzzle{
-  width: 100%;
-  max-width: 560px;   /* 너무 커지지 않게 상한 두기 */
-}
-
-/* 2) 중간 이하 화면에서는 1열로 아래에 쌓이게 */
-@media (max-width: 1100px){
-  .lx2-hero__inner{ grid-template-columns: 1fr; }
-  .lx2-puzzle{
-    justify-self: start;
-    margin-top: clamp(12px, 2vh, 20px);
-    width: min(560px, 100%);  /* 부모 폭에 맞추기 */
-  }
-}
-
-/* 3) 제목 크기 조금 더 얌전하게(밀어내지 않도록) */
-.lx2-hero__brand{
-  /* 상한을 96px 정도로 낮춤 */
-  font-size: clamp(48px, 7.2vw, 96px);
-}
-@media (max-width: 1200px){
-  .lx2-hero__brand{ font-size: clamp(44px, 8vw, 88px); }
-}
-@media (max-height: 700px){
-  .lx2-hero__brand{ font-size: clamp(42px, 7.2vh, 82px); }
-}
-
-/* (옵션) 그리드가 너무 빡빡할 때 간격도 한 단계 더 조이기 */
-@media (max-width: 980px){
-  .lx2-hero__inner{ gap: clamp(16px, 3vw, 40px); }
-}
+.lx2-hero .card::after { content:none !important; display:none !important; background:none !important; }
+.lx2-hero a{ color:inherit !important; text-decoration:none !important; }
