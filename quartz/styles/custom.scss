@@ -1012,7 +1012,8 @@ footer img {
 .lx2-slider {
   position: relative;
   width: 100%;
-  max-width: 640px;   /* 크기 축소 */
+  max-width: 640px;
+  max-height: 640px;   /* 크기 축소 */
   margin: 0 auto;
   overflow: hidden;
   text-align: center;
