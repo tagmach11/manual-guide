@@ -1080,3 +1080,58 @@ footer img {
 
 /* ===== 4) (옵션) Obsidian 마크다운 여백 제거 ===== */
 .markdown-preview-view .lx2-hero{ margin: 0; }
+
+
+/* ===== HERO 배경: 그라디언트 + 동심원 링 ===== */
+.lx2-hero{
+  /* 손대면 전체 분위기 쉽게 조절됨 */
+  --bg-deep: #061a44;      /* 맨 아래 가장 어두운 톤 */
+  --bg-mid:  #0a2a6b;      /* 중간 파랑 */
+  --bg-glow: #0e3a8a;      /* 오른쪽 발광 기점 */
+  --ring-color: rgba(255,255,255,.06);
+  --ring-gap: 64px;        /* 동심원 간격 */
+  --focus-x: 70%;          /* 패턴 중심 X (오른쪽으로) */
+  --focus-y: 62%;          /* 패턴 중심 Y */
+
+  position: relative;
+  isolation: isolate;      /* 배경과 내부 콘텐츠 레이어 분리 */
+  overflow: hidden;
+
+  /* 메인 그라디언트 (아래→위로 깊어지는 파랑) */
+  background:
+    radial-gradient(1600px 1400px at var(--focus-x) var(--focus-y),
+      var(--bg-glow) 0%,
+      var(--bg-mid) 48%,
+      #081b3a 78%,
+      #060c1f 100%);
+}
+
+/* 반복 동심원 링 */
+.lx2-hero::before{
+  content:"";
+  position:absolute; inset:-10% -8% -8% -8%;
+  z-index:-1;
+  background:
+    repeating-radial-gradient(circle at var(--focus-x) var(--focus-y),
+      transparent 0 calc(var(--ring-gap) - 1px),
+      var(--ring-color) calc(var(--ring-gap) - 1px) var(--ring-gap));
+}
+
+/* 좌측 라이트 + 우측 블루 글로우 */
+.lx2-hero::after{
+  content:"";
+  position:absolute; inset:0;
+  z-index:-1; pointer-events:none;
+  background:
+    radial-gradient(680px 620px at 18% 35%, rgba(255,255,255,.08), transparent 60%),
+    radial-gradient(980px 760px at 86% 66%, rgba(59,130,246,.18), transparent 60%);
+  mix-blend-mode: screen;
+}
+
+/* 카드가 배경 위에서 또렷하게 보이도록 (선택) */
+.lx2-puzzle{ filter: drop-shadow(0 18px 40px rgba(0,0,0,.28)); }
+
+/* 폭이 좁을 때 패턴 중심/간격 살짝 조정 (선택) */
+@media (max-width: 900px){
+  .lx2-hero{ --focus-x: 62%; --ring-gap: 52px; }
+}
