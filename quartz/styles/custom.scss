@@ -1009,116 +1009,51 @@ footer img {
 
 /*슬라이드 테스트*/
 
-.snap-slider {
-  --radius: 16px;
-  --shadow: 0 6px 20px rgba(0, 0, 0, .12);
+.slider {
   position: relative;
-  width: 100%;
   max-width: 720px;
-  margin: 0 auto;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
-}
- 
-.snap-viewport {
+  margin: auto;
   overflow: hidden;
-  border-radius: var(--radius);
-}
- 
-.snap-track {
-  display: flex;
-  scroll-snap-type: x mandatory;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
- 
-  /* 스크롤바 제거 */
-&::-webkit-scrollbar {
-    display: none;
+  border-radius: 16px;
+
+  .slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
   }
-  scrollbar-width: none;
-}
- 
-.snap-slide {
-  position: relative;
-  flex: 0 0 100%;
-  scroll-snap-align: center;
- 
-  img {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
+
+  .slide {
+    flex: 0 0 100%;
+    img {
+      width: 100%;
+      border-radius: 16px;
+      display: block;
+    }
   }
-}
- 
-/* 화살표 네비게이션 */
-.snap-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 36px;
-  height: 36px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, .9);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, .16);
-  font-size: 22px;
-  line-height: 36px;
-  text-align: center;
-  text-decoration: none;
-  color: inherit;
-  z-index: 2;
- 
-  &.prev { left: 8px; }
-&.next { right: 8px; }
-}
- 
-/* 도트 네비게이션 */
-.snap-dots {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 10px;
- 
-  a {
-    width: 8px;
-    height: 8px;
-    border-radius: 999px;
-    background: #d1d5db;
-    display: inline-block;
-    text-decoration: none;
+
+  .nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.8);
+    border: none;
+    border-radius: 50%;
+    width: 36px; height: 36px;
+    cursor: pointer;
+    &.prev { left: 10px; }
+    &.next { right: 10px; }
   }
-}
- 
-/* 다크 테마 */
-:root[data-theme="dark"] {
-  .snap-nav { background: rgba(25, 27, 33, .9); }
-  .snap-dots a { background: #2d3340; }
-}
 
+  .dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
 
-/* 기본 점 스타일 */
-.snap-dots a {
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: #d1d5db;
-  display: inline-block;
-}
-
-/* 현재 선택된 슬라이드 */
-#s1:target ~ .snap-dots a:nth-child(1),
-#s2:target ~ .snap-dots a:nth-child(2),
-#s3:target ~ .snap-dots a:nth-child(3),
-#s4:target ~ .snap-dots a:nth-child(4) {
-  background: #111; /* 활성화된 dot */
-}
-
-:root[data-theme="dark"] {
-  #s1:target ~ .snap-dots a:nth-child(1),
-  #s2:target ~ .snap-dots a:nth-child(2),
-  #s3:target ~ .snap-dots a:nth-child(3),
-  #s4:target ~ .snap-dots a:nth-child(4) {
-    background: #fff; /* 다크모드 */
+    .dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: #ccc;
+      &.active { background: #333; }
+    }
   }
 }
