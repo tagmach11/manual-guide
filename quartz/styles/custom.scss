@@ -1155,7 +1155,7 @@ footer img {
   --tab: 42px; /* 퍼즐 탭/홈 지름 */
   --shine: rgba(255,255,255,.28);
 
-  width: min(520px, 92vw);
+  width: min(300px, 92vw);
   aspect-ratio: 4 / 3;          /* 전체 비율 */
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1199,7 +1199,7 @@ footer img {
   margin-bottom: 10px;
   svg{ width: 28px; height: 28px; fill: #0b1140; opacity:.9; }
 }
-.pz-label .ko{ font-weight: 800; color:#0b1140; letter-spacing:-.01em; }
+.pz-label .ko{ font-weight: 1000; color:#0b1140; letter-spacing:-.01em; }
 .pz-label .en{ margin-top: 3px; font-size: 12px; letter-spacing:.08em; color:#1b2555; opacity:.9; }
 
 /* ===== 색상(그라디언트) ===== */
