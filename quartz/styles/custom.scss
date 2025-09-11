@@ -1142,129 +1142,82 @@ footer img {
 
 /*슬라이드 테스트*/
 
-/* ===== 퍼즐 아트 ===== */
-.lx2-hero{
-  /* 배경색(퍼즐 홈에 쓰는 ‘구멍’ 색상 맞추기용) */
-  --hero-bg-solid: #0a2a6b;
-}
+.lx2-hero {
+  --hero-bg: #0a2a6b;
 
-.lx2-puzzle{
-  /* 퍼즐 전체 크기 조절 */
-  --piece-gap: 14px;
-  --piece-radius: 22px;
-  --tab: 42px; /* 퍼즐 탭/홈 지름 */
-  --shine: rgba(255,255,255,.28);
-
-  width: min(300px, 92vw);
-  aspect-ratio: 4 / 3;          /* 전체 비율 */
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-auto-rows: 1fr;
-  gap: var(--piece-gap);
-  filter: drop-shadow(0 18px 40px rgba(0,0,0,.28));
-}
-
-/* 공통 퍼즐 조각 */
-.pz{
-  position: relative;
-  border-radius: var(--piece-radius);
-  padding: 18px;
-  overflow: hidden;
-  display: grid;
-  grid-template-rows: auto 1fr;
-  align-items: start;
-  color: #0b1140;
-  /* 미세 입체감 */
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.35),
-    inset 0 -30px 50px rgba(0,0,0,.08);
-  transition: transform .15s ease, box-shadow .15s ease;
-
-  /* 상단 하이라이트 */
-  &::after{
-    content:"";
-    position:absolute; inset:0;
-    background: linear-gradient(180deg, var(--shine), transparent 35%);
-    pointer-events:none;
+  .lx2-hero__title-kr {
+    font-size: 1.5rem; /* 크기 줄임 */
+    white-space: nowrap; /* 1줄 고정 */
   }
 
-  &:hover{ transform: translateY(-2px); box-shadow: inset 0 1px 0 rgba(255,255,255,.35), inset 0 -34px 60px rgba(0,0,0,.1); }
-}
+  .lx2-hero__brand {
+    font-size: 3rem;
+    font-weight: 900;
+  }
 
-.pz-icon{
-  width: 56px; height: 56px;
-  border-radius: 14px;
-  background: rgba(255,255,255,.3);
-  display: grid; place-items: center;
-  margin-bottom: 10px;
-  svg{ width: 28px; height: 28px; fill: #0b1140; opacity:.9; }
-}
-.pz-label .ko{ font-weight: 1000; color:#0b1140; letter-spacing:-.01em; }
-.pz-label .en{ margin-top: 3px; font-size: 12px; letter-spacing:.08em; color:#1b2555; opacity:.9; }
+  .lx2-hero__sub {
+    font-size: 0.95rem;
+    color: #d1d5db;
+  }
 
-/* ===== 색상(그라디언트) ===== */
-.pz-edu{ background: linear-gradient(180deg,#cfe7ff 0%, #78aaff 100%); }
-.pz-tech{ background: linear-gradient(180deg,#d6cdfd 0%, #a395ff 100%); }
-.pz-eff{ background: linear-gradient(180deg,#d2f6b4 0%, #86d06a 100%); }
-.pz-sec{ background: linear-gradient(180deg,#cfe0ff 0%, #89adff 100%); }
+  .lx2-hero__cta {
+    margin-top: 1rem;
+    display: inline-block;
+    padding: 0.5rem 1.2rem;
+    border: 1px solid #fff;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #fff;
+    text-decoration: none;
+  }
 
-/* ===== 퍼즐 탭/홈 만들기 ===== */
-/* EDU: 오른쪽 탭, 아래 홈 */
-.pz-edu::before,
-.pz-tech::before,
-.pz-eff::before,
-.pz-sec::before{
-  content:""; position:absolute; border-radius:50%;
-}
-.pz-edu::before{
-  /* 오른쪽 탭(튀어나온 원) */
-  width: var(--tab); height: var(--tab);
-  right: calc(-.5 * var(--tab)); top: 50%; transform: translateY(-50%);
-  background: inherit; /* 배경 연속성 */
-  box-shadow: inset 0 -8px 12px rgba(0,0,0,.07);
-}
-.pz-edu::after{
-  /* 아래 홈(파여 있는 원) */
-  content:""; position:absolute; border-radius:50%;
-  width: var(--tab); height: var(--tab);
-  left: 50%; bottom: calc(-.5 * var(--tab)); transform: translateX(-50%);
-  background: var(--hero-bg-solid);
-  box-shadow: 0 -2px 0 rgba(255,255,255,.25) inset;
-}
+  .lx2-puzzle {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    max-width: 420px;
+  }
 
-/* TECH: 왼쪽 홈 */
-.pz-tech::before{
-  width: var(--tab); height: var(--tab);
-  left: calc(-.5 * var(--tab)); top: 50%; transform: translateY(-50%);
-  background: var(--hero-bg-solid);
-  box-shadow: 0 -2px 0 rgba(255,255,255,.25) inset;
-}
+  .pz {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #f0f4ff, #dbeafe);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .1);
+    transition: transform 0.2s ease;
 
-/* EFF: 오른쪽 탭 */
-.pz-eff::before{
-  width: var(--tab); height: var(--tab);
-  right: calc(-.5 * var(--tab)); top: 50%; transform: translateY(-50%);
-  background: inherit;
-  box-shadow: inset 0 -8px 12px rgba(0,0,0,.07);
-}
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, .15);
+    }
 
-/* SEC: 왼쪽 홈, 위쪽 탭 */
-.pz-sec::before{
-  width: var(--tab); height: var(--tab);
-  left: calc(-.5 * var(--tab)); top: 50%; transform: translateY(-50%);
-  background: var(--hero-bg-solid);
-  box-shadow: 0 -2px 0 rgba(255,255,255,.25) inset;
-}
-.pz-sec::after{
-  content:""; position:absolute; border-radius:50%;
-  width: var(--tab); height: var(--tab);
-  left: 50%; top: calc(-.5 * var(--tab)); transform: translateX(-50%);
-  background: inherit;
-  box-shadow: inset 0 -8px 12px rgba(0,0,0,.07);
-}
+    .pz-icon {
+      font-size: 20px; /* 아이콘 크기 ↓ */
+      flex-shrink: 0;
+    }
 
-/* 반응형 폭이 줄면 퍼즐 살짝 축소 */
-@media (max-width: 480px){
-  .lx2-puzzle{ --tab: 34px; --piece-radius: 18px; }
-  .pz-icon{ width: 50px; height: 50px; svg{ width: 24px; height: 24px; } }
+    .pz-label {
+      display: flex;
+      flex-direction: column;
+
+      .ko {
+        font-size: 1rem;   /* 강조 */
+        font-weight: 600;
+        color: #1e293b;
+      }
+
+      .en {
+        font-size: 0.7rem; /* 작게 보조 */
+        letter-spacing: 0.05em;
+        color: #475569;
+      }
+    }
+  }
+
+  .pz-edu { background: linear-gradient(135deg, #e0f2fe, #bae6fd); }
+  .pz-tech { background: linear-gradient(135deg, #ede9fe, #ddd6fe); }
+  .pz-eff { background: linear-gradient(135deg, #dcfce7, #bbf7d0); }
+  .pz-sec { background: linear-gradient(135deg, #e0f2fe, #c7d2fe); }
 }
