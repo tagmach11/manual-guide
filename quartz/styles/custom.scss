@@ -1095,3 +1095,48 @@ footer img {
   .lx2-cards{ grid-template-columns:1fr; }
 }
 
+/* =========================
+   HERO 범위 전역-규칙 무력화 핫픽스
+   (테마가 링크/아이콘에 붙이는 장식 차단)
+   ========================= */
+
+/* 1) 링크 뒤에 붙는 화살표/아이콘 제거 */
+.lx2-hero a::after,
+.lx2-hero a.external-link::after,
+.lx2-hero .card::before,
+.lx2-hero .card::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+}
+
+/* 2) 전역 svg 크기/정렬 재정의 (확대 방지) */
+.lx2-hero svg {
+  width: auto !important;
+  height: auto !important;
+  max-width: none !important;
+  max-height: none !important;
+  display: block;        /* 인라인 갭 제거 */
+}
+
+/* 3) 카드 아이콘 크기 강제(테마 오버라이드 무력화) */
+.lx2-hero .card .ico { 
+  width: 44px !important; 
+  height: 44px !important; 
+  overflow: hidden; 
+}
+.lx2-hero .card .ico svg {
+  width: 22px !important;
+  height: 22px !important;
+  color: #0b1140 !important;
+}
+
+/* 4) 카드 스택이 배경 위로 확실히 올라오도록 */
+.lx2-hero__inner { position: relative; z-index: 0; }
+.lx2-hero .lx2-cards { position: relative; z-index: 1; }
+
+/* 5) 링크 밑줄·색상 전역 규칙 무력화 */
+.lx2-hero a { 
+  text-decoration: none !important; 
+  color: inherit !important; 
+}
