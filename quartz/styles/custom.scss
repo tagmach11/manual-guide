@@ -993,10 +993,143 @@ footer img {
   mix-blend-mode: normal !important;
   color-adjust: exact !important;     /* 브라우저 색상 보정 차단 */
   -webkit-print-color-adjust: exact !important;
+}       
+
+
+
+
+
+
+
+
+
+
+/*테스트진행*/
+
+/* ===== LX2 Hero (Main Banner) ===== */
+.lx2-hero{
+  /* 사이즈/색상 변수 */
+  --hero-max: 1200px;
+  --pad-y: 72px;           /* 상하 여백 */
+  --brand: #ffffff;
+  --text: #dbe7ff;
+  --accent: #79a6ff;
+  --cta-bg: #ffffff;
+  --cta-text: #0a2a6b;
+
+  /* 깊은 블루 + 원형 웨이브(호) 배경 */
+  background:
+    radial-gradient(1200px 1200px at 75% 50%, rgba(255,255,255,.06), transparent 35%),
+    radial-gradient(1200px 1200px at 20% 30%, rgba(255,255,255,.04), transparent 30%),
+    /* 반복 원형으로 ‘호(arc)’ 느낌 */
+    repeating-radial-gradient(circle at 70% 50%,
+      rgba(255,255,255,.05) 0 2px,
+      transparent 2px 52px),
+    linear-gradient(140deg, #0b2e83 0%, #0a2a6b 45%, #061d4e 100%);
+  color: var(--text);
+  padding: var(--pad-y) 16px;
 }
 
+.lx2-hero__inner{
+  max-width: var(--hero-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  gap: clamp(24px, 4vw, 56px);
+}
 
+.lx2-hero__content{
+  min-width: 0;
+}
 
+.lx2-hero__title-kr{
+  margin: 0 0 6px;
+  font-weight: 900;
+  color: var(--brand);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  font-size: clamp(26px, 4.2vw, 56px);
+}
+
+.lx2-hero__brand{
+  margin: 0 0 14px;
+  font-weight: 900;
+  color: var(--brand);
+  letter-spacing: 0.02em;
+  line-height: 1;
+  font-size: clamp(48px, 9vw, 112px); /* LX 2 크게 */
+}
+
+.lx2-hero__sub{
+  margin: 10px 0 26px;
+  color: var(--text);
+  opacity: .98;
+  font-size: clamp(14px, 1.6vw, 18px);
+}
+
+.lx2-hero__cta{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 26px;
+  border-radius: 999px;
+  background: var(--cta-bg);
+  color: var(--cta-text);
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgba(0,0,0,.18);
+  transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+}
+.lx2-hero__cta::after{
+  content: "↗";
+  font-size: 18px;
+  line-height: 1;
+}
+.lx2-hero__cta:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(0,0,0,.22);
+}
+.lx2-hero__cta:active{
+  transform: translateY(0);
+  box-shadow: 0 8px 20px rgba(0,0,0,.18);
+}
+
+.lx2-hero__art{
+  display: grid;
+  place-items: center;
+}
+.lx2-hero__art img{
+  width: min(520px, 90%);
+  height: auto;
+  border-radius: 18px;
+  box-shadow:
+    0 18px 40px rgba(0,0,0,.28),
+    0 0 0 1px rgba(255,255,255,.06) inset;
+}
+
+/* 반응형: 좁은 화면에서는 세로 스택 */
+@media (max-width: 900px){
+  .lx2-hero__inner{
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+  .lx2-hero__content{
+    order: 1;
+  }
+  .lx2-hero__art{
+    order: 2;
+  }
+  .lx2-hero{
+    --pad-y: 56px;
+  }
+}
+
+/* 옵시디언/퀴츠 다크모드 변수와도 잘 어울리게 */
+:root[data-theme="dark"] .lx2-hero{
+  --cta-bg: #eaf1ff;
+  --cta-text: #0a2a6b;
+}
 
 
 
@@ -1009,108 +1142,3 @@ footer img {
 
 /*슬라이드 테스트*/
 
-/* ===== LX2 Slider (JS 없이 라디오/라벨로 제어) ===== */
-.lx2-slider{
-  /* 원하는 사이즈 여기서 조절 */
-  --w: 560px;     /* 가로폭 */
-  --h: 320px;     /* 세로높이 */
-  --r: 12px;      /* 모서리 */
-  --shadow: 0 6px 20px rgba(0,0,0,.10);
-
-  width: min(100%, var(--w));
-  margin: 0 auto 12px;
-  position: relative;
-  text-align: center;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
-
-  input[type="radio"]{ display:none; }
-
-  /* 상단 타이틀 */
-  .lx2-caption{
-    min-height: 1.6em;
-    margin: 6px 0 8px;
-    font-weight: 800;
-    font-size: 1.05rem;
-    letter-spacing: -.01em;
-    .title{ display:none; }
-  }
-
-  /* 뷰포트/트랙 */
-  .lx2-viewport{
-    overflow:hidden; border-radius: var(--r);
-    box-shadow: var(--shadow);
-    background: var(--background-secondary, #f5f7fb);
-  }
-  .lx2-track{
-    display:flex; width:400%;
-    transition: transform .35s ease-in-out;
-    will-change: transform;
-  }
-  .lx2-slide{
-    flex: 0 0 100%;
-    display:grid; place-items:center;
-    img{
-      width:100%; height: var(--h); object-fit: cover;
-      display:block; border-radius: var(--r);
-    }
-  }
-
-  /* 상태 전환 */
-  #lx2-s1:checked ~ .lx2-track,
-  #lx2-s1:checked ~ .lx2-viewport .lx2-track { transform: translateX(0%); }
-  #lx2-s2:checked ~ .lx2-track,
-  #lx2-s2:checked ~ .lx2-viewport .lx2-track { transform: translateX(-100%); }
-  #lx2-s3:checked ~ .lx2-track,
-  #lx2-s3:checked ~ .lx2-viewport .lx2-track { transform: translateX(-200%); }
-  #lx2-s4:checked ~ .lx2-track,
-  #lx2-s4:checked ~ .lx2-viewport .lx2-track { transform: translateX(-300%); }
-
-  /* 타이틀 스위칭 */
-  #lx2-s1:checked ~ .lx2-caption .t1,
-  #lx2-s2:checked ~ .lx2-caption .t2,
-  #lx2-s3:checked ~ .lx2-caption .t3,
-  #lx2-s4:checked ~ .lx2-caption .t4 { display:inline; }
-
-  /* 화살표: DOM엔 여러 개지만 항상 2개만 보이게 */
-  .lx2-arrows{
-    position:absolute; inset:0; pointer-events:none;
-    display:flex; align-items:center; justify-content:space-between;
-    padding: 0 8px; transform: translateY(calc(var(--h) / 2 + 22px)) translateY(-50%);
-  }
-  .lx2-arrows label{
-    pointer-events:auto; user-select:none; cursor:pointer;
-    width: 34px; height: 34px; border-radius: 999px;
-    display:flex; align-items:center; justify-content:center;
-    background: rgba(255,255,255,.92);
-    box-shadow: 0 2px 10px rgba(0,0,0,.15);
-    font-size: 20px; line-height: 1; font-weight: 700;
-    transition: transform .12s ease, box-shadow .12s ease;
-  }
-  .lx2-arrows label:hover{ transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,.18); }
-
-  /* 기본은 전부 숨김 */
-  .lx2-arrows label{ display:none; }
-
-  /* 현재 슬라이드에서 보일 페어만 on */
-  #lx2-s1:checked ~ .lx2-arrows label[for="lx2-s4"],
-  #lx2-s1:checked ~ .lx2-arrows label[for="lx2-s2"] { display:flex; }
-  #lx2-s2:checked ~ .lx2-arrows label[for="lx2-s1"],
-  #lx2-s2:checked ~ .lx2-arrows label[for="lx2-s3"] { display:flex; }
-  #lx2-s3:checked ~ .lx2-arrows label[for="lx2-s2"],
-  #lx2-s3:checked ~ .lx2-arrows label[for="lx2-s4"] { display:flex; }
-  #lx2-s4:checked ~ .lx2-arrows label[for="lx2-s3"],
-  #lx2-s4:checked ~ .lx2-arrows label[for="lx2-s1"] { display:flex; }
-
-  /* 도트 */
-  .lx2-dots{
-    display:flex; justify-content:center; gap:8px; margin-top:10px;
-  }
-  .lx2-dots label{
-    width:8px; height:8px; border-radius:999px;
-    background:#d1d5db; cursor:pointer; transition: transform .12s ease, background .12s ease;
-  }
-  .lx2-dots label:hover{ transform: scale(1.15); }
-  #lx2-s1:checked ~ .lx2-dots label[for="lx2-s1"],
-  #lx2-s2:checked ~ .lx2-dots label[for="lx2-s2"],
-  #lx2-s3:checked ~ .lx2-dots label[for="lx2-s3"],
-  #lx2-s4:checked ~ .lx2-dots label[for="lx2-s4"]{ background:#3b82f6; }
