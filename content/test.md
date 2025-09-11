@@ -30,7 +30,7 @@
             <div class="en">TECHNOLOGY</div>
           </div>
         </div>
-		   <div class="pz pz-eff">
+        <div class="pz pz-eff">
           <div class="pz-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none">
               <path d="M3 10h18M4 14h16M6 10l2 8h2l2-8 2 8h2l2-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>

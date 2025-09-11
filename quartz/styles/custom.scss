@@ -1135,3 +1135,67 @@ footer img {
 @media (max-width: 900px){
   .lx2-hero{ --focus-x: 62%; --ring-gap: 52px; }
 }
+
+/* 오른쪽 카드 스택 레이아웃 */
+.lx2-hero__inner{
+  display:grid;
+  grid-template-columns: 1fr auto;       /* 왼쪽 텍스트 / 오른쪽 카드 */
+  gap: clamp(28px, 4vw, 64px);
+  align-items:center;
+  min-height: clamp(560px, 100vh, 800px);
+  padding: clamp(24px, 6vw, 72px);
+}
+
+.lx2-hero__cards{
+  width: clamp(280px, 30vw, 420px);
+  display:grid;
+  gap: 14px;
+}
+
+/* 단일 카드 */
+.hc{
+  position:relative;
+  display:flex; align-items:center; gap:12px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+  border: 1px solid rgba(255,255,255,.14);
+  box-shadow: 0 10px 26px rgba(0,0,0,.24);
+  text-decoration:none;
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+  backdrop-filter: saturate(140%) blur(2px);
+}
+.hc:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 14px 34px rgba(0,0,0,.28);
+  background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.08));
+}
+
+/* 아이콘 박스 */
+.hc-ico{
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  display:grid; place-items:center;
+  background: rgba(255,255,255,.16);
+  flex-shrink:0;
+}
+.hc-ico svg{ width:22px; height:22px; fill:#fff; opacity:.95; }
+
+/* 텍스트 */
+.hc-txt b{ color:#fff; font-weight:800; font-size:15px; letter-spacing:-.2px; }
+.hc-txt small{ display:block; margin-top:2px; font-size:11px; letter-spacing:.12em; color:rgba(255,255,255,.78); }
+
+/* 카드별 살짝 다른 포인트(아이콘 배경 톤) */
+.hc.edu  .hc-ico{ background: linear-gradient(135deg,#b4d5ff33,#72a8ff33); }
+.hc.tech .hc-ico{ background: linear-gradient(135deg,#cdbbff33,#998bff33); }
+.hc.eff  .hc-ico{ background: linear-gradient(135deg,#c6f6c633,#6ad06a33); }
+.hc.sec  .hc-ico{ background: linear-gradient(135deg,#cfe0ff33,#89adff33); }
+
+/* 반응형: 좁은 화면에서 2열 카드 */
+@media (max-width: 880px){
+  .lx2-hero__inner{ grid-template-columns: 1fr; }
+  .lx2-hero__cards{
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+}
