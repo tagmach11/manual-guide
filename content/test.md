@@ -10,12 +10,8 @@
     <!-- 관리자 페이지 링크로 교체하세요 -->
     <a class="lx2-hero__cta" href="/admin">자세히보기</a>
   </div>
-
-  <!-- 오른쪽 아트: 퍼즐 4타일 -->
   <div class="lx2-hero__art">
     <div class="lx2-puzzle" aria-label="LX2 핵심 가치 퍼즐">
-
-      <!-- EDU -->
       <div class="pz pz-edu" aria-label="최적의 학습 경험 - EDUCATION">
         <div class="pz-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24">
@@ -27,8 +23,6 @@
           <div class="en">EDUCATION</div>
         </div>
       </div>
-
-      <!-- TECH -->
       <div class="pz pz-tech" aria-label="검증된 기술 - TECHNOLOGY">
         <div class="pz-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24">
@@ -39,9 +33,7 @@
           <div class="ko">검증된 기술</div>
           <div class="en">TECHNOLOGY</div>
         </div>
-      </div>
-
-      <!-- EFF -->
+      </div> 
       <div class="pz pz-eff" aria-label="압도적 가성비 - EFFICIENCY">
         <div class="pz-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24">
@@ -53,8 +45,6 @@
           <div class="en">EFFICIENCY</div>
         </div>
       </div>
-
-      <!-- SEC -->
       <div class="pz pz-sec" aria-label="가장 안정적인 시스템 - SECURITY">
         <div class="pz-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24">
