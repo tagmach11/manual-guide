@@ -1,7 +1,5 @@
 <section class="lx2-hero">
   <div class="lx2-hero__inner">
-    
-    <!-- 왼쪽 텍스트 영역 -->
     <div class="lx2-hero__content">
       <h2 class="lx2-hero__title-kr">통합학습관리시스템</h2>
       <h1 class="lx2-hero__brand">LX 2</h1>
@@ -10,13 +8,10 @@
       </p>
       <a class="lx2-hero__cta" href="/admin">자세히보기</a>
     </div>
-    <!-- // lx2-hero__content -->
 
-    <!-- 오른쪽 아트: 퍼즐 4타일 -->
     <div class="lx2-hero__art">
       <div class="lx2-puzzle" aria-label="LX2 핵심 가치 퍼즐">
 
-        <!-- EDU -->
         <div class="pz pz-edu" aria-label="최적의 학습 경험 - EDUCATION">
           <div class="pz-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24">
@@ -28,9 +23,7 @@
             <div class="en">EDUCATION</div>
           </div>
         </div>
-        <!-- // EDU -->
 
-        <!-- TECH -->
         <div class="pz pz-tech" aria-label="검증된 기술 - TECHNOLOGY">
           <div class="pz-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24">
@@ -41,10 +34,8 @@
             <div class="ko">검증된 기술</div>
             <div class="en">TECHNOLOGY</div>
           </div>
-        </div>
-        <!-- // TECH -->
+        </div> 
 
-        <!-- EFF -->
         <div class="pz pz-eff" aria-label="압도적 가성비 - EFFICIENCY">
           <div class="pz-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24">
@@ -56,9 +47,7 @@
             <div class="en">EFFICIENCY</div>
           </div>
         </div>
-        <!-- // EFF -->
 
-        <!-- SEC -->
         <div class="pz pz-sec" aria-label="가장 안정적인 시스템 - SECURITY">
           <div class="pz-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24">
@@ -70,15 +59,12 @@
             <div class="en">SECURITY</div>
           </div>
         </div>
-        <!-- // SEC -->
 
       </div>
-      <!-- // lx2-puzzle -->
     </div>
-    <!-- // lx2-hero__art -->
 
   </div>
-  <!-- // lx2-hero__inner -->
 </section>
+
 
 
