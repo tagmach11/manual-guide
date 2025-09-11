@@ -8,7 +8,6 @@
       </p>
       <a class="lx2-hero__cta" href="/admin">자세히보기</a>
     </div>
-
     <div class="lx2-hero__art">
       <div class="lx2-puzzle">
         <div class="pz pz-edu">
