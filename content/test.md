@@ -1,57 +1,75 @@
-<section class="lx2-hero">
-  <div class="lx2-hero__inner">
-    <div class="lx2-hero__content">
-      <h2 class="lx2-hero__title-kr">통합학습관리시스템</h2>
-      <h1 class="lx2-hero__brand">LX 2</h1>
-      <a class="lx2-hero__cta" href="/admin">자세히보기</a>
-    </div>
-    <div class="lx2-cards">
-      <a class="card edu" href="#">
-        <span class="ico">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M5 3l14 7-7 3 3 8-4-7-6 2L5 3z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-          </svg>
-        </span>
-        <span class="txt">
-          <b class="ko">최적의 학습 경험</b>
-          <small class="en">EDUCATION</small>
-        </span>
-      </a>
-      <a class="card tech" href="#">
-        <span class="ico">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M3 9a14 14 0 0 1 18 0M6 12a10 10 0 0 1 12 0M9 15a6 6 0 0 1 6 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            <circle cx="12" cy="18" r="1.6" fill="currentColor"/>
-          </svg>
-        </span>
-        <span class="txt">
-          <b class="ko">검증된 기술</b>
-          <small class="en">TECHNOLOGY</small>
-        </span>
-      </a>
-      <a class="card eff" href="#">
-        <span class="ico">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M3 10h18M4 14h16M6 10l2 8h2l2-8 2 8h2l2-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
-        <span class="txt">
-          <b class="ko">압도적 가성비</b>
-          <small class="en">EFFICIENCY</small>
-        </span>
-      </a>
-      <a class="card sec" href="#">
-        <span class="ico">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <rect x="4.8" y="10.5" width="14.4" height="9" rx="2.2" stroke="currentColor" stroke-width="1.8"/>
-            <path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-          </svg>
-        </span>
-        <span class="txt">
-          <b class="ko">가장 안정적인 시스템</b>
-          <small class="en">SECURITY</small>
-        </span>
-      </a>
-    </div>
-  </div>
+---
+title: LX2 랜딩
+cssclass: lx2-landing
+---
+
+# 통합 학습관리시스템 LX2
+
+<section class="lx2-cards">
+  <a class="lx2-card" href="#">
+    <span class="ico">🎓</span>
+    <span class="text">
+      <span class="ttl">최적의 학습 경험</span>
+      <span class="sub">EDUCATION</span>
+    </span>
+  </a>
+  <a class="lx2-card" href="#">
+    <span class="ico">📶</span>
+    <span class="text">
+      <span class="ttl">검증된 기술</span>
+      <span class="sub">TECHNOLOGY</span>
+    </span>
+  </a>
+  <a class="lx2-card" href="#">
+    <span class="ico">⚡</span>
+    <span class="text">
+      <span class="ttl">압도적 가성비</span>
+      <span class="sub">EFFICIENCY</span>
+    </span>
+  </a>
+  <a class="lx2-card" href="#">
+    <span class="ico">🔒</span>
+    <span class="text">
+      <span class="ttl">가장 안정적인 시스템</span>
+      <span class="sub">SECURITY</span>
+    </span>
+  </a>
 </section>
+
+<p class="lx2-cta"><a class="btn" href="#">자세히보기</a></p>
+
+<style>
+/* Quartz 4.5용 최소 스타일 (다크/라이트 자동 호환) */
+.lx2-landing h1{white-space:nowrap;letter-spacing:.3px;margin:0 0 20px;}
+.lx2-landing .lx2-cards{
+  display:grid;gap:16px;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+.lx2-landing .lx2-card{
+  display:flex;align-items:center;gap:14px;
+  padding:18px 20px;border:1px solid var(--qz-border,rgba(15,23,42,.12));
+  border-radius:16px;background:rgba(255,255,255,.6);
+  backdrop-filter:saturate(140%) blur(2px); text-decoration:none;
+}
+.theme-dark .lx2-landing .lx2-card{background:rgba(2,6,23,.35);}
+.lx2-landing .ico{
+  width:56px;height:56px;display:grid;place-items:center;
+  font-size:28px;border-radius:14px;background:rgba(0,0,0,.06)
+}
+.theme-dark .lx2-landing .ico{background:rgba(255,255,255,.08);}
+.lx2-landing .text{display:flex;flex-direction:column;line-height:1.15}
+.lx2-landing .ttl{font-weight:800;font-size:1.05rem}
+.lx2-landing .sub{font-size:.8rem;opacity:.72;margin-top:2px}
+.lx2-landing .lx2-cta{margin-top:18px}
+.lx2-landing .btn{
+  display:inline-block;padding:12px 18px;border-radius:12px;
+  border:1px solid var(--qz-border,rgba(15,23,42,.12)); text-decoration:none
+}
+@media (max-width: 900px){
+  .lx2-landing .lx2-cards{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media (max-width: 520px){
+  .lx2-landing .lx2-cards{grid-template-columns:1fr;}
+  .lx2-landing h1{font-size:1.6rem;}
+}
+</style>
