@@ -1084,3 +1084,62 @@ footer img {
   .lx2-hero__inner{ grid-template-columns: 1fr; }
   .lx2-hero__art{ justify-self:start; }
 }
+
+
+/* =========================
+   HERO 배경 (그라디언트 + 동심원)
+   ========================= */
+.lx2-hero{
+  /* 배경 색감/강도 조절용 변수 */
+  --bg-deep: #071c44;
+  --bg-mid:  #0a2a6b;
+  --bg-glow: #0e3a8a;     /* 오른쪽 발광 기점 */
+  --ring:    rgba(255,255,255,.055);
+  --ring-gap: 60px;       /* 링 간격 */
+  --focus-x: 65%;         /* 패턴 중심 X (오른쪽으로) */
+  --focus-y: 55%;         /* 패턴 중심 Y */
+
+  position: relative;
+  isolation: isolate;     /* 배경과 내용 레이어 분리 */
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--bg-deep), var(--bg-mid));
+}
+
+/* 메인 그라디언트 + 동심원 링 */
+.lx2-hero::before{
+  content:"";
+  position:absolute; inset:-10% -6% -6% -6%; /* 살짝 여유 */
+  z-index:-1;
+  background:
+    /* 깊이감 있는 파란 그라디언트 */
+    radial-gradient(1200px 1200px at var(--focus-x) var(--focus-y),
+      var(--bg-glow) 0%,
+      var(--bg-mid) 45%,
+      #0a214b 75%,
+      #070f23 100%),
+    /* 반복 동심원 링 */
+    repeating-radial-gradient(circle at var(--focus-x) var(--focus-y),
+      transparent 0 calc(var(--ring-gap) - 2px),
+      var(--ring)    calc(var(--ring-gap) - 2px) var(--ring-gap));
+}
+
+/* 좌측 라이트/오른쪽 살짝 블루 글로우 */
+.lx2-hero::after{
+  content:"";
+  position:absolute; inset:0;
+  z-index:-1; pointer-events:none;
+  background:
+    radial-gradient(600px 600px at 22% 38%, rgba(255,255,255,.07), transparent 70%),
+    radial-gradient(900px 700px at 85% 65%, rgba(59,130,246,.15), transparent 60%);
+  mix-blend-mode: screen; /* 살짝 빛 번짐 느낌 */
+}
+
+/* 카드가 배경 위에서 더 또렷하게 보이도록 살짝 강화 (선택) */
+.lx2-puzzle{
+  filter: drop-shadow(0 18px 40px rgba(0,0,0,.28));
+}
+
+/* 화면 좁을 때도 패턴이 자연스럽게 보이도록 간격 살짝 축소 (선택) */
+@media (max-width: 800px){
+  .lx2-hero{ --ring-gap: 48px; --focus-x: 60%; }
+}
