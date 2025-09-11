@@ -1142,82 +1142,131 @@ footer img {
 
 /*슬라이드 테스트*/
 
+/* ===== 레이아웃 ===== */
 .lx2-hero {
-  --hero-bg: #0a2a6b;
+  --art-w: 440px;               /* 오른쪽 카드 영역 너비 */
+  --gap: 48px;
+
+  .lx2-hero__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap);
+  }
+
+  /* 왼쪽 영역: 1줄 고정 */
+  .lx2-hero__content {
+    flex: 1 1 auto;
+    min-width: 640px;           /* 타이틀이 1줄로 들어가도록 폭 확보 */
+  }
 
   .lx2-hero__title-kr {
-    font-size: 1.5rem; /* 크기 줄임 */
-    white-space: nowrap; /* 1줄 고정 */
+    margin: 0 0 .35rem;
+    font-weight: 800;
+    font-size: 1.35rem;         /* 줄였음 */
+    letter-spacing: -0.02em;
+    white-space: nowrap;        /* 한 줄 고정 */
   }
 
   .lx2-hero__brand {
-    font-size: 3rem;
+    margin: 0 0 .6rem;
+    font-size: 3.2rem;
     font-weight: 900;
+    line-height: 1;
+    white-space: nowrap;
   }
 
   .lx2-hero__sub {
-    font-size: 0.95rem;
+    margin: 0 0 1.1rem;
+    font-size: .95rem;
     color: #d1d5db;
+    white-space: nowrap;         /* 한 줄 고정 */
+    overflow: hidden;
+    text-overflow: ellipsis;     /* 혹시 넘치면 말줄임 */
   }
 
   .lx2-hero__cta {
-    margin-top: 1rem;
     display: inline-block;
-    padding: 0.5rem 1.2rem;
+    padding: .55rem 1.25rem;
     border: 1px solid #fff;
-    border-radius: 8px;
-    font-size: 0.9rem;
+    border-radius: 10px;
     color: #fff;
     text-decoration: none;
+    font-size: .92rem;
   }
 
-  .lx2-puzzle {
+  /* 오른쪽 카드 2×2 */
+  .lx2-hero__art {
+    flex: 0 0 var(--art-w);
+    max-width: var(--art-w);
+  }
+
+  .lx2-cards {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr 1fr;
     gap: 14px;
-    max-width: 420px;
   }
 
-  .pz {
-    display: flex;
+  .card {
+    display: grid;
+    grid-template-columns: 44px 1fr; /* 아이콘 작게, 텍스트 크게 */
     align-items: center;
-    gap: 10px;
-    padding: 16px;
+    gap: 12px;
+    padding: 16px 18px;
     border-radius: 16px;
-    background: linear-gradient(135deg, #f0f4ff, #dbeafe);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, .1);
-    transition: transform 0.2s ease;
+    background: linear-gradient(135deg, #f3f6ff 0%, #e8edff 100%);
+    box-shadow: 0 8px 22px rgba(0,0,0,.12);
+    transition: transform .18s ease, box-shadow .18s ease;
 
     &:hover {
       transform: translateY(-3px);
-      box-shadow: 0 6px 14px rgba(0, 0, 0, .15);
+      box-shadow: 0 12px 26px rgba(0,0,0,.16);
     }
 
-    .pz-icon {
-      font-size: 20px; /* 아이콘 크기 ↓ */
-      flex-shrink: 0;
+    .card__icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: grid; place-items: center;
+      background: rgba(255,255,255,.55);
+      color: #0b1140;
+
+      svg { width: 22px; height: 22px; }
     }
 
-    .pz-label {
-      display: flex;
-      flex-direction: column;
-
+    .card__text {
+      display: flex; flex-direction: column;
       .ko {
-        font-size: 1rem;   /* 강조 */
-        font-weight: 600;
-        color: #1e293b;
+        font-size: 1.02rem;      /* 크게, 또렷하게 */
+        font-weight: 700;
+        color: #141b38;
+        letter-spacing: -0.01em;
       }
-
       .en {
-        font-size: 0.7rem; /* 작게 보조 */
-        letter-spacing: 0.05em;
-        color: #475569;
+        font-size: .72rem;
+        color: #4b5563;
+        letter-spacing: .06em;
+        margin-top: 2px;
       }
     }
   }
 
-  .pz-edu { background: linear-gradient(135deg, #e0f2fe, #bae6fd); }
-  .pz-tech { background: linear-gradient(135deg, #ede9fe, #ddd6fe); }
-  .pz-eff { background: linear-gradient(135deg, #dcfce7, #bbf7d0); }
-  .pz-sec { background: linear-gradient(135deg, #e0f2fe, #c7d2fe); }
+  /* 카드 색 */
+  .c-edu { background: linear-gradient(135deg,#e7f2ff,#cfe4ff); }
+  .c-tech{ background: linear-gradient(135deg,#eee9ff,#ded6ff); }
+  .c-eff { background: linear-gradient(135deg,#e6ffe9,#c9f7d2); }
+  .c-sec { background: linear-gradient(135deg,#e9f0ff,#d6e3ff); }
+
+  /* 좁은 화면 대응(가능하면 1줄 유지, 너무 좁으면 글자만 살짝 줄임) */
+  @media (max-width: 1200px){
+    .lx2-hero__content{ min-width: 580px; }
+    .lx2-hero__title-kr{ font-size: 1.25rem; }
+    .lx2-hero__brand{ font-size: 3rem; }
+  }
+  @media (max-width: 1024px){
+    .lx2-hero__content{ min-width: 520px; }
+    .lx2-hero__title-kr{ font-size: 1.15rem; }
+    .lx2-hero__brand{ font-size: 2.8rem; }
+    .lx2-hero__sub{ font-size: .9rem; }
+    .lx2-hero__art{ --art-w: 400px; }
+  }
 }
