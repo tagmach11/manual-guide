@@ -1286,3 +1286,44 @@ footer img {
 }
 .lx2-card{ width: 100%; }  /* 카드 내부 내용이 길어도 줄바꿈 없이 엘립시스 유지 */
 .lx2-card__text{ white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* === PATCH v5: Hero 폭 787px 고정 + 아이콘 살짝 축소 === */
+
+/* 1) 히어로 전체 폭을 787px로 고정(데스크탑), 중앙 정렬 */
+.lx2-hero{
+  --wrap-fixed: 787px;
+  width: min(100%, var(--wrap-fixed)) !important; /* 787px 목표, 좁아지면 100% */
+  margin-inline: auto !important;                 /* 정확히 가운데 */
+}
+
+/* 작은 화면에서는 유동 폭 유지 */
+@media (max-width: 820px){
+  .lx2-hero{ width: 100% !important; }
+}
+
+/* 2) 내부 그리드는 현재 폭에 맞춰 간격만 살짝 줄임 */
+.lx2-hero__inner{
+  column-gap: clamp(12px, 2.4vw, 22px);
+}
+
+/* 3) 카드/아이콘 축소 (오버플로 방지) */
+.lx2-card{
+  min-height: 62px;            /* 68→62 */
+  padding: 10px 12px;          /* 살짝 컴팩트 */
+  gap: 8px;
+}
+.lx2-card__icon{
+  width: 30px; height: 30px;   /* 34→30 */
+  border-radius: 9px;
+}
+.lx2-card__icon svg{
+  width: 17px; height: 17px;   /* 19→17 */
+}
+.lx2-card__text{
+  font-size: clamp(12.5px, 0.98vw, 14px);
+  gap: 6px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* (옵션) 카드 그리드가 폭을 꽉 채우게 미세 조정 */
+.lx2-hero__cards{ gap: clamp(10px, 1.8vw, 16px); min-width: 0; }
