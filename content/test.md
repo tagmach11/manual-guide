@@ -1,105 +1,40 @@
 ---
-title: LX2 랜딩
-cssclass: lx2-landing
----
----
-title: LX2 랜딩
-cssclass: lx2-landing
+title: LX2 Hero
+cssclass: lx2-hero-page
 ---
 
-<h1 class="lx2-title">통합 학습관리시스템 LX2</h1>
-
-<section class="lx2-row">
-  <a class="lx2-card blue" href="#">
-    <span class="ico" aria-hidden="true">
-      <!-- Graduation cap -->
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 1 8l11 5 9-4.09V15h2V8L12 3z"/><path d="M7 12v4.5c0 1.5 2.5 2.5 5 2.5s5-1 5-2.5V12l-5 2.3L7 12z"/></svg>
-    </span>
-    <span class="txt"><b class="ko">최적의 학습 경험</b><i class="en">EDUCATION</i></span>
-  </a>
-
-  <a class="lx2-card purple" href="#">
-    <span class="ico" aria-hidden="true">
-      <!-- Wi-Fi -->
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/><path d="M2 10a16 16 0 0 1 20 0l-1.9 2.3a13 13 0 0 0-16.2 0L2 10z"/><path d="M5.5 13.5a11 11 0 0 1 13 0L16.6 16a8 8 0 0 0-9.2 0l-1.9-2.5z"/></svg>
-    </span>
-    <span class="txt"><b class="ko">검증된 기술</b><i class="en">TECHNOLOGY</i></span>
-  </a>
-
-  <a class="lx2-card green" href="#">
-    <span class="ico" aria-hidden="true">
-      <!-- Lightning -->
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 11-14h-7l0-6z"/></svg>
-    </span>
-    <span class="txt"><b class="ko">압도적 가성비</b><i class="en">EFFICIENCY</i></span>
-  </a>
-
-  <a class="lx2-card indigo" href="#">
-    <span class="ico" aria-hidden="true">
-      <!-- Lock -->
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 10V8a6 6 0 1 1 12 0v2h-2V8a4 4 0 0 0-8 0v2H6z"/><path d="M5 10h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2z"/></svg>
-    </span>
-    <span class="txt"><b class="ko">가장 안정적인 시스템</b><i class="en">SECURITY</i></span>
-  </a>
+<section class="lx2-hero">
+  <div class="lx2-hero__inner">
+    <div class="lx2-hero__content">
+      <h1 class="lx2-hero__title">통합학습관리시스템 <b>LX 2</b></h1>
+      <p class="lx2-hero__desc">수많은 기관에 적용되어 운영중인 가장 안정적인 통합 교육시스템</p>
+      <a class="lx2-hero__cta" href="/lx2">자세히보기</a>
+    </div>
+    <div class="lx2-hero__cards">
+      <a class="lx2-card edu" href="/lx2/education">
+        <span class="lx2-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M8 12h8M12 8v8"/></svg>
+        </span>
+        <span class="lx2-card__text"><b>최적의 학습 경험</b><i>EDUCATION</i></span>
+      </a>
+      <a class="lx2-card tech" href="/lx2/technology">
+        <span class="lx2-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M2 8a20 20 0 0 1 20 0"/><path d="M5 12a14 14 0 0 1 14 0"/><path d="M8.5 16a8 8 0 0 1 7 0"/><circle cx="12" cy="19" r="1.6"/></svg>
+        </span>
+        <span class="lx2-card__text"><b>검증된 기술</b><i>TECHNOLOGY</i></span>
+      </a>
+      <a class="lx2-card eff" href="/lx2/efficiency">
+        <span class="lx2-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M4 6l2.5 12L9 6l2.5 12L14 6l2.5 12L20 6"/><path d="M3 9h18M3 13h18"/></svg>
+        </span>
+        <span class="lx2-card__text"><b>압도적 가성비</b><i>EFFICIENCY</i></span>
+      </a>
+      <a class="lx2-card sec" href="/lx2/security">
+        <span class="lx2-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="3.5" y="10" width="17" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+        </span>
+        <span class="lx2-card__text"><b>가장 안정적인 시스템</b><i>SECURITY</i></span>
+      </a>
+    </div>
+  </div>
 </section>
-
-<p class="lx2-cta"><a class="btn" href="#">자세히보기</a></p>
-
-<style>
-/* ========== Layout & Typography ========== */
-.lx2-landing *{ word-break: keep-all; }
-.lx2-title{ margin:0 0 18px; white-space:nowrap; letter-spacing:.2px; }
-.lx2-row{
-  display:grid; gap:16px;
-  grid-template-columns:repeat(4, minmax(240px,1fr));
-}
-.lx2-card{
-  display:flex; align-items:center; gap:14px;
-  min-width:240px; height:122px; padding:18px 20px;
-  border-radius:18px; text-decoration:none;
-  background:var(--card-bg); border:1px solid var(--card-bd);
-  box-shadow:0 8px 22px rgba(0,0,0,.14);
-}
-.lx2-card .ico{
-  width:56px; height:56px; border-radius:14px;
-  display:grid; place-items:center;
-  background:var(--ico-bg);
-  color:var(--ico-fg);
-  box-shadow:inset 0 0 0 1px var(--ico-br);
-}
-.lx2-card svg{ width:28px; height:28px; }
-.lx2-card .txt{ line-height:1.15; }
-.lx2-card .ko{ font-weight:800; font-size:1.05rem; white-space:nowrap; }
-.lx2-card .en{ display:block; margin-top:3px; font-size:.78rem; opacity:.78; letter-spacing:.02em; }
-
-.lx2-cta{ margin-top:18px; }
-.lx2-cta .btn{
-  display:inline-block; padding:12px 18px; border-radius:12px;
-  text-decoration:none; border:1px solid var(--card-bd);
-}
-
-/* ========== Theme tokens ========== */
-.theme-light .lx2-landing{
-  --card-bg:#ffffff; --card-bd:rgba(15,23,42,.10);
-  --ico-br:rgba(0,0,0,.06); --ico-fg:#0b1020;
-}
-.theme-dark .lx2-landing{
-  --card-bg:rgba(255,255,255,.05); --card-bd:rgba(255,255,255,.12);
-  --ico-br:rgba(255,255,255,.14); --ico-fg:#e8ecf8;
-}
-
-/* Brandful card accents (라이트/다크 자동 조정) */
-.lx2-card.blue  { --ico-bg:linear-gradient(135deg,#e6f2ff,#b6d2ff); }
-.lx2-card.purple{ --ico-bg:linear-gradient(135deg,#efe7ff,#d1c6ff); }
-.lx2-card.green { --ico-bg:linear-gradient(135deg,#e9ffe1,#c8f2b3); }
-.lx2-card.indigo{ --ico-bg:linear-gradient(135deg,#e6ebff,#c7d3ff); }
-
-/* Responsive */
-@media (max-width: 960px){
-  .lx2-row{ grid-template-columns:repeat(2, minmax(240px,1fr)); }
-  .lx2-title{ white-space:normal; }
-}
-@media (max-width: 520px){
-  .lx2-row{ grid-template-columns:1fr; }
-}
-</style>
