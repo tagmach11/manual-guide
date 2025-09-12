@@ -501,3 +501,46 @@ body[data-theme="dark"] .sidebar.left .explorer .explorer-content:hover::-webkit
   margin-top: 24px !important;       /* 불필요한 위쪽 여백 제거 */
 }
 
+
+
+/* ===== Explorer 폴더 접힘 시 빈칸 완전 제거 (모든 중첩에 적용) ===== */
+
+/* 1) 접힘 컨테이너: 언제나 바깥으로 새지 않게 */
+.sidebar.left .explorer .folder-outer{
+  display: grid !important;
+  grid-template-rows: 0fr !important;
+  overflow: hidden !important;
+  min-height: 0 !important;
+}
+
+/* 2) 펼침 상태 */
+.sidebar.left .explorer .folder-outer.open{
+  grid-template-rows: 1fr !important;
+}
+
+/* 3) 실제 목록에 높이/마진을 ‘닫힘=0’으로 강제하고, 열릴 때만 살짝 줌 */
+.sidebar.left .explorer .folder-outer > ul{
+  max-height: 0 !important;
+  padding-block: 0 !important;
+  margin-block: 0 !important;   /* margin-collapsing 근본 차단 */
+  min-height: 0 !important;
+  overflow: hidden !important;
+  transition: max-height .25s ease, padding .2s ease !important;
+}
+
+/* 4) 열릴 때만 내용 보임(여유치 크게 잡아도 OK) */
+.sidebar.left .explorer .folder-outer.open > ul{
+  max-height: 1200px !important;   /* 필요 시 더 키워도 됨 */
+  padding-block: 4px !important;   /* 시각 간격은 padding으로만 */
+}
+
+/* 5) 모든 중첩 UL/LI의 잔여 마진을 전역적으로 0화 */
+.sidebar.left .explorer .explorer-content ul,
+.sidebar.left .explorer .explorer-content li{
+  margin-block: 0 !important;
+}
+
+/* 6) 폴더 타이틀(행) 아래 잔여 공간 방지 */
+.sidebar.left .explorer .folder-container{
+  margin-block: 0 !important;
+}
