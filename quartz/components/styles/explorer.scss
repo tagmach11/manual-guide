@@ -296,12 +296,14 @@ html, body, .page, #quartz-body { overflow-x: hidden !important; }
   border:1px solid var(--x-border); border-radius:18px;
   padding:10px; box-shadow:0 8px 24px rgba(16,24,40,.06);
 }
-
+.sidebar.left .explorer :where(h1,h2,h3)::before{
+  margin-left: 500px !important;     /* 또는 padding-inline-start:5px */
+}
 /* 헤더: 카드/아이콘/토글 제거 + 제목 교체 */
 :root { --explorer-label: "메뉴"; }  /* ← 여기만 바꾸면 제목 변경 */
 .sidebar.left:has(.explorer) { padding-top: 0 !important; }
 .sidebar.left .explorer :where(h1,h2,h3){
-  margin:0 !important; padding:0 !important; background:transparent !important; box-shadow:none !important; padding-left: 100px;
+  margin:0 !important; padding:0 !important; background:transparent !important; box-shadow:none !important; 
 }
 .sidebar.left .explorer .fold,
 .sidebar.left .explorer :is(.desktop-explorer,.mobile-explorer) svg,
