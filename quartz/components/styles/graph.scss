@@ -76,149 +76,108 @@
 
 
 
+/* ========== HOME ONLY detector (no markup change) ========== */
+/* 홈 페이지 판단: 본문 안에 (1) 제목 링크가 "/" 이거나, (2) 빵조각이 Home 하나뿐일 때 */
+@layer homeGraph {
+  .page:has(main.content :is(h1 > a[href="/"], nav.breadcrumbs a[href="/"]:only-child)) {
+    /* ---- Graph ↔ Backlinks 톤 통일(홈에서만) ---- */
+    --gv-h: 250px;
+    --gv-radius: 18px;
+    --gv-inner-radius: 12px;
 
-/*그래프뷰 scss*/
+    .graph{
+      display:flex; flex-direction:column;
+      background: var(--x-bg);
+      color: var(--x-text);
+      border: 1px solid var(--x-border);
+      border-radius: var(--gv-radius);
+      padding: 12px;
+      box-shadow: 0 8px 24px rgba(16,24,40,.06);
+    }
+    .graph > h3{
+      font-size:.95rem; font-weight:800; letter-spacing:-.01em;
+      margin:0 0 6px 0; padding:0; background:transparent !important;
+      box-shadow:none !important; color:var(--x-text);
+    }
+    .graph > .graph-outer{
+      border-radius: var(--gv-inner-radius);
+      border: 1px solid var(--x-border);
+      box-sizing: border-box;
+      height: var(--gv-h);
+      margin: 6px 0 0;
+      position: relative; overflow: hidden;
+      background: linear-gradient(180deg, color-mix(in srgb, var(--x-text) 2%, transparent), transparent);
+    }
+    .graph > .graph-outer > .global-graph-icon{
+      cursor: pointer;
+      background: color-mix(in srgb, var(--x-bg) 90%, transparent);
+      border: 1px solid var(--x-border);
+      color: color-mix(in srgb, var(--x-text) 70%, transparent);
+      width: 28px; height: 28px;
+      position: absolute; top: 8px; right: 8px;
+      padding:0; margin:0; border-radius:10px; display:grid; place-items:center;
+      transition: background-color .15s, border-color .15s, color .15s;
+    }
+    .graph > .graph-outer > .global-graph-icon:hover{
+      background: var(--x-hover);
+      border-color: color-mix(in srgb, var(--x-text) 28%, transparent);
+      color: var(--x-text);
+    }
 
-/* === Graph View ↔ Backlinks 톤 통일 오버라이드 === */
-:root{
-  /* 그래프 높이·라운드 조절용 토큰 */
-  --gv-h: 250px;            /* 카드 안 고정 높이 */
-  --gv-radius: 18px;        /* 카드 라운드 */
-  --gv-inner-radius: 12px;  /* 내부 캔버스 라운드 */
+    /* 모달(홈에서만 전면 중앙) */
+    .graph > .global-graph-outer{
+      position: fixed !important; inset: 0 !important;
+      z-index: 2147483646 !important;
+      display: none; backdrop-filter: blur(4px);
+      background: color-mix(in srgb, var(--x-bg) 55%, transparent);
+      place-items: center;
+    }
+    .graph > .global-graph-outer.active{ display:grid !important; }
+
+    .graph > .global-graph-outer > .global-graph-container{
+      position: relative !important; left:auto !important; top:auto !important; transform:none !important; margin:0 !important;
+      width: min(94svw, 1100px); height: min(86dvh, 820px);
+      border: 1px solid var(--x-border); border-radius: var(--gv-radius);
+      background: var(--x-bg); color: var(--x-text);
+      box-shadow: 0 16px 48px rgba(0,0,0,.28); overflow:hidden;
+    }
+
+    /* 모달 열렸을 때: 스크롤 잠금 + 사이드바 숨김(레이아웃 유지) */
+    body:has(.page .graph > .global-graph-outer.active){
+      overflow: hidden !important;
+    }
+    body:has(.page .graph > .global-graph-outer.active) .sidebar.left{
+      visibility: hidden !important; pointer-events: none !important;
+    }
+
+    /* 다크 그림자 톤 업 */
+    html[data-theme="dark"] & .graph{ box-shadow: 0 12px 30px rgba(0,0,0,.55); }
+
+    /* 캔버스 라운드(옵션) */
+    .graph canvas, .graph svg{ border-radius: var(--gv-inner-radius); }
+
+    @media (max-width: 800px){ :root{ --gv-h: 220px; } }
+  }
 }
 
-.graph{
-  /* 카드 프레임(Backlinks와 동일 톤) */
-  display:flex; flex-direction:column;
-  background: var(--x-bg);
-  color: var(--x-text);
-  border: 1px solid var(--x-border);
-  border-radius: var(--gv-radius);
-  padding: 12px;
-  box-shadow: 0 8px 24px rgba(16,24,40,.06);
-}
-
-.graph > h3{
-  /* 제목도 Backlinks와 통일 */
-  font-size: .95rem;
-  font-weight: 800;
-  letter-spacing: -.01em;
-  margin: 0 0 6px 0;
-  padding: 0;
-  background: transparent !important;
-  box-shadow: none !important;
-  color: var(--x-text);
-}
-
-/* 그래프 캔버스 영역 */
-.graph > .graph-outer{
-  border-radius: var(--gv-inner-radius);
-  border: 1px solid var(--x-border);
-  box-sizing: border-box;
-  height: var(--gv-h);
-  margin: 6px 0 0;
-  position: relative;
-  overflow: hidden;             /* 모서리 클리핑 */
-  background: linear-gradient(180deg,
-              color-mix(in srgb, var(--x-text) 2%, transparent),
-              transparent);
-}
-
-/* 우상단: 글로벌 그래프 버튼(아이콘) */
-.graph > .graph-outer > .global-graph-icon{
-  cursor: pointer;
-  background: color-mix(in srgb, var(--x-bg) 90%, transparent);
-  border: 1px solid var(--x-border);
-  color: color-mix(in srgb, var(--x-text) 70%, transparent);
-  width: 28px; height: 28px;
-  position: absolute; top: 8px; right: 8px;
-  padding: 0; margin: 0;
-  border-radius: 10px;
-  display:grid; place-items:center;
-  transition: background-color .15s ease, border-color .15s ease, color .15s ease;
-}
-.graph > .graph-outer > .global-graph-icon:hover{
-  background: var(--x-hover);
-  border-color: color-mix(in srgb, var(--x-text) 28%, transparent);
-  color: var(--x-text);
-}
-
-/* 풀스크린 오버레이(활성 시만 보임) */
-.graph > .global-graph-outer{
-  position: fixed; inset: 0;
-  z-index: 80;                 /* 히어로보다 위, 헤더/모달과 충돌 없게 적당히 */
-  display: none;
-  backdrop-filter: blur(4px);
-  background: color-mix(in srgb, var(--x-bg) 40%, transparent);
-  overflow: hidden;
-}
-.graph > .global-graph-outer.active{ display:flex; align-items:center; justify-content:center; }
-
-/* 풀스크린 컨테이너 */
-.graph > .global-graph-outer > .global-graph-container{
-  border: 1px solid var(--x-border);
-  background-color: var(--x-bg);
-  border-radius: var(--gv-radius);
-  box-sizing: border-box;
-  width: min(90vw, 1000px);
-  height: min(80vh, 760px);
-  box-shadow: 0 12px 30px rgba(0,0,0,.20);
-  position: relative;
-}
-
-/* 다크 모드에선 그림자 톤 업 */
-html[data-theme="dark"] .graph,
-body[data-theme="dark"] .graph,
-:root[data-theme="dark"] .graph{
-  box-shadow: 0 12px 30px rgba(0,0,0,.55);
-}
-
-/* (선택) 그래프 내부 캔버스/캔버스 래퍼에 라운드 상속이 필요하면 */
-.graph canvas, .graph svg{
-  border-radius: var(--gv-inner-radius);
-}
-
-/* (선택) 반응형 높이 살짝 유동 */
-@media (max-width: 800px){
-  :root{ --gv-h: 220px; }
-}
-
-/* === Graph Modal Center Fix (정중앙 고정) === */
-
-/* 오버레이는 화면 전체를 덮고, 그 안에서 중앙 정렬 */
-.graph > .global-graph-outer{
-  position: fixed;
-  inset: 0;                       /* top/right/bottom/left: 0 */
-  z-index: 9999;
-  width: 100svw;                  /* 스크롤바/모바일 대비 안전 단위 */
-  height: 100dvh;
-  display: none;
-  backdrop-filter: blur(4px);
-  background: color-mix(in srgb, var(--x-bg) 40%, transparent);
-  /* 중앙 정렬 핵심 */
-  display: none;
-}
-.graph > .global-graph-outer.active{
-  display: grid !important;
-  place-items: center !important; /* 가로·세로 모두 중앙 */
-}
-
-/* 내부 패널은 상대 위치(변환/좌표 제거) */
-.graph > .global-graph-outer > .global-graph-container{
-  position: relative !important;
-  left: auto !important;
-  top: auto !important;
-  transform: none !important;
-  margin: 0 !important;
-
-  box-sizing: border-box;
-  width: min(90svw, 1000px);
-  height: min(80dvh, 760px);
-  border: 1px solid var(--x-border);
-  background: var(--x-bg);
-  border-radius: 18px;
-  box-shadow: 0 12px 30px rgba(0,0,0,.2);
-}
-
-/* (안전망) 혹시 상위에 transform이 걸려 fixed 기준이 꼬이면 무효화 */
-.graph{ transform: none !important; }
+/* ========== NON-HOME: 기본(원래) 스타일 유지 ========== */
+/* 전역 .graph 오버라이드가 이미 있다면 지우거나, 아래처럼 원상복구를 강제 */
+@layer nonHomeReset {
+  .page:not(:has(main.content :is(h1 > a[href="/"], nav.breadcrumbs a[href="/"]:only-child))) {
+    .graph{
+      background: transparent !important; color: inherit !important;
+      border: 0 !important; border-radius: 0 !important; padding: 0 !important; box-shadow: none !important;
+    }
+    .graph > h3{
+      font-size: 1rem; margin: 0; padding: 0; color: inherit !important;
+      background: transparent !important; box-shadow: none !important;
+    }
+    .graph > .graph-outer{
+      border-radius: 5px !important;
+      border: 1px solid var(--lightgray) !important;
+      box-sizing: border-box; height: 250px !important;
+      margin: .5em 0 !important; position: relative; overflow: hidden;
+      background: transparent !important;
+    }
+    .graph > .graph-outer > .global-graph-icon{
+      cursor: pointer; background: no
