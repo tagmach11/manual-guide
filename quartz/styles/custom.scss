@@ -1326,17 +1326,18 @@ footer img {
 }
 
 /* (옵션) 카드 그리드가 폭을 꽉 채우게 미세 조정 */
-.lx2-hero__cards{ gap: clamp(10px, 1.8vw, 16px); min-width: 0; }
-/* === PATCH: Light 모드에서도 히어로 텍스트를 항상 흰색으로 === */
-.theme-light .lx2-hero :is(.lx2-hero__content,
-                           .lx2-hero__title,
-                           .lx2-title-accent,
-                           .lx2-hero__desc,
-                           .lx2-hero__cta){
-  color: #fff !important;
+html.theme-light .lx2-hero .lx2-hero__content,
+html.theme-light .lx2-hero .lx2-hero__content *{
+  color:#fff !important;
+  -webkit-text-fill-color:#fff !important; /* 일부 테마의 헤딩 채움색도 강제 */
 }
-.theme-light .lx2-hero .lx2-hero__cta{
+
+/* 버튼 테두리/호버 색도 라이트에서 흰색 유지 */
+html.theme-light .lx2-hero .lx2-hero__cta{
+  color:#fff !important;
   border-color: rgba(255,255,255,.32) !important;
 }
-/* 제목이 다른 글로벌 h1 규칙에 지지 않도록 한 번 더 */
-.theme-light .lx2-hero .lx2-hero__title{ -webkit-text-fill-color:#fff; }
+html.theme-light .lx2-hero .lx2-hero__cta:hover{
+  border-color: rgba(255,255,255,.6) !important;
+  background: rgba(255,255,255,.06) !important;
+}
