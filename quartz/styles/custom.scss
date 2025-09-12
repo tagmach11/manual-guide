@@ -1256,3 +1256,33 @@ footer img {
 
 /* 그래프뷰 우선순위(혹시라도 테마에 따라 덮이면) */
 .graph, .graph-view, #graph, #graph-container{ position:relative; z-index:30; }
+
+
+/* === PATCH v4: 가로 길이 'center' 폭에 정확히 맞추기 === */
+
+/* 0) 예전에 제가 넣어둔 페이지 폭 해제(unset)를 되돌립니다. */
+.lx2-hero-page .page,
+.lx2-hero-page .content{
+  max-width: revert !important;   /* Quartz 기본 폭으로 복구 */
+  margin-inline: auto;            /* 중앙 정렬 유지 */
+}
+
+/* 1) 히어로 폭은 컨테이너(=center) 100%로 고정 */
+.lx2-hero{
+  width: 100% !important;         /* viewport 기준 min(...) 대신 컨테이너 기준 */
+  max-width: none !important;
+  margin-inline: 0;                /* 좌우 정확히 맞춤 */
+  /* 높이/상단 오프셋은 이전 값 유지 */
+}
+
+/* 2) 내부 그리드는 컨테이너 폭 변화에 맞춰 자연스럽게 */
+.lx2-hero__inner{
+  column-gap: clamp(12px, 2.6vw, 26px);
+}
+
+/* 3) 카드가 오른쪽 가장자리에서 튀어나오지 않도록 안전폭 확보 */
+.lx2-hero__cards{
+  min-width: 0;            /* grid overflow 방지 */
+}
+.lx2-card{ width: 100%; }  /* 카드 내부 내용이 길어도 줄바꿈 없이 엘립시스 유지 */
+.lx2-card__text{ white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
