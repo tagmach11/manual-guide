@@ -597,3 +597,45 @@ body[data-theme="dark"] .sidebar.left .explorer .explorer-content:hover::-webkit
 /* 6) 첫/끝 항목 주변 여백 0 보장(유령 여백 예방) */
 .sidebar.left .explorer .folder-outer > ul > li:first-child{ margin-top: 0 !important; }
 .sidebar.left .explorer .folder-outer > ul > li:last-child { margin-bottom: 0 !important; }
+
+
+/* ===== Explorer 접힘시 빈칸 완전 제거 (display:none 블록/언블록) ===== */
+
+/* 기본 여백/패딩 제로화(중첩 전부) */
+.sidebar.left .explorer .explorer-content :where(ul, li){
+  margin:0 !important;
+  padding:0 !important;
+}
+
+/* 닫힘: 목록 자체를 레이아웃에서 제거 */
+.sidebar.left .explorer .folder-outer:not(.open) > ul{
+  display:none !important;      /* ← 핵심 */
+}
+
+/* 열림: 목록 보이기 + 시각적 간격은 padding으로만 */
+.sidebar.left .explorer .folder-outer.open > ul{
+  display:block !important;
+  padding-block:4px !important; /* 필요시 2~6px로 조절 */
+  margin:0 !important;
+  min-height:0 !important;
+  overflow:visible !important;
+}
+
+/* 폴더 행 자체의 잔여 마진 방지 */
+.sidebar.left .explorer .folder-container{
+  margin:0 !important;
+  padding:8px 10px !important;  /* 행 높이는 여기서만 관리 */
+}
+
+/* 들여쓰기 라인(있다면) */
+.sidebar.left .explorer .folder-outer > ul{
+  border-left:1px solid var(--x-border);
+  margin-left:8px; padding-left:12px;
+}
+
+/* 리스트 항목(파일 링크) 슬림 유지 */
+.sidebar.left .explorer .explorer-content li > a{
+  min-height:30px !important;
+  line-height:1.25 !important;
+  padding:6px 10px !important;
+}
