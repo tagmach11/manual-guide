@@ -183,3 +183,42 @@ body[data-theme="dark"] .graph,
   :root{ --gv-h: 220px; }
 }
 
+/* === Graph Modal Center Fix (정중앙 고정) === */
+
+/* 오버레이는 화면 전체를 덮고, 그 안에서 중앙 정렬 */
+.graph > .global-graph-outer{
+  position: fixed;
+  inset: 0;                       /* top/right/bottom/left: 0 */
+  z-index: 9999;
+  width: 100svw;                  /* 스크롤바/모바일 대비 안전 단위 */
+  height: 100dvh;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: color-mix(in srgb, var(--x-bg) 40%, transparent);
+  /* 중앙 정렬 핵심 */
+  display: none;
+}
+.graph > .global-graph-outer.active{
+  display: grid !important;
+  place-items: center !important; /* 가로·세로 모두 중앙 */
+}
+
+/* 내부 패널은 상대 위치(변환/좌표 제거) */
+.graph > .global-graph-outer > .global-graph-container{
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  transform: none !important;
+  margin: 0 !important;
+
+  box-sizing: border-box;
+  width: min(90svw, 1000px);
+  height: min(80dvh, 760px);
+  border: 1px solid var(--x-border);
+  background: var(--x-bg);
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(0,0,0,.2);
+}
+
+/* (안전망) 혹시 상위에 transform이 걸려 fixed 기준이 꼬이면 무효화 */
+.graph{ transform: none !important; }
