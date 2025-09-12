@@ -1388,78 +1388,37 @@ html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
   border-left: 1px solid var(--x-border);
 }
 
+/* ===== Explorer: 빈 하위 목록/행 완전 제거 (공백/주석 노드까지 대응) ===== */
 
-/* ===== Explorer: 캐럿 완전 제거 + 슬롯(왼쪽 빈칸) 폐기 ===== */
-
-/* 1) 폴더 행을 단일열로 강제(아이콘 슬롯 삭제) */
-.sidebar.left .explorer .folder-container{
-  display: flex !important;           /* grid → flex */
-  align-items: center !important;
-  gap: 6px !important;
-  padding-left: 8px !important;
-  grid-template-columns: none !important; /* 남아있을 수 있는 1열 제거 */
-}
-
-/* 2) 캐럿/아이콘/첫 svg 슬롯 자체를 제거 */
-.sidebar.left .explorer .folder-container >
-:is(svg, .folder-icon, .chevron, .caret,
-    [class*="chevron"], [class*="caret"], [class*="arrow"]){
+/* 1) 자식 <li>가 하나도 없는 하위 목록은 통째로 숨김 */
+.sidebar.left .explorer .folder-outer > ul.content:not(:has(> li)){
   display: none !important;
-  width: 0 !important; height: 0 !important;
-  margin: 0 !important; padding: 0 !important;
-}
-
-/* 3) details/summary 기반 마커도 차단 */
-.sidebar.left .explorer details > summary{
-  list-style: none !important;
-  padding-left: 0 !important;
-}
-.sidebar.left .explorer details > summary::-webkit-details-marker{ display:none !important; }
-.sidebar.left .explorer details > summary::marker{ content:"" !important; }
-
-/* 4) ::before/::after로 넣는 캐럿도 차단 */
-.sidebar.left .explorer .folder-container::before,
-.sidebar.left .explorer .folder-container::after{
-  content: none !important;
-}
-
-/* 5) 폴더 내용 들여쓰기 라인은 유지하되, 불필요한 상단 여백 제거 */
-.sidebar.left .explorer .folder-outer > ul{
+  padding: 0 !important;
   margin: 0 !important;
-  padding: 0 0 0 12px !important;   /* 좌측 들여쓰기만 유지 */
-  border-left: 1px solid var(--x-border);
+  border: 0 !important;        /* 들여쓰기 라인까지 제거 */
 }
 
+/* 2) 그 부모 컨테이너도 높이 0으로 접기 (grid 트랙 제거) */
+.sidebar.left .explorer .folder-outer:has(> ul.content:not(:has(> li))){
+  grid-template-rows: 0fr !important;
+  overflow: hidden !important;
+  min-height: 0 !important;
+}
 
-/* === Explorer 최상단 ul.content 여백 완전 제거 === */
+/* 3) 요소 자식이 전혀 없는 <li>도 전부 제거 (공백 텍스트만 있어도 매치) */
+.sidebar.left .explorer :is(ul, ol) > li:not(:has(*)){
+  display: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
 
-/* 1) 최상단 목록(맨 바깥)만 여백/간격 0 */
+/* 4) 최상단 목록의 기본 padding 제거(남는 윗칸 차단) */
 .sidebar.left .explorer > .explorer-content > ul.content{
   padding: 0 !important;
   margin: 0 !important;
-  gap: 0 !important;
-  row-gap: 0 !important;
-  column-gap: 0 !important;
   border: 0 !important;
 }
 
-/* 2) 하위 폴더 목록은 위/아래 0, 좌측 들여쓰기만 유지 */
-.sidebar.left .explorer .folder-outer > ul.content{
-  padding: 0 0 0 12px !important;  /* 들여쓰기만 */
-  margin: 0 !important;
-  gap: 0 !important;
-  border-left: 1px solid var(--x-border);
-}
-
-/* 3) 빈 목록이면 아예 숨김(빈칸 방지) */
-.sidebar.left .explorer ul.content:empty{
-  display: none !important;
-}
-
-/* 4) 항목 단위로도 여분 여백 제거 */
-.sidebar.left .explorer ul.content > li{ margin:0 !important; padding:0 !important; }
-.sidebar.left .explorer ul.content > li > a{
-  padding: 6px 10px !important;
-  min-height: 30px !important;
-  line-height: 1.25 !important;
-}
+/* 5) (안전망) 닫힘 상태는 언제나 0, 열릴 때만 보이게 */
+.sidebar.left .explorer .folder-outer:not(.open) > ul.content{ display:none !important; }
+.sidebar.left .explorer .folder-outer.open > ul.content{ display:block !important; }
