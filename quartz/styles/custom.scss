@@ -1357,36 +1357,6 @@ html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
 
 /* ===== Explorer: 폴더 화살표 완전 제거 & 간격 보정 ===== */
 
-/* 1) 폴더 행 안의 아이콘/캐럿 통째로 숨김 */
-.sidebar.left .explorer .folder-container :where(.folder-icon,
-                                                 .chevron,
-                                                 .caret,
-                                                 .lucide-chevron-down,
-                                                 .lucide-chevron-right,
-                                                 .ul) {
-  display: none !important;
-}
-
-/* 2) details/summary 기반이면 기본 마커도 제거 */
-.sidebar.left .explorer summary::-webkit-details-marker { display: none !important; }
-.sidebar.left .explorer summary::marker { content: "" !important; }
-
-/* 3) 캐럿을 ::before/::after로 넣는 테마 차단 */
-.sidebar.left .explorer .folder-container::before,
-.sidebar.left .explorer .folder-container::after { content: none !important; }
-
-/* 4) 아이콘 자리로 남는 공간/여백 정리 */
-.sidebar.left .explorer .folder-container {
-  gap: 6px !important;        /* 아이콘 빠졌으니 간격 축소 */
-  padding-left: 8px !important;
-}
-
-/* 5) 들여쓰기 라인/내용은 유지(필요 시 값만 조절) */
-.sidebar.left .explorer .folder-outer > ul {
-  margin-left: 8px !important;
-  padding-left: 12px !important;
-  border-left: 1px solid var(--x-border);
-}
 
 /* ===== Explorer: _etc 폴더/파일 전부 숨김 ===== */
 .sidebar.left .explorer {
