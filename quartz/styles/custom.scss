@@ -1220,3 +1220,39 @@ footer img {
   position: relative;
   z-index: 20; /* 히어로보다 항상 위 */
 }
+
+/* === PATCH v3: 그래프뷰 여유 + 히어로 더 콤팩트 + LX2 강조 === */
+.lx2-hero{
+  /* 상단 세이프존(그래프뷰/헤더 피하기) — 필요시 수치만 줄/늘리면 됨 */
+  --hero-offset-top: clamp(56px, 9vh, 96px); /* 기존보다 조금 더 확보 */
+  margin-top: var(--hero-offset-top);
+
+  /* 전체 크기 살짝 더 축소 */
+  --wrap: 980px;                          /* 1040 → 980 */
+  min-height: clamp(300px, 52dvh, 520px); /* 56dvh → 52dvh */
+  padding: clamp(16px, 5.5vh, 44px) clamp(14px, 3.6vw, 30px);
+
+  /* 그래프뷰가 항상 위로 올라오도록 레이어 낮춤 */
+  z-index: auto;
+  isolation: initial;
+}
+
+.lx2-hero__inner{
+  grid-template-columns: 1.06fr 0.94fr;   /* 우측 카드 폭 살짝 축소 */
+  column-gap: clamp(14px, 2.6vw, 26px);   /* 칼럼 간격도 한 단계 더 줄임 */
+}
+
+/* 제목은 유지, LX2만 아래 줄로 더 키우기 */
+.lx2-title-accent{
+  display:block;
+  margin-top:.22em;        /* ‘한 칸’ 느낌 */
+  font-size:1.26em;        /* LX2 조금 더 큼 (기존 1.24 → 1.26) */
+  line-height:1;
+  letter-spacing:-0.01em;
+}
+
+/* 카드 살짝 내려와 보이면 균형 맞추기용 미세 보정 */
+.lx2-hero__cards{ transform: translateY(-2px); }
+
+/* 그래프뷰 우선순위(혹시라도 테마에 따라 덮이면) */
+.graph, .graph-view, #graph, #graph-container{ position:relative; z-index:30; }
