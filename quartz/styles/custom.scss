@@ -1357,32 +1357,44 @@ html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
 
 /* ===== Explorer: 폴더 화살표 완전 제거 & 간격 보정 ===== */
 
-/* 1) 폴더 행 안의 아이콘/캐럿 통째로 숨김 */
-.sidebar.left .explorer .folder-container :where(.folder-icon,
-                                                 .chevron,
-                                                 .caret,
-                                                 .lucide-chevron-down,
-                                                 .lucide-chevron-right) {
-  display: none !important;
-}
 
-/* 2) details/summary 기반이면 기본 마커도 제거 */
-.sidebar.left .explorer summary::-webkit-details-marker { display: none !important; }
-.sidebar.left .explorer summary::marker { content: "" !important; }
+/* ===== Explorer: 캐럿 완전 제거 + 슬롯(왼쪽 빈칸) 폐기 ===== */
 
-/* 3) 캐럿을 ::before/::after로 넣는 테마 차단 */
-.sidebar.left .explorer .folder-container::before,
-.sidebar.left .explorer .folder-container::after { content: none !important; }
-
-/* 4) 아이콘 자리로 남는 공간/여백 정리 */
-.sidebar.left .explorer .folder-container {
-  gap: 6px !important;        /* 아이콘 빠졌으니 간격 축소 */
+/* 1) 폴더 행을 단일열로 강제(아이콘 슬롯 삭제) */
+.sidebar.left .explorer .folder-container{
+  display: flex !important;           /* grid → flex */
+  align-items: center !important;
+  gap: 6px !important;
   padding-left: 8px !important;
+  grid-template-columns: none !important; /* 남아있을 수 있는 1열 제거 */
 }
 
-/* 5) 들여쓰기 라인/내용은 유지(필요 시 값만 조절) */
-.sidebar.left .explorer .folder-outer > ul {
-  margin-left: 8px !important;
-  padding-left: 12px !important;
+/* 2) 캐럿/아이콘/첫 svg 슬롯 자체를 제거 */
+.sidebar.left .explorer .folder-container >
+:is(svg, .folder-icon, .chevron, .caret,
+    [class*="chevron"], [class*="caret"], [class*="arrow"]){
+  display: none !important;
+  width: 0 !important; height: 0 !important;
+  margin: 0 !important; padding: 0 !important;
+}
+
+/* 3) details/summary 기반 마커도 차단 */
+.sidebar.left .explorer details > summary{
+  list-style: none !important;
+  padding-left: 0 !important;
+}
+.sidebar.left .explorer details > summary::-webkit-details-marker{ display:none !important; }
+.sidebar.left .explorer details > summary::marker{ content:"" !important; }
+
+/* 4) ::before/::after로 넣는 캐럿도 차단 */
+.sidebar.left .explorer .folder-container::before,
+.sidebar.left .explorer .folder-container::after{
+  content: none !important;
+}
+
+/* 5) 폴더 내용 들여쓰기 라인은 유지하되, 불필요한 상단 여백 제거 */
+.sidebar.left .explorer .folder-outer > ul{
+  margin: 0 !important;
+  padding: 0 0 0 12px !important;   /* 좌측 들여쓰기만 유지 */
   border-left: 1px solid var(--x-border);
 }
