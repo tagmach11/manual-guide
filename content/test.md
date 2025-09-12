@@ -15,7 +15,7 @@ cssclass: lx2-hero-page
     <div class="lx2-hero__cards">
       <a class="lx2-card edu" href="/lx2/education">
         <span class="lx2-card__icon" aria-hidden="true">
-        <img src = "_etc/instagram.png" alt = "" width ="28" height="28"
+        <img src = "_etc/instagram.png" alt = "" width ="28" height="28">
         </span>
         <span class="lx2-card__text"><b>최적의 학습 경험</b></span>
       </a>
