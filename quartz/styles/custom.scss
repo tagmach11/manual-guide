@@ -1343,3 +1343,13 @@ html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
   border-color: rgba(255,255,255,.6) !important;
   background: rgba(255,255,255,.06) !important;
 }
+
+
+
+
+/* 모든 페이지에서 ContentMeta 숨김 */
+.page .content-meta { 
+  display: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
