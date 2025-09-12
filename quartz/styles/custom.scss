@@ -1429,3 +1429,37 @@ html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
   padding: 0 0 0 12px !important;   /* 좌측 들여쓰기만 유지 */
   border-left: 1px solid var(--x-border);
 }
+
+
+/* === Explorer 최상단 ul.content 여백 완전 제거 === */
+
+/* 1) 최상단 목록(맨 바깥)만 여백/간격 0 */
+.sidebar.left .explorer > .explorer-content > ul.content{
+  padding: 0 !important;
+  margin: 0 !important;
+  gap: 0 !important;
+  row-gap: 0 !important;
+  column-gap: 0 !important;
+  border: 0 !important;
+}
+
+/* 2) 하위 폴더 목록은 위/아래 0, 좌측 들여쓰기만 유지 */
+.sidebar.left .explorer .folder-outer > ul.content{
+  padding: 0 0 0 12px !important;  /* 들여쓰기만 */
+  margin: 0 !important;
+  gap: 0 !important;
+  border-left: 1px solid var(--x-border);
+}
+
+/* 3) 빈 목록이면 아예 숨김(빈칸 방지) */
+.sidebar.left .explorer ul.content:empty{
+  display: none !important;
+}
+
+/* 4) 항목 단위로도 여분 여백 제거 */
+.sidebar.left .explorer ul.content > li{ margin:0 !important; padding:0 !important; }
+.sidebar.left .explorer ul.content > li > a{
+  padding: 6px 10px !important;
+  min-height: 30px !important;
+  line-height: 1.25 !important;
+}
