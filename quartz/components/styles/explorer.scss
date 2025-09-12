@@ -295,6 +295,7 @@ html, body, .page, #quartz-body { overflow-x: hidden !important; }
   background:var(--x-bg); color:var(--x-text);
   border:1px solid var(--x-border); border-radius:18px;
   padding:10px; box-shadow:0 8px 24px rgba(16,24,40,.06);
+  padding-left: 50px;
 }
 .sidebar.left .explorer :where(h1,h2,h3)::before{
   margin-left: 500px !important;     /* 또는 padding-inline-start:5px */
