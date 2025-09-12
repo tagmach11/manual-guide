@@ -1095,3 +1095,60 @@ footer img {
   outline-color: color-mix(in oklab, var(--accent) 38%, white);
 }
 .theme-light .lx2-hero__cta{ color:#fff; }
+
+/* ===== PATCH: 헤더 줄바꿈 + 크기/레이아웃 축소 + 그래프뷰 미가림 ===== */
+
+/* 히어로 전체 스케일 다운 & 레이어 조정(그래프뷰 가리지 않도록) */
+.lx2-hero{
+  --wrap: 1080px;                         /* 1200 → 1080: 전체 폭 소폭 축소 */
+  min-height: clamp(420px, 66dvh, 640px); /* 82dvh → 66dvh: 높이 낮춤 */
+  padding: clamp(20px, 6vh, 56px) clamp(16px, 4vw, 36px);
+  z-index: 0;            /* 페이지 위젯(그래프뷰)보다 낮게 */
+  isolation: initial;     /* 스태킹 컨텍스트 해제 */
+  overflow: visible;      /* 주변 위젯 겹침 이슈 방지 */
+}
+
+/* 좌/우 칼럼 간격과 비율도 한 단계 줄이기 */
+.lx2-hero__inner{
+  grid-template-columns: 1.1fr 0.9fr;     /* 왼쪽(텍스트) 조금 더 넓게 */
+  column-gap: clamp(16px, 3.5vw, 32px);   /* 5vw → 3.5vw */
+}
+
+/* 제목: 기본 크기는 약간 줄이고, LX2만 한 줄 아래로 더 크게 */
+.lx2-hero__title{
+  font-size: clamp(28px, 3.9vw, 54px);    /* 전체 타이틀 살짝 축소 */
+  line-height: 1.05;
+  margin: 0 0 .3em 0;
+  letter-spacing: -0.02em;
+}
+.lx2-title-accent{
+  display: block;          /* 줄바꿈(아래 줄로) */
+  margin-top: .18em;       /* ‘한 칸’ 느낌의 여백 */
+  font-size: 1.18em;       /* LX2만 살짝 키움 */
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+/* 카드도 살짝 컴팩트하게(아이콘과 텍스트는 가깝게 유지) */
+.lx2-card{
+  min-height: 72px;        /* 84px → 72px */
+  padding: 12px 14px;      /* 14/16 → 12/14 */
+  gap: 8px;                /* 아이콘-텍스트 거리 촘촘 */
+}
+.lx2-card__icon{
+  width: 36px; height: 36px; border-radius: 10px;
+}
+.lx2-card__icon svg{ width: 20px; height: 20px; }
+.lx2-card__text{
+  gap: 6px;
+  font-size: clamp(13px, 1.05vw, 15px);
+  white-space: nowrap;
+}
+
+/* 작은 화면 최적화(한 번 더 줄이기) */
+@media (max-width: 980px){
+  .lx2-hero{
+    min-height: clamp(380px, 60dvh, 560px);
+    padding: clamp(18px, 6vh, 48px) clamp(12px, 4vw, 24px);
+  }
+}
