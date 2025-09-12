@@ -1355,54 +1355,34 @@ html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
 }
 
 
-/* ===== Explorer 빈칸 재발 완전 차단 (모든 중첩 레벨) ===== */
+/* ===== Explorer: 폴더 화살표 완전 제거 & 간격 보정 ===== */
 
-/* 0) 기본 여백 초기화(중첩 전부) */
-.sidebar.left .explorer .explorer-content :where(ul, li){
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-/* 1) 폴더 접힘 컨테이너: 항상 밖으로 새지 않게 + 높이 0 */
-.sidebar.left .explorer .folder-outer{
-  display: grid !important;
-  grid-template-rows: 0fr !important;
-  overflow: hidden !important;
-  min-height: 0 !important;
-}
-.sidebar.left .explorer .folder-outer > ul{
-  margin: 0 !important;
-  padding: 0 !important;
-  min-height: 0 !important;
-  overflow: hidden !important;
+/* 1) 폴더 행 안의 아이콘/캐럿 통째로 숨김 */
+.sidebar.left .explorer .folder-container :where(.folder-icon,
+                                                 .chevron,
+                                                 .caret,
+                                                 .lucide-chevron-down,
+                                                 .lucide-chevron-right) {
+  display: none !important;
 }
 
-/* 2) 펼침 상태에서만 내용 보이게(시각 간격은 padding으로만) */
-.sidebar.left .explorer .folder-outer.open{
-  grid-template-rows: 1fr !important;
-}
-.sidebar.left .explorer .folder-outer.open > ul{
-  padding-block: 4px !important;   /* 필요하면 2~6px로 조절 */
+/* 2) details/summary 기반이면 기본 마커도 제거 */
+.sidebar.left .explorer summary::-webkit-details-marker { display: none !important; }
+.sidebar.left .explorer summary::marker { content: "" !important; }
+
+/* 3) 캐럿을 ::before/::after로 넣는 테마 차단 */
+.sidebar.left .explorer .folder-container::before,
+.sidebar.left .explorer .folder-container::after { content: none !important; }
+
+/* 4) 아이콘 자리로 남는 공간/여백 정리 */
+.sidebar.left .explorer .folder-container {
+  gap: 6px !important;        /* 아이콘 빠졌으니 간격 축소 */
+  padding-left: 8px !important;
 }
 
-/* 3) 혹시 테마가 닫힘 상태에서도 높이를 남기면 max-height로 한 번 더 제로화 */
-.sidebar.left .explorer .folder-outer:not(.open) > ul{
-  max-height: 0 !important;
+/* 5) 들여쓰기 라인/내용은 유지(필요 시 값만 조절) */
+.sidebar.left .explorer .folder-outer > ul {
+  margin-left: 8px !important;
+  padding-left: 12px !important;
+  border-left: 1px solid var(--x-border);
 }
-
-/* 4) 폴더 타이틀(행) 자체의 잔여 마진 제거 */
-.sidebar.left .explorer .folder-container{
-  margin-block: 0 !important;
-  padding: 8px 10px !important;
-}
-
-/* 5) 링크(파일) 행은 슬림하게 — 줄 높이만 유지 */
-.sidebar.left .explorer .explorer-content li > a{
-  min-height: 30px !important;
-  line-height: 1.25 !important;
-  padding: 6px 10px !important;
-}
-
-/* 6) 첫/끝 항목 주변 여백 0 보장(유령 여백 예방) */
-.sidebar.left .explorer .folder-outer > ul > li:first-child{ margin-top: 0 !important; }
-.sidebar.left .explorer .folder-outer > ul > li:last-child { margin-bottom: 0 !important; }
