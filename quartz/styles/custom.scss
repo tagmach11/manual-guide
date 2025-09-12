@@ -1152,3 +1152,71 @@ footer img {
     padding: clamp(18px, 6vh, 48px) clamp(12px, 4vw, 24px);
   }
 }
+
+
+
+
+/**/
+
+/* ===== PATCH: GraphView 안 덮기 + LX2 줄바꿈/확대 + 전체 축소 ===== */
+
+/* 1) 히어로 상단 세이프 마진 (헤더/그래프뷰 피하기) */
+.lx2-hero{
+  /* 필요 시 숫자만 조절하세요 (기본 72px) */
+  --hero-offset-top: clamp(40px, 7vh, 72px);
+  margin-top: var(--hero-offset-top);
+
+  /* 전체 크기 한 단계 더 축소 */
+  --wrap: 1040px;                         /* 1080 → 1040 */
+  min-height: clamp(340px, 56dvh, 580px); /* 66dvh → 56dvh */
+  padding: clamp(18px, 6vh, 48px) clamp(16px, 4vw, 32px);
+
+  /* 레이어는 낮게 유지(그래프뷰가 항상 위) */
+  z-index: auto;
+  isolation: initial;
+}
+
+/* 칼럼 간격/비율도 살짝 더 줄임 */
+.lx2-hero__inner{
+  grid-template-columns: 1.08fr 0.92fr;
+  column-gap: clamp(14px, 3vw, 28px);
+}
+
+/* 2) 제목: 'LX 2'를 다음 줄로 + 약간 더 크게 */
+.lx2-hero__title{
+  font-size: clamp(26px, 3.7vw, 52px); /* 본문 타이틀은 살짝 축소 */
+  line-height: 1.06;
+  margin: 0 0 .28em 0;
+}
+.lx2-title-accent{
+  display: block;              /* 줄바꿈 */
+  margin-top: .2em;            /* 한 칸 내려보이게 */
+  font-size: 1.24em;           /* LX2만 더 큼 (기존 1.18 → 1.24) */
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+/* 3) 카드 더 컴팩트(아이콘-텍스트는 가깝게 유지) */
+.lx2-card{
+  min-height: 68px;            /* 72 → 68 */
+  padding: 11px 14px;
+  gap: 8px;
+}
+.lx2-card__icon{ width: 34px; height: 34px; border-radius: 10px; }
+.lx2-card__icon svg{ width: 19px; height: 19px; }
+.lx2-card__text{ gap: 6px; font-size: clamp(13px, 1.02vw, 15px); white-space: nowrap; }
+
+/* 4) 모바일에서 여백 더 절약 */
+@media (max-width: 980px){
+  .lx2-hero{
+    --hero-offset-top: clamp(24px, 5vh, 48px);
+    margin-top: var(--hero-offset-top);
+    min-height: clamp(320px, 52dvh, 520px);
+  }
+}
+
+/* (선택) 그래프뷰가 여전히 위로 안 올라오면, 흔한 클래스에 우선순위 부여 */
+.graph, .graph-view, #graph, #graph-container{
+  position: relative;
+  z-index: 20; /* 히어로보다 항상 위 */
+}
