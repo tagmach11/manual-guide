@@ -1325,19 +1325,21 @@ footer img {
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 
-/* (옵션) 카드 그리드가 폭을 꽉 채우게 미세 조정 */
-html.theme-light .lx2-hero .lx2-hero__content,
-html.theme-light .lx2-hero .lx2-hero__content *{
-  color:#fff !important;
-  -webkit-text-fill-color:#fff !important; /* 일부 테마의 헤딩 채움색도 강제 */
+/* === FORCE WHITE TEXT IN LIGHT THEME (left block only) === */
+/* 테마에서 h1/h2 등에 !important가 걸려 있어도 이게 이깁니다(더 높은 특이성 + !important). */
+html.theme-light body .page .content .lx2-hero .lx2-hero__content,
+html.theme-light body .page .content .lx2-hero .lx2-hero__content *{
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important; /* 크롬/웨브킷 헤딩 채움색 */
+  mix-blend-mode: normal !important;        /* 혹시 블렌드 섞여 있으면 무효화 */
 }
 
-/* 버튼 테두리/호버 색도 라이트에서 흰색 유지 */
-html.theme-light .lx2-hero .lx2-hero__cta{
+/* 버튼도 라이트에서 흰색 유지 */
+html.theme-light body .page .content .lx2-hero .lx2-hero__cta{
   color:#fff !important;
   border-color: rgba(255,255,255,.32) !important;
 }
-html.theme-light .lx2-hero .lx2-hero__cta:hover{
+html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
   border-color: rgba(255,255,255,.6) !important;
   background: rgba(255,255,255,.06) !important;
 }
