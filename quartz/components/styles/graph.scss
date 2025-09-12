@@ -162,7 +162,7 @@
 
 /* ========== NON-HOME: 기본(원래) 스타일 유지 ========== */
 /* 전역 .graph 오버라이드가 이미 있다면 지우거나, 아래처럼 원상복구를 강제 */
-@layer nonHomeReset {
+
   .page:not(:has(main.content :is(h1 > a[href="/"], nav.breadcrumbs a[href="/"]:only-child))) {
     .graph{
       background: transparent !important; color: inherit !important;
@@ -181,3 +181,5 @@
     }
     .graph > .graph-outer > .global-graph-icon{
       cursor: pointer; background: no
+    }
+  }
