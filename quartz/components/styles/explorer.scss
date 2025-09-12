@@ -301,7 +301,7 @@ html, body, .page, #quartz-body { overflow-x: hidden !important; }
 :root { --explorer-label: "메뉴"; }  /* ← 여기만 바꾸면 제목 변경 */
 .sidebar.left:has(.explorer) { padding-top: 0 !important; }
 .sidebar.left .explorer :where(h1,h2,h3){
-  margin:0 !important; padding:0 !important; background:transparent !important; box-shadow:none !important;
+  margin:0 !important; padding:0 !important; background:transparent !important; box-shadow:none !important; padding-left: 100px;
 }
 .sidebar.left .explorer .fold,
 .sidebar.left .explorer :is(.desktop-explorer,.mobile-explorer) svg,
