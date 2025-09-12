@@ -1388,37 +1388,34 @@ html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
   border-left: 1px solid var(--x-border);
 }
 
-/* ===== Explorer: 빈 하위 목록/행 완전 제거 (공백/주석 노드까지 대응) ===== */
+/* ===== Explorer: _etc 폴더/파일 전부 숨김 ===== */
+.sidebar.left .explorer {
+  /* 1) 폴더 자체(행) 숨김 + 공간까지 제거 */
+  li:has(> .folder-container[data-folderpath^="_etc"]),
+  li:has(> .folder-container[data-folderpath*="/_etc"]) {
+    display: none !important;
+  }
+  /* 폴더 컨테이너가 남더라도 바로 접힘 */
+  .folder-container[data-folderpath^="_etc"],
+  .folder-container[data-folderpath*="/_etc"] {
+    display: none !important;
+  }
+  /* 폴더 내용 블록(형제)도 제거 */
+  .folder-container[data-folderpath^="_etc"] + .folder-outer,
+  .folder-container[data-folderpath*="/_etc"] + .folder-outer {
+    display: none !important;
+  }
 
-/* 1) 자식 <li>가 하나도 없는 하위 목록은 통째로 숨김 */
-.sidebar.left .explorer .folder-outer > ul.content:not(:has(> li)){
-  display: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  border: 0 !important;        /* 들여쓰기 라인까지 제거 */
+  /* 2) 파일 링크가 _etc 경로를 가리키면 항목(li)ごと 제거 */
+  li:has(> a[data-for^="_etc/"]),
+  li:has(> a[href^="../_etc/"]),
+  li:has(> a[href*="/_etc/"]) {
+    display: none !important;
+  }
+  /* 앵커 자체도 보이지 않게(혹시 li:has 미지원 브라우저 대비) */
+  a[data-for^="_etc/"],
+  a[href^="../_etc/"],
+  a[href*="/_etc/"] {
+    display: none !important;
+  }
 }
-
-/* 2) 그 부모 컨테이너도 높이 0으로 접기 (grid 트랙 제거) */
-.sidebar.left .explorer .folder-outer:has(> ul.content:not(:has(> li))){
-  grid-template-rows: 0fr !important;
-  overflow: hidden !important;
-  min-height: 0 !important;
-}
-
-/* 3) 요소 자식이 전혀 없는 <li>도 전부 제거 (공백 텍스트만 있어도 매치) */
-.sidebar.left .explorer :is(ul, ol) > li:not(:has(*)){
-  display: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-/* 4) 최상단 목록의 기본 padding 제거(남는 윗칸 차단) */
-.sidebar.left .explorer > .explorer-content > ul.content{
-  padding: 0 !important;
-  margin: 0 !important;
-  border: 0 !important;
-}
-
-/* 5) (안전망) 닫힘 상태는 언제나 0, 열릴 때만 보이게 */
-.sidebar.left .explorer .folder-outer:not(.open) > ul.content{ display:none !important; }
-.sidebar.left .explorer .folder-outer.open > ul.content{ display:block !important; }
