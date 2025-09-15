@@ -1405,19 +1405,20 @@ html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
   --dot-active: #000;
   --dur: .45s;
   --timing: cubic-bezier(.25,.8,.25,1);
-
+ 
   position: relative;
   max-width: 1080px;
   margin: 24px auto;
+  height: auto;
   border-radius: 14px;
   box-shadow: 0 6px 24px rgba(0,0,0,.10);
   isolation: isolate;
   overflow: hidden;
 }
-
+ 
 /* 상태 라디오 숨김 */
 .obs-slider > input[type="radio"]{ position:absolute; opacity:0; pointer-events:none; }
-
+ 
 /* 뷰포트/트랙 */
 .obs-slider .viewport{ position:relative; height: var(--h); overflow:hidden; }
 .obs-slider .track{
@@ -1427,7 +1428,7 @@ html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
   will-change: transform;
   backface-visibility: hidden;
 }
-
+ 
 /* 패널: 정확히 100% 폭 */
 .obs-slider .panel{
   flex: 0 0 100%;
@@ -1437,7 +1438,7 @@ html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
   margin:0;           /* figure 기본 여백 제거 */
 }
 .obs-slider .panel img{ width:100%; height:100%; object-fit:cover; display:block; } /* 하단 공백 제거 */
-
+ 
 /* 네비게이션 버튼 (흰 원 + 검정 >, 호버 반전) — 자리 유지, 투명도만 토글 */
 .obs-slider .nav{
   position:absolute; inset-block:0; margin-block:auto;
@@ -1455,7 +1456,7 @@ html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
 .obs-slider .nav:active{ transform: scale(.98); }
 .obs-slider .nav.prev{ left:14px; }
 .obs-slider .nav.next{ right:14px; }
-
+ 
 /* 점 표시 */
 .obs-slider .dots{
   position:absolute; left:0; right:0; bottom:14px;
@@ -1465,12 +1466,12 @@ html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
   width:10px; height:10px; border-radius:999px; background:var(--dot);
   cursor:pointer; transition: transform .2s, background .2s;
 }
-
+ 
 /* ===== 상태 → 이동/표시 ===== */
 #os-s1:checked ~ .viewport .track{ transform: translate3d(0,0,0); }
 #os-s2:checked ~ .viewport .track{ transform: translate3d(-100%,0,0); }
 #os-s3:checked ~ .viewport .track{ transform: translate3d(-200%,0,0); }
-
+ 
 /* 활성 dot 강조 */
 #os-s1:checked ~ .viewport .dots label:nth-child(1),
 #os-s2:checked ~ .viewport .dots label:nth-child(2),
@@ -1478,70 +1479,21 @@ html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
   background: var(--dot-active);
   transform: scale(1.25);
 }
-
+ 
 /* 각 슬라이드에서 활성화할 버튼 페어(투명도/포인터만 변경) */
 #os-s1:checked ~ .viewport .nav.for-1,
 #os-s2:checked ~ .viewport .nav.for-2,
 #os-s3:checked ~ .viewport .nav.for-3{
   opacity:1; pointer-events:auto;
 }
-
+ 
 /* 접근성: 모션 줄이기 */
 @media (prefers-reduced-motion: reduce){
   .obs-slider .track{ transition:none; }
 }
-
+ 
 /* 반응형 */
 @media (max-width: 720px){
   .obs-slider{ --h: 320px; --btn-size: 44px; }
 }
-
-/* === 핵심: 기준을 다시 잡아준다 === */
-.obs-slider { position: relative !important; overflow: hidden; }
-.obs-slider .viewport { position: relative !important; }
-
-/* === 트랙/패널 기본 보정 === */
-.obs-slider .track { display: flex !important; gap: 0 !important; }
-.obs-slider .panel { flex: 0 0 100% !important; margin: 0 !important; }
-.obs-slider .panel img { display: block !important; }
-
-/* === 버튼/도트는 반드시 떠있게 === */
-.obs-slider .nav,
-.obs-slider .dots { position: absolute !important; z-index: 10 !important; }
-
-/* 버튼: 세로 중앙 고정 */
-.obs-slider .nav {
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  /* 혹시 display가 풀렸다면 강제 */
-  display: flex !important; align-items: center !important; justify-content: center !important;
-  width: 48px !important; height: 48px !important;
-  border-radius: 999px !important;
-  background: #fff !important; color: #000 !important;
-  box-shadow: 0 2px 10px rgba(0,0,0,.22) !important;
-  cursor: pointer !important; user-select: none !important;
-}
-.obs-slider .nav.prev { left: 14px !important; }
-.obs-slider .nav.next { right: 14px !important; }
-.obs-slider .nav:hover { background: #000 !important; color: #fff !important; }
-
-/* 도트: 하단 중앙 고정 */
-.obs-slider .dots {
-  left: 0 !important; right: 0 !important; bottom: 14px !important;
-  display: flex !important; gap: 10px !important; justify-content: center !important; align-items: center !important;
-}
-
-/* === 이미지 '핏하게' (크롭 없음) === */
-.obs-slider.fit-tight .viewport { height: auto !important; }
-.obs-slider.fit-tight .track { height: auto !important; align-items: flex-start !important; }
-.obs-slider.fit-tight .panel { height: auto !important; background: transparent !important; }
-.obs-slider.fit-tight .panel img {
-  max-width: 100% !important;
-  height: auto !important;
-  object-fit: contain !important;
-  object-position: 50% 50% !important;
-}
-
-/* (선택) 850x460 고정 박스 쓰고 싶을 때는 이 블록과 fit-tight를 같이 쓰지 마세요 */
-.obs-slider.size-850x460 { width: 850px !important; }
-.obs-slider.size-850x460 .viewport { height: 460px !important; }
+ 
