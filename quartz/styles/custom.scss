@@ -1432,7 +1432,7 @@ html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
 /* 패널: 정확히 100% 폭 */
 .obs-slider .panel{
   flex: 0 0 100%;
-  height: 100%;
+  height: auto;
   display:grid; place-items:center;
   background:#f6f7f9;
   margin:0;           /* figure 기본 여백 제거 */
