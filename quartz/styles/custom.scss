@@ -1389,3 +1389,101 @@ html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
     display: none !important;
   }
 }
+
+
+
+
+
+
+
+
+/* ===== Obsidian CSS-only Slider ===== */
+.obs-slide {
+  --w: 100%;
+  --h: 420px;
+  --btn: #fff;         /* 버튼 배경: 흰색  */
+  --icon: #000;        /* 아이콘( > ) 색: 검정 */
+  --btn-size: 48px;
+  --btn-shadow: 0 2px 10px rgba(0,0,0,.22);
+  --dot: #cfcfcf;
+  --dot-active: #000;
+
+  position: relative;
+  width: var(--w);
+  max-width: 980px;
+  margin: 24px auto;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(0,0,0,.10);
+}
+
+/* 라디오(상태) 숨김 */
+.obs-slide > input[type="radio"] { position: absolute; opacity: 0; pointer-events: none; }
+
+/* 뷰포트 & 트랙 */
+.obs-slide .viewport { position: relative; width: 100%; height: var(--h); overflow: hidden; }
+.obs-slide .track {
+  display: flex;
+  width: 300%; /* 3장 기준 */
+  height: 100%;
+  transition: transform .55s ease-in-out;
+}
+
+/* 슬라이드 패널 */
+.obs-slide .panel {
+  width: 100%;
+  height: 100%;
+  flex: 0 0 100%;
+  display: grid; place-items: center;
+  background: #f6f7f9;
+}
+.obs-slide .panel img { width: 100%; height: 100%; object-fit: cover; }
+
+/* 좌우 버튼 (흰 원형 + 검정 >) */
+.obs-slide .arrow {
+  position: absolute; inset-block: 0; margin-block: auto;
+  width: var(--btn-size); height: var(--btn-size);
+  display: none; /* 상태에 따라 보여줌 */
+  align-items: center; justify-content: center;
+  border-radius: 999px; background: var(--btn); color: var(--icon);
+  font-size: 24px; font-weight: 700; line-height: 1;
+  box-shadow: var(--btn-shadow);
+  cursor: pointer; user-select: none;
+  transition: transform .15s ease, background .15s ease, color .15s ease;
+}
+.obs-slide .arrow:hover { background: #000; color: #fff; transform: scale(1.06); }
+.obs-slide .arrow.prev { left: 14px; }
+.obs-slide .arrow.next { right: 14px; }
+
+/* 위치 점(dots) */
+.obs-slide .dots {
+  position: absolute; left: 0; right: 0; bottom: 14px;
+  display: flex; gap: 10px; justify-content: center; align-items: center;
+}
+.obs-slide .dots label {
+  width: 10px; height: 10px; border-radius: 999px;
+  background: var(--dot); cursor: pointer; transition: transform .2s, background .2s;
+}
+
+/* ===== 상태에 따른 이동 ===== */
+#o-s1:checked ~ .viewport .track { transform: translateX(0%); }
+#o-s2:checked ~ .viewport .track { transform: translateX(-100%); }
+#o-s3:checked ~ .viewport .track { transform: translateX(-200%); }
+
+/* 활성 dot 강조 */
+#o-s1:checked ~ .viewport .dots label:nth-child(1),
+#o-s2:checked ~ .viewport .dots label:nth-child(2),
+#o-s3:checked ~ .viewport .dots label:nth-child(3) {
+  background: var(--dot-active);
+  transform: scale(1.25);
+}
+
+/* ===== 각 상태에서 보일 버튼 페어 ===== */
+#o-s1:checked ~ .viewport .arrow.for-1 { display: flex; }
+#o-s2:checked ~ .viewport .arrow.for-2 { display: flex; }
+#o-s3:checked ~ .viewport .arrow.for-3 { display: flex; }
+
+/* 반응형 높이 */
+@media (max-width: 700px) {
+  .obs-slide { --h: 300px; --btn-size: 44px; }
+}
