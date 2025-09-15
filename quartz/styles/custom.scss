@@ -1496,15 +1496,32 @@ html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
   .obs-slider{ --h: 320px; --btn-size: 44px; }
 }
 
-
-/* 850×460 고정 + 크롭 방지(contain) */
-.obs-slider.size-850x460{ width: 850px !important; }
-.obs-slider.size-850x460 .viewport{ height: 460px !important; }
-.obs-slider.size-850x460 .panel{ margin: 0 !important; background: #0b0c10; }
-.obs-slider.size-850x460 .panel img{
+/* === Fit-Tight: 이미지 비율 그대로, 여백 최소화(크롭 없음) === */
+/* 폭은 슬라이더 폭(예: 850px)에 맞추고, 높이는 이미지에 따라 자동 조절 */
+.obs-slider.fit-tight { width: 850px; }             /* 원하는 폭으로 조정 */
+.obs-slider.fit-tight .viewport { height: auto !important; }
+.obs-slider.fit-tight .track { height: auto !important; align-items: flex-start; }
+.obs-slider.fit-tight .panel { 
+  min-width: 100%; 
+  height: auto !important; 
+  margin: 0 !important; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  background: transparent;
+}
+.obs-slider.fit-tight .panel img {
   display: block;
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: contain !important;  /* 전체 보이기: 안 잘림 */
-  object-position: 50% 50% !important;
+  max-width: 100%;      /* 가로는 컨테이너 안에서 최대치 */
+  height: auto;         /* 세로 자동 → 크롭 0% */
+  object-fit: contain;  /* 혹시 height 지정이 들어와도 안전 */
+  object-position: 50% 50%;
+}
+
+/* 네비 버튼은 세로 중앙 정렬이 유지되도록 보정 */
+.obs-slider.fit-tight .nav {
+  top: 50%; 
+  transform: translateY(-50%); 
+  bottom: auto; 
+  inset-block: auto;
 }
