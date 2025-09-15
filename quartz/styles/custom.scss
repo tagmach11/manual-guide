@@ -1503,3 +1503,30 @@ html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
 @media (max-width: 700px) {
   .obs-slide { --h: 300px; --btn-size: 44px; }
 }
+
+/* 슬라이드 개수 지정 */
+.obs-slide { --count: 3; }  /* 3장 기준 — 장수 바뀌면 여기만 수정 */
+
+/* 트랙 기본값: gap이 있으면 잔상 생깁니다 */
+.obs-slide .track { display:flex; height:100%; gap:0; }
+
+/* 각 패널은 100% 폭(한 장 = 한 화면) */
+.obs-slide .panel { flex: 0 0 100%; }
+
+/* === 이동식 === */
+/* 1번(처음) */
+#o-s1:checked ~ .viewport .track {
+  transform: translate3d(0,0,0);
+}
+
+/* 2번: -100% / 슬라이드수 = 정확히 한 칸 */
+#o-s2:checked ~ .viewport .track {
+  transform: translate3d(calc(-100% / var(--count)), 0, 0);
+}
+
+/* 3번: -200% / 슬라이드수 = 두 칸 */
+#o-s3:checked ~ .viewport .track {
+  transform: translate3d(calc(-200% / var(--count)), 0, 0);
+}
+
+/* (4장이면)
