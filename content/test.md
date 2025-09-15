@@ -2,27 +2,38 @@
 title: LX2 Hero
 cssclass: lx2-hero-page
 ---
-<div class="o-deck" id="deck-1">
+<div class="obs-slider">
+
+  <!-- 상태 라디오 -->
+  <input type="radio" name="obslide" id="os-s1" checked>
+  <input type="radio" name="obslide" id="os-s2">
+  <input type="radio" name="obslide" id="os-s3">
+
   <div class="viewport">
-    <section class="slide" id="s1">
-      <img src="slide_1.png" alt="Slide 1">
-    </section>
-    <section class="slide" id="s2">
-      <img src="slide_2.png" alt="Slide 2">
-    </section>
-    <section class="slide" id="s3">
-      <img src="slide_3.png" alt="Slide 3">
-    </section>
+    <div class="track">
+      <figure class="panel"><img src="slide_1.png" alt="Slide 1"></figure>
+      <figure class="panel"><img src="slide_2.png" alt="Slide 2"></figure>
+      <figure class="panel"><img src="slide_3.png" alt="Slide 3"></figure>
+    </div>
+
+    <!-- 좌/우 버튼(흰색 + 검정 >) -->
+    <!-- s1일 때 보여줄 버튼: prev→s3, next→s2 -->
+    <label for="os-s3" class="nav prev for-1" aria-label="Prev">&#8249;</label>
+    <label for="os-s2" class="nav next for-1" aria-label="Next">&#8250;</label>
+
+    <!-- s2일 때 -->
+    <label for="os-s1" class="nav prev for-2" aria-label="Prev">&#8249;</label>
+    <label for="os-s3" class="nav next for-2" aria-label="Next">&#8250;</label>
+
+    <!-- s3일 때 -->
+    <label for="os-s2" class="nav prev for-3" aria-label="Prev">&#8249;</label>
+    <label for="os-s1" class="nav next for-3" aria-label="Next">&#8250;</label>
+
+    <!-- 지점(dot) -->
+    <div class="dots">
+      <label for="os-s1" aria-label="Go to slide 1"></label>
+      <label for="os-s2" aria-label="Go to slide 2"></label>
+      <label for="os-s3" aria-label="Go to slide 3"></label>
+    </div>
   </div>
-  <a class="nav prev for-1" href="#s3" aria-label="Prev">&#8249;</a>
-  <a class="nav next for-1" href="#s2" aria-label="Next">&#8250;</a>
-  <a class="nav prev for-2" href="#s1" aria-label="Prev">&#8249;</a>
-  <a class="nav next for-2" href="#s3" aria-label="Next">&#8250;</a>
-  <a class="nav prev for-3" href="#s2" aria-label="Prev">&#8249;</a>
-  <a class="nav next for-3" href="#s1" aria-label="Next">&#8250;</a>
-  <nav class="dots">
-    <a href="#s1" aria-label="Go to slide 1"></a>
-    <a href="#s2" aria-label="Go to slide 2"></a>
-    <a href="#s3" aria-label="Go to slide 3"></a>
-  </nav>
 </div>

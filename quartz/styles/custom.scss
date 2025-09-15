@@ -1395,100 +1395,103 @@ html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
 
 
 
-
-
-/* ===== Obsidian CSS-only Slider (Smooth v2) ===== */
-/* ===== Obsidian Slider – precise translate (v3) ===== */
-.obs-slide{
-  --count: 3;              /* 슬라이드 개수: HTML에서 덮어쓰기 가능 */
-  --i: 0;                  /* 현재 인덱스(0부터) – 상태에 따라 갱신 */
-  --h: 420px;
+/* ===== Obsidian Slider (pure CSS, no JS) ===== */
+.obs-slider{
+  --h: 460px;
   --btn-size: 48px;
-  --btn-bg: #fff;          /* 버튼: 흰색 */
-  --btn-fg: #000;          /* 아이콘: 검정 */
+  --btn-bg: #fff;   /* 버튼 배경: 흰색 */
+  --btn-fg: #000;   /* 아이콘: 검정 */
   --dot: #cfcfcf;
   --dot-active: #000;
   --dur: .45s;
   --timing: cubic-bezier(.25,.8,.25,1);
 
   position: relative;
-  max-width: 980px; width: 100%;
-  margin: 24px auto; border-radius: 14px; overflow: hidden;
+  max-width: 1080px;
+  margin: 24px auto;
+  border-radius: 14px;
   box-shadow: 0 6px 24px rgba(0,0,0,.10);
   isolation: isolate;
+  overflow: hidden;
 }
 
 /* 상태 라디오 숨김 */
-.obs-slide > input[type="radio"]{ position:absolute; opacity:0; pointer-events:none; }
+.obs-slider > input[type="radio"]{ position:absolute; opacity:0; pointer-events:none; }
 
-/* 뷰포트 & 트랙 */
-.obs-slide .viewport{ position:relative; height: var(--h); overflow:hidden; }
-.obs-slide .track{
+/* 뷰포트/트랙 */
+.obs-slider .viewport{ position:relative; height: var(--h); overflow:hidden; }
+.obs-slider .track{
   display:flex; gap:0; height:100%;
-  /* 핵심: 트랙 이동은 "트랙 너비 기준 100% / 슬라이드 수" 만큼 */
-  transform: translate3d(calc(-100% / var(--count) * var(--i)), 0, 0);
+  transform: translate3d(0,0,0);
   transition: transform var(--dur) var(--timing);
-  will-change: transform; backface-visibility: hidden;
+  will-change: transform;
+  backface-visibility: hidden;
 }
-/* 패널은 정확히 (100% / 개수) 로 분할 */
-.obs-slide .panel{
-  flex: 0 0 calc(100% / var(--count)); height:100%;
-  display:grid; place-items:center; background:#f6f7f9; margin:0; /* figure 마진 제거 */
-}
-.obs-slide .panel img{ width:100%; height:100%; object-fit:cover; display:block; } /* 하단 공백 제거 */
 
-/* 좌우 버튼(흰 원 + 검정 >) – 자리는 유지, 투명도만 토글 */
-.obs-slide .arrow{
+/* 패널: 정확히 100% 폭 */
+.obs-slider .panel{
+  flex: 0 0 100%;
+  height: 100%;
+  display:grid; place-items:center;
+  background:#f6f7f9;
+  margin:0;           /* figure 기본 여백 제거 */
+}
+.obs-slider .panel img{ width:100%; height:100%; object-fit:cover; display:block; } /* 하단 공백 제거 */
+
+/* 네비게이션 버튼 (흰 원 + 검정 >, 호버 반전) — 자리 유지, 투명도만 토글 */
+.obs-slider .nav{
   position:absolute; inset-block:0; margin-block:auto;
   width:var(--btn-size); height:var(--btn-size);
   display:flex; align-items:center; justify-content:center;
-  border-radius:999px; background:var(--btn-bg); color:var(--btn-fg);
-  font-size:24px; font-weight:700; line-height:1;
+  border-radius:999px;
+  background:var(--btn-bg); color:var(--btn-fg);
+  font-size:24px; font-weight:800; line-height:1;
   box-shadow:0 2px 10px rgba(0,0,0,.22);
-  cursor:pointer; user-select:none;
-  transition: opacity .18s ease, transform .15s ease, background .15s ease, color .15s ease;
+  user-select:none; cursor:pointer;
+  transition: background .15s ease, color .15s ease, transform .15s ease, opacity .18s ease;
   opacity:0; pointer-events:none;
 }
-.obs-slide .arrow:hover{ background:#000; color:#fff; transform:scale(1.06); }
-.obs-slide .arrow:active{ transform:scale(.98); }
-.obs-slide .arrow.prev{ left:14px; }
-.obs-slide .arrow.next{ right:14px; }
+.obs-slider .nav:hover{ background:#000; color:#fff; transform: scale(1.06); }
+.obs-slider .nav:active{ transform: scale(.98); }
+.obs-slider .nav.prev{ left:14px; }
+.obs-slider .nav.next{ right:14px; }
 
 /* 점 표시 */
-.obs-slide .dots{
+.obs-slider .dots{
   position:absolute; left:0; right:0; bottom:14px;
   display:flex; gap:10px; justify-content:center; align-items:center;
 }
-.obs-slide .dots label{
+.obs-slider .dots label{
   width:10px; height:10px; border-radius:999px; background:var(--dot);
-  cursor:pointer; transition:transform .2s, background .2s;
+  cursor:pointer; transition: transform .2s, background .2s;
 }
 
-/* ===== 상태 → 인덱스 갱신 ===== */
-#o-s1:checked ~ .viewport{ --i: 0; }
-#o-s2:checked ~ .viewport{ --i: 1; }
-#o-s3:checked ~ .viewport{ --i: 2; }
+/* ===== 상태 → 이동/표시 ===== */
+#os-s1:checked ~ .viewport .track{ transform: translate3d(0,0,0); }
+#os-s2:checked ~ .viewport .track{ transform: translate3d(-100%,0,0); }
+#os-s3:checked ~ .viewport .track{ transform: translate3d(-200%,0,0); }
 
 /* 활성 dot 강조 */
-#o-s1:checked ~ .viewport .dots label:nth-child(1),
-#o-s2:checked ~ .viewport .dots label:nth-child(2),
-#o-s3:checked ~ .viewport .dots label:nth-child(3){
+#os-s1:checked ~ .viewport .dots label:nth-child(1),
+#os-s2:checked ~ .viewport .dots label:nth-child(2),
+#os-s3:checked ~ .viewport .dots label:nth-child(3){
   background: var(--dot-active);
   transform: scale(1.25);
 }
 
-/* 활성 슬라이드에서만 버튼 페어 활성 */
-#o-s1:checked ~ .viewport .arrow.for-1,
-#o-s2:checked ~ .viewport .arrow.for-2,
-#o-s3:checked ~ .viewport .arrow.for-3{
+/* 각 슬라이드에서 활성화할 버튼 페어(투명도/포인터만 변경) */
+#os-s1:checked ~ .viewport .nav.for-1,
+#os-s2:checked ~ .viewport .nav.for-2,
+#os-s3:checked ~ .viewport .nav.for-3{
   opacity:1; pointer-events:auto;
 }
 
-/* 접근성 */
+/* 접근성: 모션 줄이기 */
 @media (prefers-reduced-motion: reduce){
-  .obs-slide .track{ transition:none; }
+  .obs-slider .track{ transition:none; }
 }
+
 /* 반응형 */
-@media (max-width: 700px){
-  .obs-slide{ --h: 300px; --btn-size: 44px; }
+@media (max-width: 720px){
+  .obs-slider{ --h: 320px; --btn-size: 44px; }
 }
