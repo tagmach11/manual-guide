@@ -8,9 +8,9 @@ cssclass: lx2-hero-page
   <input type="radio" name="obslide" id="os-s3">
   <div class="viewport">
     <div class="track">
-      <figure class="panel"><img src="slide_1.png" alt="Slide 1"></figure>
-      <figure class="panel"><img src="slide_2.png" alt="Slide 2"></figure>
-      <figure class="panel"><img src="slide_3.png" alt="Slide 3"></figure>
+      <figure class="panel"><img src="회원-조교.png" alt="Slide 1"></figure>
+      <figure class="panel"><img src="회원-학습자.png" alt="Slide 2"></figure>
+      <figure class="panel"><img src="회원-전체.png" alt="Slide 3"></figure>
     </div>
     <label for="os-s3" class="nav prev for-1" aria-label="Prev">&#8249;</label>
     <label for="os-s2" class="nav next for-1" aria-label="Next">&#8250;</label>
