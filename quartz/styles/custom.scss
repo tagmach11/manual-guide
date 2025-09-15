@@ -1420,9 +1420,9 @@ html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
 .obs-slider > input[type="radio"]{ position:absolute; opacity:0; pointer-events:none; }
  
 /* 뷰포트/트랙 */
-.obs-slider .viewport{ position:relative; height: var(--h); overflow:hidden; }
+.obs-slider .viewport{ position:relative; height: auto; overflow:hidden; }
 .obs-slider .track{
-  display:flex; gap:0; height:100%;
+  display:flex; gap:0; height:auto;
   transform: translate3d(0,0,0);
   transition: transform var(--dur) var(--timing);
   will-change: transform;
@@ -1437,7 +1437,7 @@ html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
   background:#f6f7f9;
   margin:0;           /* figure 기본 여백 제거 */
 }
-.obs-slider .panel img{ width:100%; height:100%; object-fit:cover; display:block; } /* 하단 공백 제거 */
+.obs-slider .panel img{ width:100%; height:100%; object-fit:contain; display:block; } /* 하단 공백 제거 */
  
 /* 네비게이션 버튼 (흰 원 + 검정 >, 호버 반전) — 자리 유지, 투명도만 토글 */
 .obs-slider .nav{
