@@ -2,7 +2,7 @@
 title: LX2 Hero
 cssclass: lx2-hero-page
 ---
-<div class="obs-slider">
+<div class="obs-slider no-crop">
   <input type="radio" name="obslide" id="os-s1" checked>
   <input type="radio" name="obslide" id="os-s2">
   <input type="radio" name="obslide" id="os-s3">

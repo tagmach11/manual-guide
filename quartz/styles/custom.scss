@@ -1497,35 +1497,26 @@ html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
 }
 
 
-/* === 공통: fit/position 변수 추가 === */
-.o-deck{
-  --fit: cover;           /* 기본: 꽉 채우기(크롭 가능) */
-  --pos: 50% 50%;         /* 중앙 정렬 */
-  --bg: #0b0c10;          /* contain 시 레터박스 배경 */
+/* ========== ① no-crop: 이미지 절대 안 잘림 (슬라이드 높이 자동) ========== */
+.o-deck.no-crop .viewport { height: auto; }
+.o-deck.no-crop .track { align-items: stretch; height: auto; }
+.o-deck.no-crop .slide { min-width: 100%; height: auto; background: transparent; }
+.o-deck.no-crop .slide img {
+  display: block;
+  width: 100%;
+  height: auto;       /* 핵심: 세로 자동 → 크롭 0% */
+  object-fit: unset;  /* 또는 object-fit: contain; */
+  object-position: 50% 50%;
 }
-.o-deck .slide{ background: var(--bg); }
-.o-deck .slide img{
+
+/* ========== ② letterbox: 고정 높이에서 전체 보이기(레터박스) ========== */
+.o-deck.letterbox .viewport { height: var(--h); }
+.o-deck.letterbox .slide { background: var(--bg, #0b0c10); }
+.o-deck.letterbox .slide img {
+  display: block;
   width: 100%;
   height: 100%;
-  object-fit: var(--fit);
-  object-position: var(--pos);
-  display: block;         /* 이미지 하단 공백 방지 */
+  object-fit: contain;       /* 전체 보이기 */
+  object-position: 50% 50%;
+  background: transparent;
 }
-
-/* === 모드 ①: 전체 보이기(안 잘림, 레터박스) === */
-.o-deck.fit-contain{ --fit: contain; }   /* 루트에 .fit-contain 추가 */
-
-/* === 모드 ②: 자동 높이(안 잘림, 레터박스 없음 – 슬라이드 높이가 이미지에 맞춰 변동) === */
-.o-deck.auto-height .viewport{ height: auto; }   /* 루트에 .auto-height 추가 */
-.o-deck.auto-height .slide{ min-height: 0; }
-.o-deck.auto-height .slide img{ height: auto; }
-
-/* === 모드 ③: 크롭은 유지하되, 자르는 기준 변경 === */
-.o-deck.pos-top{ --pos: 50% 0%; }        /* 위쪽 기준 */
-.o-deck.pos-bottom{ --pos: 50% 100%; }   /* 아래쪽 기준 */
-
-/* === 개별 슬라이드 단위로만 예외 처리 === */
-.o-deck .slide.is-portrait img{ object-fit: contain; }  /* 세로 긴 이미지만 전체 보이기 */
-
-
-
