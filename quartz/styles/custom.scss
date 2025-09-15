@@ -1497,26 +1497,14 @@ html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
 }
 
 
-/* ========== ① no-crop: 이미지 절대 안 잘림 (슬라이드 높이 자동) ========== */
-.o-deck.no-crop .viewport { height: auto; }
-.o-deck.no-crop .track { align-items: stretch; height: auto; }
-.o-deck.no-crop .slide { min-width: 100%; height: auto; background: transparent; }
-.o-deck.no-crop .slide img {
+/* 850×460 고정 + 크롭 방지(contain) */
+.obs-slider.size-850x460{ width: 850px !important; }
+.obs-slider.size-850x460 .viewport{ height: 460px !important; }
+.obs-slider.size-850x460 .panel{ margin: 0 !important; background: #0b0c10; }
+.obs-slider.size-850x460 .panel img{
   display: block;
-  width: 100%;
-  height: auto;       /* 핵심: 세로 자동 → 크롭 0% */
-  object-fit: unset;  /* 또는 object-fit: contain; */
-  object-position: 50% 50%;
-}
-
-/* ========== ② letterbox: 고정 높이에서 전체 보이기(레터박스) ========== */
-.o-deck.letterbox .viewport { height: var(--h); }
-.o-deck.letterbox .slide { background: var(--bg, #0b0c10); }
-.o-deck.letterbox .slide img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;       /* 전체 보이기 */
-  object-position: 50% 50%;
-  background: transparent;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;  /* 전체 보이기: 안 잘림 */
+  object-position: 50% 50% !important;
 }

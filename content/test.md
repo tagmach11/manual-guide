@@ -2,7 +2,7 @@
 title: LX2 Hero
 cssclass: lx2-hero-page
 ---
-<div class="obs-slider no-crop">
+<div class="obs-slider size-850x460">
   <input type="radio" name="obslide" id="os-s1" checked>
   <input type="radio" name="obslide" id="os-s2">
   <input type="radio" name="obslide" id="os-s3">
@@ -12,6 +12,7 @@ cssclass: lx2-hero-page
       <figure class="panel"><img src="회원-학습자.png" alt="Slide 2"></figure>
       <figure class="panel"><img src="회원-전체.png" alt="Slide 3"></figure>
     </div>
+    <!-- 네비/도트는 그대로 -->
     <label for="os-s3" class="nav prev for-1" aria-label="Prev">&#8249;</label>
     <label for="os-s2" class="nav next for-1" aria-label="Next">&#8250;</label>
     <label for="os-s1" class="nav prev for-2" aria-label="Prev">&#8249;</label>
