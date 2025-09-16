@@ -78,9 +78,27 @@
 
 
 /*그래프뷰 scss*/
-
-/* 디버그: 선택된 그래프 카드에 보라색 윤곽 표시 */
-:where(div, section, aside, article):has(> :is(canvas, svg)){
-  outline: 2px solid magenta;
+/* 그래프 카드(외형만) */
+.lx2-graph-card{
+  background: var(--x-bg);
+  color: var(--x-text);
+  border: 1px solid var(--x-border);
+  border-radius: 18px;
+  padding: 12px;
+  box-shadow: 0 8px 24px rgba(16,24,40,.06);
 }
 
+/* 내부 그래프는 투명 배경(내용 색은 그대로) */
+.lx2-graph-card :is(canvas, svg){
+  background: transparent !important;
+}
+
+/* 타이틀(있다면) 통일감 */
+.lx2-graph-card > :is(h1,h2,h3){
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: -.01em;
+  color: var(--x-text);
+  opacity: .95;
+}
