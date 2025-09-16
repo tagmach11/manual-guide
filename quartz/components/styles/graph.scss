@@ -74,61 +74,29 @@
 
 
 
-
-
-/* 1) 그래프 컨테이너를 안전하게 지정 (Quartz/Obsidian 모두 커버) */
-:where(#graph, #graph-container, .graph, .graph-container){
-  position: relative !important;              /* 프레임 기준점 */
-  padding: 0 !important;                      /* 내부 안 밀기 */
-  overflow: visible !important;               /* 툴바 안 잘리게 */
-  background: transparent !important;         /* 내부 배경은 그대로 */
-  border: none !important;
-  box-shadow: none !important;
+/* Quartz/Obsidian 공통 컨테이너 후보들 */
+:where(#graph-container, #graph, .graph-container, .graph){
+  background: var(--x-bg) !important;
+  border: 1px solid var(--x-border) !important;
+  border-radius: 18px !important;
+  /* 레이아웃에 영향 없는 그림자 */
+  filter: drop-shadow(0 8px 24px rgba(16,24,40,.06));
 }
 
-/* 2) 바깥 프레임만 추가—내용과 툴바엔 전혀 간섭 안 함 */
-:where(#graph, #graph-container, .graph, .graph-container)::before{
-  content:"";
-  position:absolute;
-  inset:-10px;                                /* 그래프 밖으로 여백 */
-  border-radius:18px;
-  background: var(--x-bg);
-  box-shadow: 0 0 0 1px var(--x-border), 0 8px 24px rgba(16,24,40,.06);
-  z-index: 0;
-  pointer-events: none;                       /* 클릭 막지 않기 */
+/* 내부 캔버스/SVG는 모서리만 살짝 — 나머지는 절대 손대지 않음 */
+:where(#graph-container, #graph, .graph-container, .graph) > :is(canvas, svg){
+  border-radius: 14px;
+  display: block;
 }
 
-/* 3) 툴바/아이콘은 항상 위로 + 색만 살짝 가시성 ↑ */
-:where(#graph, #graph-container, .graph, .graph-container)
-  :is(.graph-controls, .controls, [class*="control"], button){
+/* 툴바(확대 아이콘 등)는 항상 위로 보이게만 — 위치/사이즈 불변 */
+:where(#graph-container, #graph, .graph-container, .graph)
+  :is(.graph-controls, [class*="control"], button){
   position: relative;
-  z-index: 2;
+  z-index: 10;
   color: var(--x-text);
-  opacity: .9;
 }
-:where(#graph, #graph-container, .graph, .graph-container)
-  :is(.graph-controls svg, .controls svg, button svg){
+:where(#graph-container, #graph, .graph-container, .graph)
+  :is(.graph-controls svg, [class*="control"] svg, button svg){
   fill: currentColor;
-}
-
-/* ▶ 그래프 컨테이너에 씌운 오버레이/프레임 전부 제거 */
-#graph::before,
-#graph-container::before,
-.graph::before,
-.graph-container::before{
-  content: none !important;
-}
-
-/* ▶ 그래프 컨테이너 기본값 복구(내부 레이아웃/툴바 보존) */
-#graph,
-#graph-container,
-.graph,
-.graph-container{
-  padding: 0 !important;
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  overflow: hidden !important;  /* 툴바 잘리지 않게 */
-  position: static !important;  /* 상대/절대 포지셔닝 해제 */
-  z-index: auto !important;
 }
