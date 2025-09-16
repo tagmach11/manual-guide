@@ -77,9 +77,9 @@
 
 
 
-/*그래프뷰 scss*/
-/* 그래프 카드(외형만) */
-.lx2-graph-card{
+/* 그래프(canvas 또는 svg)를 ‘직접 자식’으로 갖는 박스에 카드 스킨 */
+:where(.page, main, .content, .right, .sidebar, .container)
+  :where(div, section, aside, article):has(> :is(canvas, svg)){
   background: var(--x-bg);
   color: var(--x-text);
   border: 1px solid var(--x-border);
@@ -88,13 +88,13 @@
   box-shadow: 0 8px 24px rgba(16,24,40,.06);
 }
 
-/* 내부 그래프는 투명 배경(내용 색은 그대로) */
-.lx2-graph-card :is(canvas, svg){
+/* 내부 그래프 배경 투명화(내용 색은 그대로 유지) */
+:where(div, section, aside, article):has(> :is(canvas, svg)) :is(canvas, svg){
   background: transparent !important;
 }
 
-/* 타이틀(있다면) 통일감 */
-.lx2-graph-card > :is(h1,h2,h3){
+/* 카드 안의 제목이 있으면 통일 */
+:where(div, section, aside, article):has(> :is(canvas, svg)) > :is(h1,h2,h3){
   margin: 0 0 8px 0;
   font-size: 14px;
   font-weight: 800;
