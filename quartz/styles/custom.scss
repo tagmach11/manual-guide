@@ -1497,3 +1497,52 @@ html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
   .obs-slider{ --h: 320px; --btn-size: 44px; }
 }
  
+
+
+
+/* === Vertical variant === */
+.obs-slider.is-vertical .viewport{ height: var(--h); }
+.obs-slider.is-vertical .track{
+  flex-direction: column;                 /* 세로 스택 */
+}
+
+/* 패널 크기: 높이 100% 채우기 */
+.obs-slider.is-vertical .panel{
+  block-size: var(--h);
+}
+
+/* 네비게이션 버튼: 위/아래 */
+.obs-slider.is-vertical .nav{
+  left: 0; right: 0;                      /* 가운데 정렬 */
+  margin-inline: auto;
+}
+.obs-slider.is-vertical .nav.up{    top: 14px; }
+.obs-slider.is-vertical .nav.down{  bottom: 14px; }
+
+/* 점 네비: 우측 세로 배치 */
+.obs-slider.is-vertical .dots{
+  top: 50%; bottom: auto; right: 14px; left: auto;
+  transform: translateY(-50%);
+  flex-direction: column;
+}
+
+/* 상태 → 이동(translateY) */
+#ov-s1:checked ~ .viewport .track{ transform: translate3d(0,   0%, 0); }
+#ov-s2:checked ~ .viewport .track{ transform: translate3d(0, -100%, 0); }
+#ov-s3:checked ~ .viewport .track{ transform: translate3d(0, -200%, 0); }
+
+/* 활성 dot 강조 (그대로 재사용) */
+#ov-s1:checked ~ .viewport .dots label:nth-child(1),
+#ov-s2:checked ~ .viewport .dots label:nth-child(2),
+#ov-s3:checked ~ .viewport .dots label:nth-child(3){
+  background: var(--dot-active);
+  transform: scale(1.25);
+}
+
+/* 각 슬라이드에서 보일 버튼 페어 (가시성/포인터 토글) */
+#ov-s1:checked ~ .viewport .nav.for-1,
+#ov-s2:checked ~ .viewport .nav.for-2,
+#ov-s3:checked ~ .viewport .nav.for-3{
+  opacity: 1;
+  pointer-events: auto;
+}
