@@ -15,7 +15,7 @@
     position: relative;
     overflow: hidden;
     color: #fff;
-    
+
     & > .global-graph-icon {
       cursor: pointer;
       background: none;
@@ -84,53 +84,64 @@
   --graph-card-title: #0f1116;   /* 내부 제목(검정) */
 }
 
-/* 1) '그래프' / '로컬 그래프' 뷰 콘텐츠만 타깃팅 */
-.workspace-leaf[data-type="graph"] .view-content,
-.workspace-leaf[data-type="localgraph"] .view-content{
-  position: relative;
-  background: var(--graph-card-bg) !important;
-  border: 1px solid var(--graph-card-border);
-  border-radius: var(--graph-card-radius);
-  box-shadow: var(--graph-card-shadow);
-  overflow: visible; /* 툴바가 잘리지 않게 */
+//* ===== Obsidian Graph View: Right Pane Card Skin (safe) ===== */
+/* 화이트 카드 + 검정 제목. 그래프 내부/툴바/풀뷰는 영향 없음 */
+
+/* 1) 오른쪽 분할(사이드) 안의 Graph / Local Graph만 타깃팅 */
+.workspace-split.mod-right-split
+  .workspace-leaf[data-type="graph"] .view-content,
+.workspace-split.mod-right-split
+  .workspace-leaf[data-type="localgraph"] .view-content{
+  position: relative;                     /* 제목 배치 기준 */
+  background: #fff !important;            /* 화이트 카드 */
+  border: 1px solid #e7eaf2;
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(16,24,40,.06);
+  /* 내부 레이아웃은 건드리지 않음: padding/overflow/position 그대로 */
 }
 
-/* 2) 그래프 내부 배경은 투명 유지 (내용/색은 건드리지 않음) */
-.workspace-leaf[data-type="graph"] .view-content .graph-view,
-.workspace-leaf[data-type="localgraph"] .view-content .graph-view{
+/* 2) 카드 안쪽 좌상단에 검정 제목(“그래프 뷰”)만 얹기 */
+.workspace-split.mod-right-split
+  .workspace-leaf[data-type="graph"] .view-content::before,
+.workspace-split.mod-right-split
+  .workspace-leaf[data-type="localgraph"] .view-content::before{
+  content: "그래프 뷰";
+  position: absolute; left: 14px; top: 10px;
+  font: 800 14px/1.2 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  letter-spacing: -.01em;
+  color: #0f1116;                         /* 항상 검정 */
+  pointer-events: none;                   /* 그래프 조작 방해 X */
+  z-index: 2;
+}
+
+/* 3) 그래프 그리는 영역은 배경 투명(내용 색은 테마 그대로) */
+.workspace-split.mod-right-split
+  .workspace-leaf[data-type="graph"] .view-content .graph-view,
+.workspace-split.mod-right-split
+  .workspace-leaf[data-type="localgraph"] .view-content .graph-view{
   background: transparent !important;
 }
 
-/* 3) 카드 안쪽 좌상단에 제목(검정) 표시 — 클릭 방해 X */
-.workspace-leaf[data-type="graph"] .view-content::before,
-.workspace-leaf[data-type="localgraph"] .view-content::before{
-  content: "그래프 뷰";
-  position: absolute; left: 14px; top: 10px;
-  font-weight: 800; font-size: 14px; letter-spacing: -.01em;
-  color: var(--graph-card-title);
-  pointer-events: none;
-  z-index: 3; /* 그래프보다 위, 툴바보다 아래여도 OK */
-}
-
-/* 4) 캔버스 모서리만 살짝 — 레이아웃/사이즈 불변 */
-.workspace-leaf[data-type="graph"] .view-content canvas,
-.workspace-leaf[data-type="localgraph"] .view-content canvas{
-  border-radius: calc(var(--graph-card-radius) - 4px);
-  display: block;
-}
-
-/* 5) 우상단 툴바/확대 아이콘은 항상 위로 보이게만 */
-.workspace-leaf[data-type="graph"] .view-content .mod-top-right,
-.workspace-leaf[data-type="localgraph"] .view-content .mod-top-right{
+/* 4) 우상단 툴바(확대 등)는 항상 위로 보이게만, 위치/기능 불변 */
+.workspace-split.mod-right-split
+  .workspace-leaf[data-type="graph"] .view-content .mod-top-right,
+.workspace-split.mod-right-split
+  .workspace-leaf[data-type="localgraph"] .view-content .mod-top-right{
   position: absolute; right: 8px; top: 8px;
-  z-index: 4;
+  z-index: 3;                             /* 제목보다 위 */
 }
-.workspace-leaf[data-type="graph"] .view-content .mod-top-right svg,
-.workspace-leaf[data-type="localgraph"] .view-content .mod-top-right svg{
+.workspace-split.mod-right-split
+  .workspace-leaf[data-type="graph"] .view-content .mod-top-right svg,
+.workspace-split.mod-right-split
+  .workspace-leaf[data-type="localgraph"] .view-content .mod-top-right svg{
   fill: currentColor;
 }
 
-/* (선택) 바깥 헤더 제목이 겹치면 숨기고 카드 내부 제목만 사용
-.workspace-leaf[data-type="graph"] .view-header,
-.workspace-leaf[data-type="localgraph"] .view-header{ display: none; }
-*/
+/* 5) 캔버스 모서리만 살짝 (레이아웃/사이즈 영향 없음) */
+.workspace-split.mod-right-split
+  .workspace-leaf[data-type="graph"] .view-content canvas,
+.workspace-split.mod-right-split
+  .workspace-leaf[data-type="localgraph"] .view-content canvas{
+  border-radius: 14px;
+  display: block;
+}
