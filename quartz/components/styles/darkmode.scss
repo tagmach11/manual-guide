@@ -45,3 +45,10 @@
     display: none;
   }
 }
+
+.sidebar.left .explorer .explorer-content li > a:is(.active,[aria-current="page"],.is-active){
+  background: var(--x-accent) !important;
+  color: #fff !important;
+  box-shadow: none !important;
+  border-radius: 8px;
+}
