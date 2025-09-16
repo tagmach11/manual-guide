@@ -421,41 +421,6 @@ html, body, .page, #quartz-body { overflow-x: hidden !important; }
   background: var(--x-accent) !important;
 }
 
-/* 3) 다크모드 셀렉터를 폭넓게(어디에 달려 있어도 적용) */
-html[data-theme="dark"] .sidebar.left .explorer,
-body[data-theme="dark"] .sidebar.left .explorer,
-:root[data-theme="dark"] .sidebar.left .explorer{
-  background: var(--x-bg) !important;   /* #0f131a */
-  color: var(--x-text) !important;      /* #eef2f6 */
-  border-color: var(--x-border) !important; /* #2a3240 */
-  box-shadow: 0 12px 30px rgba(0,0,0,.55) !important;
-}
-html[data-theme="dark"] .sidebar.left .explorer .explorer-content,
-body[data-theme="dark"] .sidebar.left .explorer .explorer-content,
-:root[data-theme="dark"] .sidebar.left .explorer .explorer-content{
-  border-top-color: var(--x-sep) !important; /* #1c2432 */
-}
-html[data-theme="dark"] .sidebar.left .explorer .folder-container:hover,
-body[data-theme="dark"] .sidebar.left .explorer .folder-container:hover,
-:root[data-theme="dark"] .sidebar.left .explorer .folder-container:hover,
-html[data-theme="dark"] .sidebar.left .explorer .explorer-content li > a:hover,
-body[data-theme="dark"] .sidebar.left .explorer .explorer-content li > a:hover,
-:root[data-theme="dark"] .sidebar.left .explorer .explorer-content li > a:hover{
-  background: var(--x-hover) !important; /* #162031 */
-}
-html[data-theme="dark"] .sidebar.left .explorer .explorer-content li > a.active,
-body[data-theme="dark"] .sidebar.left .explorer .explorer-content li > a.active,
-:root[data-theme="dark"] .sidebar.left .explorer .explorer-content li > a.active{
-  background: var(--x-active) !important; /* #182642 */
-  color: var(--x-accent) !important;      /* #60a5fa */
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--x-accent) 40%, transparent) !important;
-}
-html[data-theme="dark"] .sidebar.left .explorer .explorer-content li > a.active::before,
-body[data-theme="dark"] .sidebar.left .explorer .explorer-content li > a.active::before,
-:root[data-theme="dark"] .sidebar.left .explorer .explorer-content li > a.active::before{
-  background: var(--x-accent) !important;
-}
-
 /* 4) 수평 스크롤 재차단(혹시 다시 생기면…) */
 .sidebar.left,
 .sidebar.left .explorer,
@@ -494,7 +459,6 @@ body[data-theme="dark"] .sidebar.left .explorer .explorer-content:hover::-webkit
 .page main.content {
   margin-top: 24px !important;       /* 불필요한 위쪽 여백 제거 */
 }
-
 
 
 /* ===== Explorer 폴더 접힘 시 빈칸 완전 제거 (모든 중첩에 적용) ===== */
