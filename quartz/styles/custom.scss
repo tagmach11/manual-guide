@@ -1573,3 +1573,36 @@ html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
 #ov-s3:checked ~ .viewport .nav.for-3{
   opacity:1; pointer-events:auto;
 }
+
+/* === Vertical: 한 장씩 정확히 이동 (px/var 기반) === */
+.obs-slider.is-vertical .viewport{ height: var(--h); }
+.obs-slider.is-vertical .track{
+  flex-direction: column;
+  will-change: transform;
+}
+
+/* 각 패널은 정확히 --h 높이 */
+.obs-slider.is-vertical .panel{ block-size: var(--h); }
+
+/* 퍼센트(-100%) 대신 '패널 높이'로 이동 */
+#ov-s1:checked ~ .viewport .track{ transform: translate3d(0, calc(-0 * var(--h)), 0); }
+#ov-s2:checked ~ .viewport .track{ transform: translate3d(0, calc(-1 * var(--h)), 0); }
+#ov-s3:checked ~ .viewport .track{ transform: translate3d(0, calc(-2 * var(--h)), 0); }
+
+/* 버튼 중앙 겹침 방지(위/아래 고정) */
+.obs-slider.is-vertical .nav{
+  inset-block: auto !important; margin-block: 0 !important;
+  left: 0; right: 0; margin-inline: auto;
+}
+.obs-slider.is-vertical .nav.up{ top: 14px !important; }
+.obs-slider.is-vertical .nav.down{ bottom: 14px !important; }
+
+/* 현재 슬라이드에서만 버튼 보이게 */
+#ov-s1:checked ~ .viewport .nav,
+#ov-s2:checked ~ .viewport .nav,
+#ov-s3:checked ~ .viewport .nav{ opacity:0; pointer-events:none; }
+#ov-s1:checked ~ .viewport .nav.for-1,
+#ov-s2:checked ~ .viewport .nav.for-2,
+#ov-s3:checked ~ .viewport .nav.for-3{ opacity:1; pointer-events:auto; }
+
+/* 점 네비는 기존 그대로 (우측 세로) */
