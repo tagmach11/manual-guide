@@ -73,59 +73,63 @@
 }
 
 
-
-//* 카드 스타일: 캔버스/툴바엔 영향 없음 */
-:where(.right, .sidebar.right, .content, main)
-  :where(div,section,article,aside):has(> :is(canvas,svg)){
-  background:#fff !important;                 /* 화이트 카드 */
-  border:1px solid #e7eaf2 !important;
-  border-radius:18px !important;
-  /* 그림자는 layout에 영향 없는 drop-shadow만 */
-  filter: drop-shadow(0 8px 24px rgba(16,24,40,.06));
-  /* padding/overflow/position 건드리지 않음 */
+/* ===== Obsidian Graph View: Card Skin (non-intrusive) ===== */
+/* 카드 스타일 변수 */
+:root{
+  --graph-card-bg: #fff;         /* 카드 배경 — 다크여도 화이트 */
+  --graph-card-border: #e7eaf2;  /* 테두리 */
+  --graph-card-radius: 18px;     /* 둥근 모서리 */
+  --graph-card-shadow: 0 8px 24px rgba(16,24,40,.06);
+  --graph-card-title: #0f1116;   /* 내부 제목(검정) */
 }
 
-/* 모서리만 살짝 */
-:where(.right, .sidebar.right, .content, main)
-  :where(div,section,article,aside):has(> :is(canvas,svg)) > :is(canvas,svg){
-  display:block; border-radius:14px;
+/* 1) '그래프' / '로컬 그래프' 뷰 콘텐츠만 타깃팅 */
+.workspace-leaf[data-type="graph"] .view-content,
+.workspace-leaf[data-type="localgraph"] .view-content{
+  position: relative;
+  background: var(--graph-card-bg) !important;
+  border: 1px solid var(--graph-card-border);
+  border-radius: var(--graph-card-radius);
+  box-shadow: var(--graph-card-shadow);
+  overflow: visible; /* 툴바가 잘리지 않게 */
 }
 
-/* 그래프 툴바는 항상 위로 보이게(위치/사이즈 변경 없음) */
-:where(div,section,article,aside):has(> :is(canvas,svg))
-  :is(.graph-controls,[class*="control"],button){
-  position:relative; z-index:3; color:#666;
-}
-:where(div,section,article,aside):has(> :is(canvas,svg))
-  :is(.graph-controls svg,[class*="control"] svg){ fill:currentColor; }
-
-/* 그래프 컨테이너 바로 위 제목을 검정으로(카드 제목 역할) */
-:where(h1,h2,h3,h4):has(+ :where(div,section,article,aside):has(> :is(canvas,svg))){
-  color:#0f1116 !important; font-weight:800 !important; margin-bottom:8px !important;
+/* 2) 그래프 내부 배경은 투명 유지 (내용/색은 건드리지 않음) */
+.workspace-leaf[data-type="graph"] .view-content .graph-view,
+.workspace-leaf[data-type="localgraph"] .view-content .graph-view{
+  background: transparent !important;
 }
 
-/* 전역으로 건드렸던 그래프 스타일 다 무력화 */
-#graph, #graph-container, .graph, .graph-container,
-#graph::before, #graph::after, .graph::before, .graph::after{
-  all: revert !important;
+/* 3) 카드 안쪽 좌상단에 제목(검정) 표시 — 클릭 방해 X */
+.workspace-leaf[data-type="graph"] .view-content::before,
+.workspace-leaf[data-type="localgraph"] .view-content::before{
+  content: "그래프 뷰";
+  position: absolute; left: 14px; top: 10px;
+  font-weight: 800; font-size: 14px; letter-spacing: -.01em;
+  color: var(--graph-card-title);
+  pointer-events: none;
+  z-index: 3; /* 그래프보다 위, 툴바보다 아래여도 OK */
 }
-#graph, #graph-container, .graph, .graph-container{
-  padding:0 !important; margin:0 !important; background:transparent !important;
-  border:none !important; box-shadow:none !important; filter:none !important;
-  position:static !important; overflow:visible !important; z-index:auto !important;
-}
-/* 공통 카드 */
-.lx2-card{
-  background:#fff; border:1px solid #e7eaf2; border-radius:18px;
-  box-shadow:0 8px 24px rgba(16,24,40,.06); padding:12px;
-}
-/* 제목은 검정(다크여도) */
-.lx2-card-title{ margin:0 0 8px; font:800 14px/1.2 system-ui; color:#0f1116; }
 
-/* 그래프 내부는 건드리지 않음 — 모서리만 살짝 */
-.graph-card > :is(#graph,#graph-container,.graph,.graph-container){ border-radius:14px; }
-.graph-card :is(canvas,svg){ border-radius:14px; display:block; }
+/* 4) 캔버스 모서리만 살짝 — 레이아웃/사이즈 불변 */
+.workspace-leaf[data-type="graph"] .view-content canvas,
+.workspace-leaf[data-type="localgraph"] .view-content canvas{
+  border-radius: calc(var(--graph-card-radius) - 4px);
+  display: block;
+}
 
-/* 툴바는 항상 위로 보이게만(위치/크기 변경 없음) */
-.graph-card :is(.graph-controls,[class*="control"],button){ position:relative; z-index:3; color:#666; }
-.graph-card :is(.graph-controls svg,[class*="control"] svg){ fill:currentColor; }
+/* 5) 우상단 툴바/확대 아이콘은 항상 위로 보이게만 */
+.workspace-leaf[data-type="graph"] .view-content .mod-top-right,
+.workspace-leaf[data-type="localgraph"] .view-content .mod-top-right{
+  position: absolute; right: 8px; top: 8px;
+  z-index: 4;
+}
+.workspace-leaf[data-type="graph"] .view-content .mod-top-right svg,
+.workspace-leaf[data-type="localgraph"] .view-content .mod-top-right svg{
+  fill: currentColor;
+}
+
+/* (선택) 바깥 헤더 제목이 겹치면 숨기고 카드 내부 제목만 사용
+.workspace-leaf[data-type="graph"] .view-header,
+.workspace-leaf[data-type="localgraph"] .view-header{ display: none; }
+*/
