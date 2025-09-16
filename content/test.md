@@ -33,9 +33,9 @@ cssclass: lx2-hero-page
   <input type="radio" name="ov" id="ov-s3">
   <div class="viewport" style="height:var(--h);">
     <div class="track">
-      <figure class="panel"><img src="slide-1.png" alt="슬라이드 1"></figure>
-      <figure class="panel"><img src="slide-2.png" alt="슬라이드 2"></figure>
-      <figure class="panel"><img src="slide-3.png" alt="슬라이드 3"></figure>
+      <figure class="panel"><img src="회원-학습자.png" alt="슬라이드 1"></figure>
+      <figure class="panel"><img src="회원-조교.png" alt="슬라이드 2"></figure>
+      <figure class="panel"><img src="회원-전체.png" alt="슬라이드 3"></figure>
     </div>
     <label class="nav up for-1"   for="ov-s1" aria-label="위로">▲</label>
     <label class="nav down for-1" for="ov-s2" aria-label="아래로">▼</label>
