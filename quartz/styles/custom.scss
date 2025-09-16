@@ -1606,3 +1606,49 @@ html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
 #ov-s3:checked ~ .viewport .nav.for-3{ opacity:1; pointer-events:auto; }
 
 /* 점 네비는 기존 그대로 (우측 세로) */
+
+
+/* 1) 슬라이더 자체를 독립 스택으로 + 내부만 보이게 클립 */
+.obs-slider{
+  position: relative;
+  isolation: isolate;  /* 바깥과 z-index 섞임 방지 */
+  z-index: 0;          /* 주변보다 높지도 낮지도 않게 기준값 */
+  overflow: clip;      /* 자식 절대요소가 밖으로 새지 않도록 */
+}
+.obs-slider .viewport{
+  position: relative;
+  overflow: clip;      /* nav/dots도 뷰포트 밖으로 못 나감 */
+}
+
+/* 내부 z-index 질서: track < dots < nav */
+.obs-slider .track{ position: relative; z-index: 0; }
+.obs-slider .dots { position: absolute; z-index: 1; }
+.obs-slider .nav  { position: absolute; z-index: 2; }
+
+/* 2) 세로 모드 – 버튼과 콘텐츠가 안 겹치게 패딩 확보 */
+.obs-slider.is-vertical .viewport{
+  /* 버튼 높이만큼 위/아래 여유; 필요하면 수치 조절 */
+  padding-block: calc(var(--btn-size) * 0.9);
+}
+
+/* 세로 nav 위치 상·하로 고정(중앙 겹침 방지) */
+.obs-slider.is-vertical .nav{
+  inset-block: auto !important;
+  margin-block: 0 !important;
+  left: 0; right: 0; margin-inline: auto;
+}
+.obs-slider.is-vertical .nav.up   { top:    14px !important; bottom: auto !important; }
+.obs-slider.is-vertical .nav.down { bottom: 14px !important; top:    auto !important; }
+
+/* 한 장씩 정확히 이동(끝까지 '슉' 방지) */
+#ov-s1:checked ~ .viewport .track{ transform: translate3d(0, calc(-0 * var(--h)), 0); }
+#ov-s2:checked ~ .viewport .track{ transform: translate3d(0, calc(-1 * var(--h)), 0); }
+#ov-s3:checked ~ .viewport .track{ transform: translate3d(0, calc(-2 * var(--h)), 0); }
+
+/* 현재 슬라이드에서만 버튼 페어 활성 */
+#ov-s1:checked ~ .viewport .nav,
+#ov-s2:checked ~ .viewport .nav,
+#ov-s3:checked ~ .viewport .nav{ opacity:0; pointer-events:none; }
+#ov-s1:checked ~ .viewport .nav.for-1,
+#ov-s2:checked ~ .viewport .nav.for-2,
+#ov-s3:checked ~ .viewport .nav.for-3{ opacity:1; pointer-events:auto; }
