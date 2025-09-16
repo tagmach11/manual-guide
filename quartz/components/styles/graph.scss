@@ -100,3 +100,32 @@
   :is(.graph-controls svg, [class*="control"] svg, button svg){
   fill: currentColor;
 }
+/* 그래프 컨테이너/내부에 먹었던 오버레이·필터·패딩 등 전부 무력화 */
+#graph, #graph-container, .graph, .graph-container {
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+  backdrop-filter: none !important;
+  position: static !important;
+  overflow: visible !important;
+  z-index: auto !important;
+}
+#graph *, #graph-container *, .graph *, .graph-container *{
+  filter: none !important;
+  -webkit-filter: none !important;
+  backdrop-filter: none !important;
+}
+#graph, #graph-container, .graph, .graph-container {
+  outline: 1px solid var(--x-border) !important;
+  border-radius: 16px !important;       /* 시각용; outline은 둥글림과 따로라서 OK */
+  background: transparent !important;   /* 내부 색은 라이브러리 그대로 */
+}
+/* 그림자는 layout에 영향 없는 외곽 drop-shadow 대신, 컨테이너 바깥에만 */
+#graph, #graph-container, .graph, .graph-container {
+  filter: drop-shadow(0 8px 24px rgba(16,24,40,.06)); /* blur 아님 */
+}
