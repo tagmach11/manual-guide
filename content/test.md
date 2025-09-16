@@ -28,30 +28,21 @@ cssclass: lx2-hero-page
 
 
 <div class="obs-slider is-vertical" style="--h:460px;">
-  <!-- 상태 라디오 -->
   <input type="radio" name="ov" id="ov-s1" checked>
   <input type="radio" name="ov" id="ov-s2">
   <input type="radio" name="ov" id="ov-s3">
-
   <div class="viewport" style="height:var(--h);">
     <div class="track">
       <figure class="panel"><img src="slide-1.png" alt="슬라이드 1"></figure>
       <figure class="panel"><img src="slide-2.png" alt="슬라이드 2"></figure>
       <figure class="panel"><img src="slide-3.png" alt="슬라이드 3"></figure>
     </div>
-
-    <!-- ↑/↓ 네비게이션 (label=라디오 전환) -->
-    <!-- s1일 때 표시되는 페어 -->
     <label class="nav up for-1"   for="ov-s1" aria-label="위로">▲</label>
     <label class="nav down for-1" for="ov-s2" aria-label="아래로">▼</label>
-    <!-- s2일 때 -->
     <label class="nav up for-2"   for="ov-s1" aria-label="위로">▲</label>
     <label class="nav down for-2" for="ov-s3" aria-label="아래로">▼</label>
-    <!-- s3일 때 -->
     <label class="nav up for-3"   for="ov-s2" aria-label="위로">▲</label>
     <label class="nav down for-3" for="ov-s3" aria-label="아래로">▼</label>
-
-    <!-- 점 네비(바로 이동) -->
     <div class="dots">
       <label for="ov-s1" aria-label="1번 슬라이드"></label>
       <label for="ov-s2" aria-label="2번 슬라이드"></label>
