@@ -1,147 +1,98 @@
 @use "../../styles/variables.scss" as *;
 
 .graph {
+  /* 제목: 항상 검정 + 간격 정돈 */
   & > h3 {
     font-size: 1rem;
-    margin: 0;
+    margin: 0 0 8px 0;
+    color: #0f1116; /* 검정 고정 */
+    font-weight: 800;
+    letter-spacing: -0.01em;
   }
 
+  /* 카드 외형: 그래프 내부는 손대지 않음 */
   & > .graph-outer {
-    border-radius: 5px;
+    background: #fff;                 /* 화이트 카드 (다크에서도 유지) */
+    color: #0f1116;                   /* <- 기존 color:#fff 제거 */
     border: 1px solid var(--lightgray);
+    border-radius: 18px;              /* 라운드 업 */
+    box-shadow: 0 8px 24px rgba(16,24,40,.06);
     box-sizing: border-box;
     height: 250px;
     margin: 0.5em 0;
     position: relative;
     overflow: hidden;
-    color: #fff;
 
+    /* 그래프 렌더(canvas/svg) 자체는 레이아웃 변경 금지: 모서리만 살짝 */
+    & > canvas,
+    & > svg {
+      display: block;
+      border-radius: 14px;
+    }
+
+    /* 우상단 '전역 그래프' 버튼: 항상 위로 보이게 + 호버 */
     & > .global-graph-icon {
       cursor: pointer;
       background: none;
       border: none;
       color: var(--dark);
-      opacity: 0.5;
+      opacity: 0.7;
       width: 24px;
       height: 24px;
       position: absolute;
+      z-index: 2;                     /* <- 추가: 캔버스 위 */
       padding: 0.2rem;
       margin: 0.3rem;
       top: 0;
       right: 0;
-      border-radius: 4px;
+      border-radius: 6px;
       background-color: transparent;
-      transition: background-color 0.5s ease;
-      cursor: pointer;
-      &:hover {
-        background-color: var(--lightgray);
-      }
+      transition: background-color 0.2s ease, opacity 0.2s ease;
+
+      &:hover { background-color: var(--lightgray); opacity: 1; }
     }
   }
 
+  /* 풀뷰 오버레이는 기존 동작 그대로 (변경 없음) */
   & > .global-graph-outer {
     position: fixed;
     z-index: 9999;
-    left: 0;
-    top: 0;
-    width: 100vw;
-    height: 100%;
+    left: 0; top: 0;
+    width: 100vw; height: 100%;
     backdrop-filter: blur(4px);
     display: none;
     overflow: hidden;
 
-    &.active {
-      display: inline-block;
-    }
+    &.active { display: inline-block; }
 
     & > .global-graph-container {
       border: 1px solid var(--lightgray);
       background-color: var(--light);
-      border-radius: 5px;
+      border-radius: 8px;
       box-sizing: border-box;
       position: fixed;
-      top: 50%;
-      left: 50%;
+      top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      height: 80vh;
-      width: 80vw;
+      height: 80vh; width: 80vw;
 
-      @media all and not ($desktop) {
-        width: 90%;
-      }
+      @media all and not ($desktop) { width: 90%; }
     }
   }
 }
 
+/* 다크 테마에서도 ‘화이트 카드 + 검정 제목’ 유지 */
+:root.theme-dark .graph > h3,
+html.theme-dark .graph > h3,
+html.dark .graph > h3,
+html[data-theme="dark"] .graph > h3 { color: #0f1116; }
 
-/* ===== Obsidian Graph View: Card Skin (non-intrusive) ===== */
-/* 카드 스타일 변수 */
-:root{
-  --graph-card-bg: #fff;         /* 카드 배경 — 다크여도 화이트 */
-  --graph-card-border: #e7eaf2;  /* 테두리 */
-  --graph-card-radius: 18px;     /* 둥근 모서리 */
-  --graph-card-shadow: 0 8px 24px rgba(16,24,40,.06);
-  --graph-card-title: #0f1116;   /* 내부 제목(검정) */
+:root.theme-dark .graph > .graph-outer,
+html.theme-dark .graph > .graph-outer,
+html.dark .graph > .graph-outer,
+html[data-theme="dark"] .graph > .graph-outer {
+  background: #fff;
+  border-color: #e7eaf2;
+  box-shadow: 0 8px 24px rgba(16,24,40,.35);
 }
 
-//* ===== Obsidian Graph View: Right Pane Card Skin (safe) ===== */
-/* 화이트 카드 + 검정 제목. 그래프 내부/툴바/풀뷰는 영향 없음 */
 
-/* 1) 오른쪽 분할(사이드) 안의 Graph / Local Graph만 타깃팅 */
-.workspace-split.mod-right-split
-  .workspace-leaf[data-type="graph"] .view-content,
-.workspace-split.mod-right-split
-  .workspace-leaf[data-type="localgraph"] .view-content{
-  position: relative;                     /* 제목 배치 기준 */
-  background: #fff !important;            /* 화이트 카드 */
-  border: 1px solid #e7eaf2;
-  border-radius: 18px;
-  box-shadow: 0 8px 24px rgba(16,24,40,.06);
-  /* 내부 레이아웃은 건드리지 않음: padding/overflow/position 그대로 */
-}
-
-/* 2) 카드 안쪽 좌상단에 검정 제목(“그래프 뷰”)만 얹기 */
-.workspace-split.mod-right-split
-  .workspace-leaf[data-type="graph"] .view-content::before,
-.workspace-split.mod-right-split
-  .workspace-leaf[data-type="localgraph"] .view-content::before{
-  content: "그래프 뷰";
-  position: absolute; left: 14px; top: 10px;
-  font: 800 14px/1.2 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  letter-spacing: -.01em;
-  color: #0f1116;                         /* 항상 검정 */
-  pointer-events: none;                   /* 그래프 조작 방해 X */
-  z-index: 2;
-}
-
-/* 3) 그래프 그리는 영역은 배경 투명(내용 색은 테마 그대로) */
-.workspace-split.mod-right-split
-  .workspace-leaf[data-type="graph"] .view-content .graph-view,
-.workspace-split.mod-right-split
-  .workspace-leaf[data-type="localgraph"] .view-content .graph-view{
-  background: transparent !important;
-}
-
-/* 4) 우상단 툴바(확대 등)는 항상 위로 보이게만, 위치/기능 불변 */
-.workspace-split.mod-right-split
-  .workspace-leaf[data-type="graph"] .view-content .mod-top-right,
-.workspace-split.mod-right-split
-  .workspace-leaf[data-type="localgraph"] .view-content .mod-top-right{
-  position: absolute; right: 8px; top: 8px;
-  z-index: 3;                             /* 제목보다 위 */
-}
-.workspace-split.mod-right-split
-  .workspace-leaf[data-type="graph"] .view-content .mod-top-right svg,
-.workspace-split.mod-right-split
-  .workspace-leaf[data-type="localgraph"] .view-content .mod-top-right svg{
-  fill: currentColor;
-}
-
-/* 5) 캔버스 모서리만 살짝 (레이아웃/사이즈 영향 없음) */
-.workspace-split.mod-right-split
-  .workspace-leaf[data-type="graph"] .view-content canvas,
-.workspace-split.mod-right-split
-  .workspace-leaf[data-type="localgraph"] .view-content canvas{
-  border-radius: 14px;
-  display: block;
-}
