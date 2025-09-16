@@ -358,13 +358,13 @@ html, body, .page, #quartz-body { overflow-x: hidden !important; }
   line-height: 1.2;        /* 텍스트 줄 높이 줄이기 */
   border-radius: 6px;      /* 둥글기 조금만 */
   transition: background .15s ease, color .15s ease;
-  color: black;
+  color: var(--x-text);
 }
 
 /* 활성화 상태 (파란박스) */
 .sidebar.left .explorer .explorer-content li > a.active {
   background: var(--x-active);
-  color: black !important;
+  color: var(--x-text);
   border-radius: 6px;      /* 둥글둥글 → 살짝 네모 */
   box-shadow: inset 0 0 0 2px var(--x-accent);
   font-weight: 700;
@@ -380,16 +380,6 @@ html, body, .page, #quartz-body { overflow-x: hidden !important; }
   }
 }
 
-/* 슬림 스크롤바 (Explorer 전용) */
-.sidebar.left .explorer .explorer-content{
-  scrollbar-width: thin;
-  scrollbar-color: color-mix(in srgb, var(--x-text) 30%, transparent) transparent;
-}
-.sidebar.left .explorer .explorer-content::-webkit-scrollbar{ width:10px; }
-.sidebar.left .explorer .explorer-content:hover::-webkit-scrollbar{ width:12px; }
-.sidebar.left .explorer .explorer-content::-webkit-scrollbar-track{
-  background:transparent; margin:6px 0;
-}
 .sidebar.left .explorer .explorer-content::-webkit-scrollbar-thumb{
   border-radius:999px; border:3px solid transparent; background-clip:padding-box;
   background-color: color-mix(in srgb, var(--x-text) 28%, transparent);
