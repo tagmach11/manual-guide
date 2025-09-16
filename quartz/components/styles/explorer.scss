@@ -280,33 +280,8 @@ li:has(> .folder-outer:not(.open)) > .folder-container > svg {
   --x-border:#e7eaf2; --x-sep:#eef1f6;
   --x-hover:#f5f7fe; --x-active:#eaf1ff; --x-accent:#2563eb;
 }
-:root.theme-dark,
-html.theme-dark,
-body.theme-dark,
-html.dark,
-body.dark,
-:root[data-theme="dark"],
-html[data-theme="dark"],
-body[data-theme="dark"]{
-  --x-bg:#0f131a;
-  --x-text:#eef2f6;
-  --x-border:#2a3240;
-  --x-sep:#1c2432;
-  --x-hover:#162031;
-  --x-active:#182642;
-  --x-accent:#60a5fa;
-}
-
-/* 다크에서 확실히 카드색 덮어쓰기 */
-html.theme-dark .sidebar.left .explorer,
-html.dark .sidebar.left .explorer,
-html[data-theme="dark"] .sidebar.left .explorer{
-  background: var(--x-bg) !important;
-  color: var(--x-text) !important;
-  border-color: var(--x-border) !important;
-}
 [data-theme="dark"]{
-  --x-bg:#0f131a; --x-text:#eef2f6;
+  --x-bg:#0f131a; --x-text:#0f131a;
   --x-border:#2a3240; --x-sep:#1c2432;
   --x-hover:#162031; --x-active:#182642; --x-accent:#60a5fa;
 }
