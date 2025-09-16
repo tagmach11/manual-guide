@@ -96,3 +96,24 @@ html[data-theme="dark"] .graph > .graph-outer {
 }
 
 
+/* 그래프 우상단 확장 버튼: 항상 hover 상태처럼 보이기 */
+.graph > .graph-outer > .global-graph-icon{
+  z-index: 2;                 /* 캔버스 위에 */
+  opacity: 1;                 /* ← hover와 동일 */
+  background-color: var(--lightgray);  /* ← hover와 동일 */
+  color: var(--dark);         /* 아이콘 색(검정). 흰색을 원하면 #fff로 */
+  border-radius: 6px;
+}
+
+/* hover 시에도 스타일 변화 없게(깜박임 방지) */
+.graph > .graph-outer > .global-graph-icon:hover{
+  background-color: var(--lightgray);
+  opacity: 1;
+  color: var(--dark);
+}
+
+/* (선택) 다크 모드에서 아이콘을 흰색으로 원하면 이 블록 추가 */
+html[data-theme="dark"] .graph > .graph-outer > .global-graph-icon{
+  background-color: #4b5563; /* 조금 더 진한 회색 알약 */
+  color: #fff;               /* 아이콘 흰색 */
+}
