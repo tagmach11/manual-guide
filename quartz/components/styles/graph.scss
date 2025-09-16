@@ -115,3 +115,12 @@ html[data-theme="dark"] .graph > .graph-outer > .global-graph-icon{
   background-color: #4b5563; /* 조금 더 진한 회색 알약 */
   color: #fff;               /* 아이콘 흰색 */
 }
+
+:where(html, :root):not([data-theme="dark"]) .graph > h3,
+:root[saved-theme="light"] .graph > h3,
+html.theme-light .graph > h3{ color:#0f1116; }
+
+:where(html, :root)[data-theme="dark"] .graph > h3,
+:root[saved-theme="dark"] .graph > h3,
+html.theme-dark .graph > h3,
+html.dark .graph > h3{ color:#eef2f6; }
