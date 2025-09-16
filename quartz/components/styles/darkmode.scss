@@ -45,10 +45,28 @@
     display: none;
   }
 }
-
+/*
 .sidebar.left .explorer .explorer-content li > a:is(.active,[aria-current="page"],.is-active){
   background: var(--x-accent) !important;
   color: #fff !important;
   box-shadow: none !important;
   border-radius: 8px;
+}
+*/
+
+.darkmode{
+  color: var(--x-text, inherit);
+  & svg{ fill: currentColor; }   // 아이콘 색 자동 동기화
+}
+
+/* 다크/라이트 플래그 통합 지원 */
+:where(:root[saved-theme="dark"], html.theme-dark, html.dark, html[data-theme="dark"]){
+  color-scheme: dark;
+  .darkmode > .dayIcon{ display:none; }
+  .darkmode > .nightIcon{ display:inline; }
+}
+:where(:root[saved-theme="light"], html.theme-light, html[data-theme="light"]){
+  color-scheme: light;
+  .darkmode > .dayIcon{ display:inline; }
+  .darkmode > .nightIcon{ display:none; }
 }
