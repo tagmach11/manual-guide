@@ -79,4 +79,8 @@
 
 /*그래프뷰 scss*/
 
+/* 디버그: 선택된 그래프 카드에 보라색 윤곽 표시 */
+:where(div, section, aside, article):has(> :is(canvas, svg)){
+  outline: 2px solid magenta;
+}
 
