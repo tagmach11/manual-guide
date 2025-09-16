@@ -81,10 +81,8 @@
 }
 
 /* 다크 테마에서도 ‘화이트 카드 + 검정 제목’ 유지 */
-:root.theme-dark .graph > h3,
-html.theme-dark .graph > h3,
-html.dark .graph > h3,
-html[data-theme="dark"] .graph > h3 { color: #0f1116; }
+:root.theme-light .graph > h3,
+html[data-theme="light"] .graph > h3 { color: #0f1116; }
 
 :root.theme-dark .graph > .graph-outer,
 html.theme-dark .graph > .graph-outer,
