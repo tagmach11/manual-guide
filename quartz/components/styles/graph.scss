@@ -103,3 +103,29 @@
 :where(h1,h2,h3,h4):has(+ :where(div,section,article,aside):has(> :is(canvas,svg))){
   color:#0f1116 !important; font-weight:800 !important; margin-bottom:8px !important;
 }
+
+/* 전역으로 건드렸던 그래프 스타일 다 무력화 */
+#graph, #graph-container, .graph, .graph-container,
+#graph::before, #graph::after, .graph::before, .graph::after{
+  all: revert !important;
+}
+#graph, #graph-container, .graph, .graph-container{
+  padding:0 !important; margin:0 !important; background:transparent !important;
+  border:none !important; box-shadow:none !important; filter:none !important;
+  position:static !important; overflow:visible !important; z-index:auto !important;
+}
+/* 공통 카드 */
+.lx2-card{
+  background:#fff; border:1px solid #e7eaf2; border-radius:18px;
+  box-shadow:0 8px 24px rgba(16,24,40,.06); padding:12px;
+}
+/* 제목은 검정(다크여도) */
+.lx2-card-title{ margin:0 0 8px; font:800 14px/1.2 system-ui; color:#0f1116; }
+
+/* 그래프 내부는 건드리지 않음 — 모서리만 살짝 */
+.graph-card > :is(#graph,#graph-container,.graph,.graph-container){ border-radius:14px; }
+.graph-card :is(canvas,svg){ border-radius:14px; display:block; }
+
+/* 툴바는 항상 위로 보이게만(위치/크기 변경 없음) */
+.graph-card :is(.graph-controls,[class*="control"],button){ position:relative; z-index:3; color:#666; }
+.graph-card :is(.graph-controls svg,[class*="control"] svg){ fill:currentColor; }
