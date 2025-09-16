@@ -358,12 +358,13 @@ html, body, .page, #quartz-body { overflow-x: hidden !important; }
   line-height: 1.2;        /* 텍스트 줄 높이 줄이기 */
   border-radius: 6px;      /* 둥글기 조금만 */
   transition: background .15s ease, color .15s ease;
+  color: black;
 }
 
 /* 활성화 상태 (파란박스) */
 .sidebar.left .explorer .explorer-content li > a.active {
   background: var(--x-active);
-  color: var(--x-accent) !important;
+  color: black !important;
   border-radius: 6px;      /* 둥글둥글 → 살짝 네모 */
   box-shadow: inset 0 0 0 2px var(--x-accent);
   font-weight: 700;
