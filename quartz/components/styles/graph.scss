@@ -110,3 +110,25 @@
   :is(.graph-controls svg, .controls svg, button svg){
   fill: currentColor;
 }
+
+/* ▶ 그래프 컨테이너에 씌운 오버레이/프레임 전부 제거 */
+#graph::before,
+#graph-container::before,
+.graph::before,
+.graph-container::before{
+  content: none !important;
+}
+
+/* ▶ 그래프 컨테이너 기본값 복구(내부 레이아웃/툴바 보존) */
+#graph,
+#graph-container,
+.graph,
+.graph-container{
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  overflow: hidden !important;  /* 툴바 잘리지 않게 */
+  position: static !important;  /* 상대/절대 포지셔닝 해제 */
+  z-index: auto !important;
+}
