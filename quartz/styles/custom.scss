@@ -1370,11 +1370,10 @@ html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
   border-color: rgba(255,255,255,.6) !important;
   background: rgba(255,255,255,.06) !important;
 }
-
-.lx2-card::after {
-  content: none !important;
+/* 카드 안에 붙은 외부링크 아이콘 숨김 */
+.lx2-card .external-icon {
+  display: none !important;
 }
-
 
 /* 모든 페이지에서 ContentMeta 숨김 */
 .page .content-meta { 
