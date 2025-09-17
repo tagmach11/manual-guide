@@ -1344,6 +1344,14 @@ footer img {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.lx2-card__text {
+  flex: 1 1 auto;
+  min-width: 0;             /* 이거 빠지면 ellipsis 작동안 함 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* === FORCE WHITE TEXT IN LIGHT THEME (left block only) === */
 /* 테마에서 h1/h2 등에 !important가 걸려 있어도 이게 이깁니다(더 높은 특이성 + !important). */
 html.theme-light body .page .content .lx2-hero .lx2-hero__content,
