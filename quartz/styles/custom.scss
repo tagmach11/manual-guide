@@ -1324,12 +1324,25 @@ footer img {
   gap: 6px;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
+.lx2-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;               /* 아이콘 ↔ 텍스트 간격 */
+  overflow: hidden;       /* 내부 넘침 방지 */
+  text-decoration: none;  /* 링크 밑줄 제거 */
+  color: inherit;         /* 텍스트 색상 카드에 맞춤 */
+}
 
-.lx2-card__icon a,
-.lx2-card__icon svg {
-  display: block;          /* inline → block으로 */
-  width: 100%;
-  height: 100%;
+.lx2-card__icon {
+  flex: 0 0 auto;         /* 크기 고정 */
+}
+
+.lx2-card__text {
+  flex: 1 1 auto;         /* 남은 공간 차지 */
+  min-width: 0;           /* 줄임표 허용 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 /* === FORCE WHITE TEXT IN LIGHT THEME (left block only) === */
 /* 테마에서 h1/h2 등에 !important가 걸려 있어도 이게 이깁니다(더 높은 특이성 + !important). */
