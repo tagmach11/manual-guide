@@ -1154,7 +1154,9 @@ footer img {
 }
 
 
-
+.lx2-card::after {
+  content: none !important;
+}
 
 /**/
 
