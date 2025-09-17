@@ -1154,9 +1154,7 @@ footer img {
 }
 
 
-.lx2-card::after {
-  content: none !important;
-}
+
 
 /**/
 
@@ -1373,7 +1371,9 @@ html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
   background: rgba(255,255,255,.06) !important;
 }
 
-
+.lx2-card::after {
+  content: none !important;
+}
 
 
 /* 모든 페이지에서 ContentMeta 숨김 */
