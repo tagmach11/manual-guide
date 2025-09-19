@@ -1306,12 +1306,6 @@ footer img {
   column-gap: clamp(12px, 2.4vw, 22px);
 }
 
-/* 3) 카드/아이콘 축소 (오버플로 방지) */
-.lx2-card{
-  min-height: 40px;            /* 68→62 */
-  padding: 10px 12px;          /* 살짝 컴팩트 */
-  gap: 8px;
-}
 .lx2-card__icon{
   width: 30px; height: 30px;   /* 34→30 */
   border-radius: 9px;
@@ -1680,3 +1674,14 @@ html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
 #ov-s1:checked ~ .viewport .nav.for-1,
 #ov-s2:checked ~ .viewport .nav.for-2,
 #ov-s3:checked ~ .viewport .nav.for-3{ opacity:1; pointer-events:auto; }
+
+
+
+
+.lx2-hero__copyright {
+  position: absolute;
+  bottom: 20px;   /* 섹션 하단에서 20px 위 */
+  left: 40px;     /* 왼쪽 여백 */
+  font-size: 0.9em;
+  color: gray;
+}
