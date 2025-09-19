@@ -1685,3 +1685,12 @@ html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
   font-size: 0.9em;
   color: gray;
 }
+
+.lx2-card__icon img {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;  /* 모서리 둥글게 */
+  background: #fff;    /* 흰색 배경으로 정리 */
+  padding: 4px;        /* 여백을 줘서 정돈 */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15); /* 살짝 그림자 */
+}
