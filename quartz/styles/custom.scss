@@ -1,3 +1,1726 @@
 @use "./base.scss";
 
-// put your custom CSS here!
+/* =========================
+   Quartz 4 Custom SCSS (FINAL)
+   ========================= */
+
+/* 팔레트 & 공통 */
+$bg: #ffffff;
+$primary: #15354a;      // 남색 타이틀
+$accent: #f5e3d8;       // 살구 포인트
+$shadow: 0 10px 30px rgba(16, 24, 40, .08);
+
+/* ===== 버튼 공통 ===== */
+.btn {
+  display: inline-block;
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-weight: 700;
+  border: 2px solid currentColor;
+  text-decoration: none;
+  margin-right: 10px;
+  transition: transform 0.12s ease, opacity 0.12s ease;
+  &:hover { transform: translateY(-1px); }
+  &.primary { background: $primary; color: #fff; border-color: transparent; }
+}
+
+/* ===== 히어로 콜아웃 (배너) ===== */
+/* [!hero] 콜아웃 또는 <div class="callout" data-callout="hero">… */
+.callout[data-callout="hero"] {
+  border: none;
+  background: linear-gradient(180deg, #fff 0%, #f6f7fb 100%);
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: $shadow;
+  position: relative;
+
+  .callout-title { display: none; } /* [!hero] 제목줄 숨김 */
+
+  .callout-content {
+    display: grid;
+    grid-template-columns: 1.1fr .9fr;
+    gap: 24px;
+    align-items: center;
+
+    h1, h2 {
+      color: $primary;
+      margin: .1em 0 .3em;
+      font-weight: 800;
+    }
+    p { margin: .3em 0 1em; opacity: 0.9; }
+
+    .hero-img {
+      width: 100%;
+      height: auto;
+      border-radius: 22px;
+      box-shadow: $shadow;
+      display: block;
+    }
+  }
+
+  /* 살구색 배경 오브젝트 */
+  &::after {
+    content: "";
+    position: absolute;
+    right: 8%;
+    top: 12%;
+    width: 220px;
+    height: 180px;
+    background: $accent;
+    border-radius: 42% 58% 40% 60% / 60% 40% 60% 40%;
+    filter: blur(2px);
+    opacity: 0.7;
+    z-index: 0;
+  }
+}
+
+/* ===== 페이지 상단에 배너 올리기 (해당 노트에만 적용) ===== */
+/* 프런트매터에 cssclass: hero-first 추가 */
+.hero-first {
+  /* 페이지 타이틀/빵부스러기 숨김(있는 경우만) */
+  .page-title, .article-title, header h1,
+  .breadcrumb-container, nav.breadcrumbs, .article-metadata {
+    display: none !important;
+  }
+
+  /* 문서 첫 요소가 hero일 때 상단 여백 제거 */
+  .callout[data-callout="hero"]:first-of-type {
+    margin-top: 0 !important;
+  }
+
+  /* 배너만 강조(여백/그림자는 위의 hero 규칙 사용) */
+}
+
+/* ===== 사이드바(Explorer) 은은한 터치만 ===== */
+.explorer .item:hover,
+.explorer .file:hover,
+.explorer .node:hover {
+  background: rgba(143,159,169,.08);
+  border-radius: 8px;
+}
+.explorer .item.active,
+.explorer .file.active {
+  background: rgba(40,75,99,.12);
+  font-weight: 700;
+  border-radius: 8px;
+}
+
+/* ===== 대/중/소 노트별 이미지 통일(옵션) ===== */
+/* 노트 프런트매터에 cssclass: menu-big / menu-mid / menu-small */
+.menu-big   .markdown-preview-view img { width: 600px; height: auto; border-radius: 12px; object-fit: cover; }
+.menu-mid   .markdown-preview-view img { width: 420px; height: auto; border-radius: 10px; object-fit: cover; }
+.menu-small .markdown-preview-view img { width: 260px; height: auto; border-radius:  8px; object-fit: cover; }
+
+/* ===== 반응형 ===== */
+@media (max-width: 860px) {
+  .callout[data-callout="hero"] {
+    .callout-content { grid-template-columns: 1fr; gap: 18px; }
+    &::after { right: 6%; top: 6%; width: 160px; height: 120px; }
+  }
+}
+/* 공통 버튼 & 콜랩스 기본 */
+/* === 토글 버튼 / 내용 기본 === */
+.toggle-btn {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  user-select: none;
+  margin: 0 0 8px auto; /* 우측 정렬 */
+  transition: background .15s ease, border-color .15s ease, color .15s ease, box-shadow .15s ease;
+  border: 1px solid var(--interactive-normal, #d1d5db);
+  background: var(--interactive-accent, #f3f4f6);
+  color: var(--text-normal, #111827); /* <-- 라이트 fallback을 진한 색으로 */
+}
+
+.toggle-btn:hover {
+  background: var(--background-modifier-hover, #e5e7eb);
+}
+
+.toggle-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59,130,246,.35);
+}
+
+.toggle-content {
+  display: none;
+  margin: .5rem 0 1rem;
+  padding: .75rem 1rem;
+  border-left: 3px solid #2563eb;
+  background: var(--background-secondary, #f9fafb);
+  color: var(--text-normal, #111827);   /* <-- 라이트 fallback 진하게 수정 */
+  border-radius: 6px;
+}
+.toggle-content.open { display: block; }
+
+/* === 라이트 모드 명시 === */
+html[data-theme="light"] .toggle-btn {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+  color: #111827;
+}
+html[data-theme="light"] .toggle-content {
+  background: #f9fafb;
+  color: #111827;
+  border-left-color: #2563eb;
+}
+
+html[data-theme="dark"] {
+  /* 버튼(글자만 버튼처럼 보이는 형태 유지) */
+  .toggle-btn {
+    background: #16283a;   /* 남색 톤 */
+    border-color: #25405b; /* 버튼 테두리 살짝 진하게 */
+    color: #ffffff;         /* 흰 글씨 */
+  }
+  .toggle-btn:hover {
+    background: #1c334a;   /* hover 시 조금 더 밝은 남색 */
+  }
+
+  /* 콜랩스 내용 박스 */
+  .toggle-content {
+    background: #0f1f2e;     /* 진한 남색(배경) */
+    color: #ffffff;           /* 흰 글씨 */
+    border-left: 2px solid #7fb3ff; /* 왼쪽 얇은 라인(파랑) */
+    /* box-shadow: 0 2px 8px rgba(0,0,0,.35); */
+    /* border-radius: 6px;  // 이미 있으시면 유지 */
+  }
+}
+
+/* ===== Top Navigation (메뉴바) ===== */
+.top-nav{
+  position: sticky; top:0; z-index:-3;
+  display:flex; justify-content:space-between; align-items:center;
+  gap:16px; padding:12px 20px;
+  background:#fff; border-bottom:1px solid #eceef3;
+  overflow: visible; /* 드롭다운 잘림 방지 */
+}
+.top-nav .brand{
+  font-weight:700; font-size:2rem; color:#111; text-decoration:none;
+}
+.top-nav .brand img {
+  height: 32px;
+  display: block;
+}
+.nav-links{ display:flex; gap:8px; list-style:none; margin:0; padding:0; }
+.nav-item{ position:relative; }
+.nav-btn{
+  appearance:none; background:transparent; border:0; cursor:pointer;
+  padding:10px 14px; border-radius:999px; font-weight:600; color:#222; text-decoration:none;
+  transition:background .15s ease;
+}
+.nav-btn:hover{ background:#f2f4f8; }
+
+/* ===== Mega Dropdown (메가 드롭다운) ===== */
+/* 버튼 -> 패널 사이 호버 끊김 방지용 '보이지 않는 다리' */
+.nav-item.has-mega{ position:relative; }
+.nav-item.has-mega::after{
+  content:"";
+  position:absolute; left:0; right:0; top:100%;
+  height:14px; /* 패널 margin-top(10px)보다 조금 크게 */
+  
+}
+
+/* 패널 박스 */
+.has-mega .mega-panel{
+  position:absolute; left:50%; transform:translateX(-50%);
+  top:100%;             /* 버튼 바로 아래에 붙이고 */
+  margin-top:10px;      /* 시각적 간격은 margin으로 */
+  display:none;
+  width:min(920px, 90vw);
+  background:#fff; border:1px solid #e9edf5; border-radius:18px;
+  box-shadow:0 16px 40px rgba(16,24,40,.12);
+  padding:18px; gap:18px;
+  z-index:9999;         /* 레이어 최상단으로 */
+  pointer-events:auto;  /* 내부 클릭 허용 */
+}
+
+/* 열기 조건: hover + focus-within 모두 허용 (키보드 접근성) */
+.has-mega:hover > .mega-panel,
+.has-mega:focus-within > .mega-panel{
+  display:flex;
+}
+
+/* 패널 내부 레이아웃 */
+.mega-panel{ display:flex; }
+.mega-col{ flex:1; min-width:280px; }
+.mega-col.highlight{ flex:1.4; display:flex; align-items:center; }
+
+/* 링크/카드 스타일 */
+.mega-link{
+  display:block; padding:10px 12px; border-radius:10px;
+  color:#111; text-decoration:none; font-weight:600;
+  transition:background .15s ease;
+}
+.mega-link:hover{ background:#f5f7fb; }
+
+.card{
+  display:block; width:100%; text-decoration:none; color:inherit;
+  border:1px solid #e9edf5; border-radius:18px; padding:14px;
+  box-shadow:0 8px 24px rgba(16,24,40,.08);
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.card:hover{ transform:translateY(-2px); box-shadow:0 16px 36px rgba(16,24,40,.12); }
+.thumb{ width:100%; height:140px; border-radius:12px; background:#eef3ff; margin-bottom:12px; }
+.card-title{ font-weight:700; margin-bottom:4px; }
+.card-desc{ color:#556070; font-size:.95rem; }
+
+/* ===== 잘림/레이어 보정 (상황 따라 유지) ===== */
+.page, .container, .content, body{ overflow:visible; }
+
+/* ===== 모바일 (선택 사항) : 클릭 토글을 쓴다면 ===== */
+@media (max-width: 860px){
+  /* 모바일에선 hover로 열리지 않게 */
+  .has-mega:hover > .mega-panel{ display:none; }
+  /* JS로 .open 클래스를 붙일 때만 열리게 */
+  .has-mega.open > .mega-panel{ display:flex; }
+
+  /* 패널을 화면 가로에 꽉 차게 */
+  .has-mega .mega-panel{
+    left:0; right:0; transform:none; width:100vw; max-width:none;
+    margin-left:calc(-50vw + 50%); /* 화면 양끝 정렬 */
+  }
+}
+
+
+/*테스트입니다.*/
+/*.card-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.card-menu li {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transition: all .15s ease;
+}
+
+.card-menu li:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+.card-menu li img {
+  width: 100%;
+  height: 110px;    
+  object-fit: cover;
+  display: block;
+}
+
+.card-menu .card-label {
+  display: inline-block;
+  margin: 8px 0 4px 12px;
+  padding: 2px 8px;
+  background: var(--secondary);
+  color: #fff;
+  border-radius: 8px;
+  font-size: 0.75rem;
+}
+
+.card-menu .card-desc {
+  display: block;
+  margin: 0 12px 12px;
+  font-size: 0.85rem;
+  line-height: 1.3;
+  color: var(--text);
+}
+*/
+.app-cards ul {
+  list-style: none;
+  padding: 0;
+  margin: 14px 0 24px;
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+}
+
+.app-cards li {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  border-radius: 14px;
+  padding: 14px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,.06);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.app-cards li:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 14px rgba(0,0,0,.12);
+  border-color: var(--secondary);
+}
+
+/* 아이콘을 작은 정사각형으로 */
+.app-cards li img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-bottom: 8px;
+}
+
+/* 라벨 & 설명 */
+.app-cards .card-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: var(--secondary);
+}
+.app-cards .card-desc {
+  font-size: 0.82rem;
+  line-height: 1.3;
+  opacity: 0.9;
+}
+
+/* === 다크모드 전용 === */
+html[data-theme="dark"] .app-cards li {
+  border-color: rgba(255,255,255,.18);      /* 더 밝은 테두리 */
+  background: #1e293b;                      /* 짙은 네이비/다크 블루 계열 */
+  box-shadow: 0 2px 8px rgba(0,0,0,.45);    /* 그림자 진하게 */
+}
+
+html[data-theme="dark"] .app-cards li:hover {
+  border-color: var(--qz-brand-accent, #22b8b0);  /* 브랜드 색 강조 */
+  background: #273449;                             /* hover 시 조금 더 밝게 */
+}
+
+/*2번째 테스트 (pillcard)_*/
+/* ====== 작은 카드 + 하단 라운드 바 ====== */
+.pill-cards ul{
+  list-style:none; padding:0; margin:14px 0 24px;
+  display:grid; gap:14px; grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+}
+.pill-cards li{ margin:0; }
+
+.pill-cards .pill-card{
+  display:block; position:relative; text-decoration:none; color:var(--text);
+  border:1px solid var(--border); background:var(--bg);
+  border-radius:18px; padding:12px; overflow:hidden;
+  box-shadow:0 2px 10px rgba(0,0,0,.06);
+  transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+}
+.pill-cards .pill-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 24px rgba(0,0,0,.12);
+  border-color:var(--secondary);
+}
+
+/* 썸네일 영역(작게) */
+.pill-cards .thumb{
+  height:120px; border-radius:16px; overflow:hidden; background:#f2f3f7;
+}
+.pill-cards .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+/* 하단 라운드 바(제목/부제목) */
+.pill-cards .legend{
+  position:absolute; left:12px; right:12px; bottom:10px;
+  padding:10px 12px; border-radius:14px;
+  text-align:center; color:#fff; line-height:1.1;
+  background: rgba(80,80,85,.85);               /* 라이트/다크 모두 OK */
+  backdrop-filter: saturate(120%) blur(4px);     /* 지원 브라우저에서만 */
+  box-shadow: 0 6px 18px rgba(0,0,0,.22);
+}
+.pill-cards .legend .title{ font-weight:800; font-size:.95rem; }
+.pill-cards .legend .subtitle{ margin-top:4px; font-size:.82rem; opacity:0.95; }
+
+/* 제목이 두 줄이 되어도 카드 모양 유지 */
+.pill-cards .legend .title, .pill-cards .legend .subtitle{
+  display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+
+/* 모바일 살짝 컴팩트 */
+@media (max-width:520px){
+  .pill-cards .thumb{ height:110px; }
+  .pill-cards .legend{ padding:9px 10px; }
+}
+
+/*카드뷰 감싸 앉게 */
+/* 섹션 제목(####)을 둥근 라벨처럼 */
+.pill-cards h4{
+  display:inline-block;
+  margin: 10px 0 10px;
+  padding: 6px 14px;
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  background: var(--bg);
+  font-weight: 800;
+  box-shadow: 0 4px 14px rgba(0,0,0,.06);
+}
+/* 제목 아래 카드 그리드와 간격 */
+.pill-cards h4 + ul{ margin-top: 6px; }
+
+/* 섹션 래퍼 */
+.pill-cards .sec{
+  position: relative;
+  margin: 18px 0 28px;
+  padding-top: 10px;                 /* 라벨과 겹치지 않도록 */
+  border-radius: 16px;
+}
+
+/* 라벨(섹션 번호/제목) — 모서리 살짝 겹치게 */
+.pill-cards .sec::before{
+  content: attr(data-label);
+  position: absolute;
+  top: -12px;
+  left: 12px;
+  padding: 8px 16px;
+  border: 2px solid var(--border);
+  border-left: 2px solid rgba(0,0,0,.10);
+  border-radius: 14px;
+  background: var(--bg);
+  font-weight: 800;
+  box-shadow: 0 6px 18px rgba(0,0,0,.10);
+  
+}
+
+/* 섹션 안 카드 그리드는 기존 규칙 그대로 */
+.pill-cards .sec > ul{
+  list-style:none; padding:0; margin:14px 0 0;
+  display:grid; gap:14px; grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+}
+
+
+
+/*_etc 폴더 숨기기*/
+.explorer .folder-container[data-folderpath="_etc/index"]{
+  display: none !important;
+}
+
+
+.explorer .content li:has(> a[data-for^="_etc/"]) {   /* <li><a data-for="_etc/…"> */
+  display: none !important;
+}
+
+.explorer a[href^="../_etc/"],
+.explorer a[href*="/_etc/"] {
+  display: none !important;
+}
+
+
+
+
+/*테스트*/
+/* === 섹션 라벨 전용 토큰 === */
+:root{
+  --sec-label-bg: #ffffff;
+  --sec-label-text: #111827;
+  --sec-label-border: #e5e7eb;
+  --sec-label-shadow: 0 6px 18px rgba(16,24,40,.10);
+}
+html[data-theme="dark"]{
+  --sec-label-bg: #0f1f2e;          /* 카드/페이지보다 한 톤 밝은 남색 */
+  --sec-label-text: #ffffff;        /* 라벨 글자 */
+  --sec-label-border: #2b3a4a;      /* 어두운 테두리 */
+  --sec-label-shadow: 0 10px 26px rgba(0,0,0,.45);
+}
+
+/* === 라벨 보정 (겹치기 B안용) === */
+.pill-cards .sec{ position:relative; z-index:0; }
+.pill-cards .sec::before{
+  content: attr(data-label);
+  position:absolute; top:-12px; left:12px;
+  padding:8px 16px; border-radius:14px;
+  background: var(--sec-label-bg);
+  color: var(--sec-label-text);
+  border: 2px solid var(--sec-label-border);
+  box-shadow: var(--sec-label-shadow);
+  z-index: 2;                          /* 카드 위로 */
+}
+.pill-cards .sec[data-emoji]::after{
+  content: attr(data-emoji);
+  position:absolute; top:-12px; left:14px;
+  width:24px; height:24px; display:grid; place-items:center;
+  border-radius:8px; z-index:3;
+}
+.pill-cards .pill-card{ position:relative; z-index:1; }  /* 라벨보다 아래 */
+
+/* 라벨 오른쪽 정렬 옵션 유지 */
+.pill-cards .sec[data-align="right"]::before{ left:auto; right:12px; }
+.pill-cards .sec[data-align="right"][data-emoji]::after{ left:auto; right:14px; }
+
+/* ==== Neo Icon Cards (contrast tuned + blue hover) ==== */
+:root{
+  --neo-bg:#fff; --neo-text:#0e1116; --neo-muted:#5f6b7a;
+  --neo-border:#e6e8ee; --neo-ring:rgba(59,130,246,.12);
+  --neo-shadow:0 8px 24px rgba(0,0,0,.06);
+  --neo-shadow-hover:0 14px 42px rgba(0,0,0,.12);
+  --neo-r:20px; --neo-gap:18px;
+  --neo-icon-bg:linear-gradient(180deg,#f7f9ff,#f2f6ff);
+  --neo-icon-stroke:#375ef6;
+  --neo-blue:#3b82f6;            /* 링크 hover 파란색(Light) */
+}
+[data-theme="dark"]{
+  --neo-bg:#0f131a;              /* 더 어두운 배경으로 대비↑ */
+  --neo-text:#f4f6fb;            /* 본문 텍스트 밝기↑ */
+  --neo-muted:#c0c7d1;           /* 부제목 채도↑ */
+  --neo-border:#2a3240;          /* 경계 명확히 */
+  --neo-ring:rgba(96,165,250,.18);/* 파랑 링 투명도↑ */
+  --neo-shadow:0 12px 30px rgba(0,0,0,.55);
+  --neo-shadow-hover:0 18px 50px rgba(0,0,0,.65);
+  --neo-icon-bg:linear-gradient(180deg,#1a2130,#121722);
+  --neo-icon-stroke:#9ec3ff;      /* 아이콘 선명도↑ */
+  --neo-blue:#60a5fa;             /* 링크 hover 파란색(Dark) */
+}
+
+/* 컨테이너 */
+.neo-cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+  gap:26px;
+}
+
+/* 카드 */
+.neo-card{
+  background:var(--neo-bg); color:var(--neo-text);
+  border:1px solid var(--neo-border);
+  border-radius:var(--neo-r);
+  box-shadow:var(--neo-shadow);
+  padding:22px;
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  position:relative; isolation:isolate; overflow:hidden;
+}
+.neo-card::after{
+  content:none; position:absolute; inset:-1px; border-radius:inherit;
+  pointer-events:none; box-shadow:0 0 0 0 rgba(0,0,0,0);
+  transition:box-shadow .2s ease;
+}
+.neo-card:hover{
+  transform:translateY(-3px);
+  box-shadow:var(--neo-shadow-hover);
+  border-color:transparent;
+}
+.neo-card:hover::after{
+  box-shadow:0 0 0 6px var(--neo-ring) inset;
+}
+
+/* 헤더 */
+.neo-head{ display:flex; align-items:center; gap:14px; margin-bottom:10px; }
+.neo-icon{
+  width:56px; height:56px; border-radius:14px;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--neo-icon-bg); border:1px solid var(--neo-border);
+}
+.neo-icon svg{ width:32px; height:32px; stroke:var(--neo-icon-stroke); fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+
+/* 타이틀/부제 */
+.neo-title{ margin:0; font-weight:800; letter-spacing:-.01em; font-size:1.2rem; line-height:1.25; }
+.neo-title a{ color:inherit; text-decoration:none; transition:color .15s ease; }
+.neo-title a:hover,
+.neo-title a:focus-visible{ color:var(--neo-blue); text-decoration:underline; outline:none; }
+.neo-sub{ margin:.15rem 0 0; color:var(--neo-muted); font-weight:600; font-size:.98rem; }
+
+/* 링크 리스트 */
+.neo-links{ margin:12px 0 0; padding:0; list-style:none; display:grid; gap:8px; }
+.neo-links.two-col{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px 14px; }
+.neo-links a{
+  display:inline-flex; align-items:center; gap:8px;
+  color:inherit; text-decoration:none; font-weight:700; font-size:.98rem;
+  transition:color .15s ease, text-decoration-color .15s ease;
+}
+.neo-links a::after{ content:"→"; opacity:0.65; transition:transform .15s ease, opacity 0.15s ease, color .15s ease; }
+.neo-links a:hover,
+.neo-links a:focus-visible{
+  color:var(--neo-blue);
+  text-decoration:underline;
+  outline:none;
+}
+.neo-links a:hover::after,
+.neo-links a:focus-visible::after{
+  transform:translateX(2px);
+  opacity:0.95;
+  color:var(--neo-blue);
+}
+
+/* 악센트(선택) */
+.neo-card.accent-blue   { --neo-icon-bg:linear-gradient(180deg,#eef3ff,#e8efff); --neo-icon-stroke:#375ef6; }
+.neo-card.accent-emerald{ --neo-icon-bg:linear-gradient(180deg,#e9fff6,#e6fbef); --neo-icon-stroke:#0ea569; }
+.neo-card.accent-amber  { --neo-icon-bg:linear-gradient(180deg,#fff7e7,#fff1db); --neo-icon-stroke:#d97706; }
+.neo-card.accent-rose   { --neo-icon-bg:linear-gradient(180deg,#ffe8ee,#ffe9f2); --neo-icon-stroke:#e11d48; }
+
+/* 다크에서 악센트 대비 조금 더 */
+[data-theme="dark"] .neo-card.accent-blue   { --neo-icon-bg:linear-gradient(180deg,#1c2740,#141c2e); --neo-icon-stroke:#9ec3ff; }
+[data-theme="dark"] .neo-card.accent-emerald{ --neo-icon-bg:linear-gradient(180deg,#0f2a22,#0b1f19); --neo-icon-stroke:#53d39e; }
+[data-theme="dark"] .neo-card.accent-amber  { --neo-icon-bg:linear-gradient(180deg,#2a2212,#1e190f); --neo-icon-stroke:#f2b35c; }
+[data-theme="dark"] .neo-card.accent-rose   { --neo-icon-bg:linear-gradient(180deg,#2a1620,#1b0f15); --neo-icon-stroke:#ff86a3; }
+
+/* 모바일 */
+@media (max-width:900px){
+  .neo-cards{ gap:20px; }
+  .neo-card{ padding:18px; }
+  .neo-icon{ width:52px; height:52px; }
+}
+
+/* 안전장치: Quartz 기본 규칙과 충돌 방지 */
+.neo-cards *{ box-sizing:border-box; }
+
+
+/* === Quartz 기본 링크/뱃지 스타일 리셋 (카드 내부 전용) === */
+.neo-cards a,
+.neo-cards a.internal-link,
+.neo-cards a.external-link {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  filter: none !important;
+  opacity: 1 !important;
+  color: var(--neo-text) !important; /* 기본 글자색 강제 */
+}
+
+/* Quartz가 붙이는 링크 꼬리표/아이콘 제거 */
+.neo-cards a.internal-link::after,
+.neo-cards a.external-link::after {
+  content: none !important;
+}
+
+/* 제목/메뉴 링크: 호버 시 파란색으로 */
+.neo-cards .neo-title a,
+.neo-cards .neo-links a { transition: color .15s ease, text-decoration-color .15s ease; }
+
+.neo-cards .neo-title a:hover,
+.neo-cards .neo-title a:focus-visible,
+.neo-cards .neo-links a:hover,
+.neo-cards .neo-links a:focus-visible {
+  color: var(--neo-blue) !important;
+  text-decoration: underline;
+  outline: none;
+}
+
+/* 다크모드에서 부제/보조 텍스트 가독성 ↑ */
+[data-theme="dark"] .neo-card .neo-sub { color: #d5dbe6; }     /* 부제 */
+[data-theme="dark"] .neo-card { border-color: #2c3646; }       /* 카드 테두리 선명 */
+[data-theme="dark"] .neo-icon { border-color: #2c3646; }       /* 아이콘 박스 테두리 */
+[data-theme="dark"] .neo-icon svg { stroke: var(--neo-icon-stroke); }
+
+/* 리스트 화살표도 파란색으로 동기화 */
+.neo-cards .neo-links a::after { content: ""; opacity: 0.75; transition: transform .15s ease, opacity 0.15s ease, color .15s ease; }
+.neo-cards .neo-links a:hover::after,
+.neo-cards .neo-links a:focus-visible::after { transform: translateX(2px); opacity: 0.95; color: var(--neo-blue); }
+
+/* (옵션) 카드 안의 모든 링크는 항상 굵게 */
+.neo-cards .neo-links a { font-weight: 700; }
+.neo-cards .neo-title a { font-weight: 800; }
+
+/* 일부 테마에서 앵커가 블록/뱃지로 강제되는 경우 대비 */
+.neo-cards .neo-links a, .neo-cards .neo-title a { display: inline; }
+
+
+/* 주문결제 카드만 크기 맞춤 */
+.neo-card.small {
+  min-width: 340px;   /* 다른 카드들과 최소 크기 맞추기 */
+  max-width: 400px;
+  height: 250px;   /* 필요 시 최대 폭 제한 */
+}
+
+
+
+
+
+/* ===== Scroll Stack (Toss-like) ===== */
+.scroll-stack{
+  /* JS에서 카드 개수로 채워줌 */
+  --count: 3;                 /* fallback */
+  --top: 10vh;                /* sticky 상단 여백 */
+  --gap: 26px;                /* 카드 간 간격 */
+  --radius: 24px;
+
+  /* 스크롤 길이: 카드가 많을수록 길게 */
+  height: calc(100vh + (var(--count) - 1) * var(--step, 80vh));
+  position: relative;
+}
+
+.scroll-stack .stack{
+  position: sticky;
+  top: var(--top);
+  height: calc(100vh - var(--top) - 6vh);
+  border-radius: var(--radius);
+  perspective: 1200px;
+  overflow: visible;
+}
+
+.s-card{
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: clamp(24px, 5vw, 64px);
+  border-radius: var(--radius);
+  background: var(--bg, #0b5fff);
+  color: #fff;
+  box-shadow: 0 30px 80px rgba(0,0,0,.25);
+  transform-origin: 50% 70%;
+  will-change: transform, opacity;
+  transition: box-shadow .2s ease;
+}
+.s-card h2{ font-size: clamp(28px, 4vw, 54px); line-height: 1.1; margin: 0 0 .5em; font-weight: 800; }
+.s-card p { max-width: 46ch; opacity: .95; font-size: clamp(15px, 1.4vw, 18px); }
+
+/* 라이트/다크 가독성 조정 */
+:root{
+  --s-txt: #0f1116;
+}
+[data-theme="dark"]{
+  --s-txt: #e6ebf5;
+}
+.s-card[data-ink="dark"]{ color: var(--s-txt); }
+
+/* 수평 스크롤 방지 안전장치 */
+.scroll-stack, .scroll-stack *{ max-width:100%; overflow-x:clip; }
+
+
+
+
+
+
+
+
+/* custom.scss 안 */
+
+:root{
+  --qz-brand-accent:#22b8b0;
+  --qz-border-light: rgba(15,23,42,.12);
+  --qz-border-dark: rgba(255,255,255,.16);
+}
+.theme-light { --qz-border: var(--qz-border-light); }
+.theme-dark  { --qz-border: var(--qz-border-dark); }
+
+/* 탭 라벨 */
+article.popover-hint h4{
+  position:relative; display:inline-block;
+  margin:28px 0 0; padding:4px 10px; font-weight:700; font-size:.92rem;
+  background:var(--background-primary);
+  border:1px solid var(--qz-border); border-radius:12px; z-index:2;
+}
+
+/* 바깥 박스 + 그리드 */
+article.popover-hint h4 + ul{
+  position:relative; list-style:none; margin:-12px 0 26px; padding:28px 24px;
+  border:1px solid var(--qz-border); border-radius:14px; background:var(--background-primary);
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(110px,1fr)); gap:14px 20px;
+}
+
+/* 안쪽 포커스 프레임 */
+article.popover-hint h4 + ul::before{
+  content:""; position:absolute; inset:18px 22px;
+  border:2px solid var(--qz-brand-accent); border-radius:10px; pointer-events:none; opacity:.9;
+}
+
+/* 칩 */
+article.popover-hint h4 + ul > li{ list-style:none; text-align:center; }
+article.popover-hint h4 + ul > li > a{
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+  text-decoration:none !important; color:var(--text-normal);
+}
+article.popover-hint h4 + ul > li > a > img{
+  width:36px; height:36px; object-fit:contain; padding:10px;
+  background:var(--background-secondary);
+  border:1px solid var(--qz-border); border-radius:12px;
+  box-shadow:0 1px 0 rgba(0,0,0,.04), inset 0 0 0 1px rgba(255,255,255,.55);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+article.popover-hint h4 + ul > li > a:hover > img{
+  transform:translateY(-1px);
+  box-shadow:0 2px 10px rgba(0,0,0,.06), inset 0 0 0 1px rgba(255,255,255,.65);
+}
+
+/* 텍스트 */
+.card-label{ display:none; }
+.card-desc{ display:block; font-size:.78rem; color:var(--text-muted); line-height:1.25; }
+
+/* ==================== Dark mode tuning ==================== */
+:root{ --qz-brand-accent:#22b8b0; }
+
+/* 바깥 카드 박스 & 탭 라벨 */
+.theme-dark article.popover-hint h4,
+.theme-dark article.popover-hint h4 + ul{
+  background: rgba(255,255,255,.05);      /* 어두운 배경 위에서 은은한 밝기 */
+  border-color: rgba(255,255,255,.18);     /* 라이트 회색 테두리 */
+  box-shadow: 0 2px 0 rgba(0,0,0,.55);
+}
+
+/* 안쪽 포커스 프레임(파란 사각형) */
+.theme-dark article.popover-hint h4 + ul::before{
+  border-color: var(--qz-brand-accent);    /* 브랜드 색 유지 */
+  opacity: .95;
+}
+
+/* 칩(아이콘 타일) */
+.theme-dark article.popover-hint h4 + ul > li > a > img{
+  background: rgba(255,255,255,.08);       /* 칩 배경을 살짝 더 밝게 */
+  border-color: rgba(255,255,255,.20);
+  box-shadow: 0 1px 0 rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.25);
+}
+
+/* 텍스트 대비 */
+.theme-dark .card-desc{ color: rgba(255,255,255,.78); }
+.theme-dark a{ color: inherit; }           /* 링크 색으로 인해 대비 꺾이는 것 방지 */
+
+/* 한 개만 있는 카드에서 아이콘이 작아 보이는 걸 보정 */
+article.popover-hint h4 + ul > li:only-child > a > img{
+  transform: scale(var(--qz-single-scale, 1.22));  /* 1.15~1.30 사이로 취향 조절 */
+}
+article.popover-hint h4 + ul > li:only-child > a:hover > img{
+  transform: scale(var(--qz-single-scale, 1.22)) translateY(-1px);
+}
+
+/* (선택) 한 개일 땐 가운데 정렬 느낌 강화 */
+article.popover-hint h4 + ul{
+  justify-items: start;
+}
+article.popover-hint h4 + ul:has(> li:only-child){
+  justify-items: center; /* 지원 브라우저에서만 적용됨(Chrome/Safari 최신) */
+}
+
+/* === 모든 메뉴 아이콘 80x80로 고정 === */
+:root { --menu-icon-size: 80px; }
+
+article.popover-hint h4 + ul > li > a > img{
+  width:  var(--menu-icon-size) !important;
+  height: var(--menu-icon-size) !important;
+  padding: 0 !important;                 /* 내부 여백 제거 */
+  background: transparent !important;    /* 배경/테두리 없앰(아이콘 파일 자체를 그대로) */
+  border: 0 !important;
+  box-shadow: none !important;
+  object-fit: contain;
+}
+
+/* 아이콘 커졌으니 그리드 폭도 살짝 넉넉하게 */
+article.popover-hint h4 + ul{
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 18px 22px;
+}
+
+.card-desc{ margin-top: 6px; }
+
+
+
+
+
+/* ================= Quartz 4.5 Light/Dark ================= */
+:root,
+[data-theme="light"]{
+  --card-bg:#ffffff;
+  --card-fg:#0f172a;
+  --card-muted:#334155;
+  --card-subtle:#64748b;
+  --card-border:rgba(15,23,42,.12);
+  --card-shadow:0 1px 2px rgba(0,0,0,.06), 0 8px 24px rgba(0,0,0,.08);
+  --card-ring:rgba(34,184,176,.35);
+  --card-thumb:80px;   /* 썸네일 80x80 */
+  --card-radius:16px; --card-gap:16px; --card-pad:18px;
+}
+[data-theme="dark"]{
+  --card-bg:#0f172a;
+  --card-fg:#e2e8f0;
+  --card-muted:#e5e7eb;
+  --card-subtle:#94a3b8;
+  --card-border:rgba(255,255,255,.14);
+  --card-shadow:0 1px 2px rgba(0,0,0,.40), 0 8px 24px rgba(0,0,0,.50);
+  --card-ring:rgba(34,184,176,.55);
+}
+
+/* ================= Scope: 본문만, 백링크 제외 ================= */
+/* Quartz 기본 구조: .page > main.content …  */
+.page main.content h4 + ul{
+  list-style:none; margin:0; padding:0;
+  display:grid; gap:var(--card-gap);
+  grid-template-columns:repeat(auto-fill, minmax(220px,1fr));
+}
+/* 백링크 영역 초기화(혹시 h4+ul 구조가 있어도 카드화 막기) */
+#backlinks h4 + ul,
+#backlinks ul{
+  all:unset; display:block; list-style:disc; margin-left:1.25rem;
+}
+
+/* ================= Card ================= */
+.page main.content h4 + ul > li{
+  background:var(--card-bg); color:var(--card-fg);
+  border:1px solid var(--card-border);
+  border-radius:var(--card-radius);
+  padding:var(--card-pad);
+  box-shadow:var(--card-shadow);
+  text-align:center; min-height:180px;
+  transition:transform .12s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.page main.content h4 + ul > li:hover,
+.page main.content h4 + ul > li:focus-within{
+  transform:translateY(-2px);
+  box-shadow:0 0 0 3px var(--card-ring), var(--card-shadow);
+}
+
+/* 링크/썸네일 */
+.page main.content h4 + ul a{
+  text-decoration:none; color:inherit;
+  display:inline-grid; place-items:center;
+}
+.page main.content h4 + ul img{
+  width:var(--card-thumb); height:var(--card-thumb); object-fit:contain;
+}
+
+/* 라벨/설명 */
+.card-label{
+  display:block; margin-top:10px;
+  font-weight:700; font-size:.9rem; color:var(--card-muted);
+}
+.card-desc{
+  display:block; margin-top:6px;
+  font-size:.86rem; line-height:1.35; color:var(--card-subtle);
+  display:-webkit-box; -webkit-box-orient:vertical; overflow:hidden;
+}
+
+/* 모션 최소화 */
+@media (prefers-reduced-motion: reduce){
+  .page main.content h4 + ul > li{ transition:none; }
+}
+
+
+
+
+
+
+
+/* Footer 로고 전용 */
+footer img {
+  filter: none !important;
+  opacity: 1 !important;
+  mix-blend-mode: normal !important;
+  color-adjust: exact !important;     /* 브라우저 색상 보정 차단 */
+  -webkit-print-color-adjust: exact !important;
+}       
+
+
+
+
+
+/* ===== Scope to this page only ===== */
+.lx2-hero-page { .page, .content { max-width: unset; } }
+
+/* ===== Hero Wrapper ===== */
+.lx2-hero{
+  --wrap: 1200px; --pad-x: clamp(16px,4vw,48px); --pad-y: clamp(24px,8vh,80px);
+  --radius: 24px;
+  position: relative; display:grid; place-items:center;
+  width: min(92vw, var(--wrap)); margin: 0 auto; padding: var(--pad-y) var(--pad-x);
+  min-height: min(82dvh, 820px);
+  background:
+    radial-gradient(1200px 1200px at 70% 62%, rgba(255,255,255,.06) 0%, transparent 60%),
+    radial-gradient(900px 900px at 70% 62%, rgba(255,255,255,.04) 0%, transparent 60%),
+    linear-gradient(180deg,#0a2a6b,#061a44);
+  border-radius: var(--radius); box-shadow: 0 12px 36px rgba(0,0,0,.28); overflow: clip;
+}
+
+/* ===== Left/Right Columns ===== */
+.lx2-hero__inner{
+  width:100%; display:grid; align-items:center;
+  grid-template-columns: 1.15fr 1fr; column-gap: clamp(20px,5vw,48px);
+}
+@media (max-width: 980px){ .lx2-hero__inner{ grid-template-columns: 1fr; row-gap: 28px; } }
+
+/* ===== Left: Title/Desc/CTA ===== */
+.lx2-hero__content{ color:#fff; text-align:left; }
+.lx2-hero__title{ margin:0 0 .25em; font-size: clamp(32px,4.4vw,60px); line-height:1.05; letter-spacing:-.02em; }
+.lx2-hero__desc{ margin:0 0 1.1em; font-size:clamp(15px,1.4vw,18px); opacity:.9; }
+.lx2-hero__cta{
+  display:inline-block; padding:.85em 1.5em; border-radius:999px; color:#fff; text-decoration:none;
+  border:1px solid rgba(255,255,255,.32); backdrop-filter: blur(6px);
+  transition: transform .15s ease, background .15s ease, border-color .15s ease;
+}
+.lx2-hero__cta:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.6); background: rgba(255,255,255,.06); }
+
+/* ===== Right: 2×2 Card Grid ===== */
+.lx2-hero__cards{
+  display:grid; grid-template-columns: 1fr 1fr; gap: clamp(12px,2vw,16px);
+}
+@media (max-width: 540px){ .lx2-hero__cards{ grid-template-columns: 1fr; } }
+
+/* ===== Card ===== */
+.lx2-card{
+  --accent: #8ab6ff; /* default */
+  display:flex; align-items:center; gap: 10px; /* 아이콘-텍스트 촘촘하게 */
+  padding: 14px 16px; border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+  border: 1px solid rgba(255,255,255,.14);
+  color:#fff; text-decoration:none;
+  box-shadow: 0 8px 20px rgba(0,0,0,.25);
+  min-height: 84px;
+  transition: transform .12s ease, border-color .12s ease, background .12s ease;
+}
+.lx2-card:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.28); background: rgba(255,255,255,.08); }
+
+/* 색상 버전 */
+.lx2-card.edu{ --accent:#86c5ff; }
+.lx2-card.tech{ --accent:#b9a7ff; }
+.lx2-card.eff{ --accent:#a7e57d; }
+.lx2-card.sec{ --accent:#9db8ff; }
+
+/* 아이콘: 한 줄, 크기 고정, 강조색 */
+.lx2-card__icon{
+  flex: 0 0 auto; height: 40px; width: 40px; display:grid; place-items:center;
+  border-radius: 12px; background: color-mix(in oklab, var(--accent) 18%, transparent);
+  outline: 1px solid color-mix(in oklab, var(--accent) 40%, transparent);
+}
+.lx2-card__icon svg{ width: 22px; height: 22px; stroke: var(--accent); fill: none; stroke-width: 1.8; }
+
+/* 텍스트: '한 줄' + 아이콘과 가깝게 */
+.lx2-card__text{
+  display:flex; align-items:center; gap: 8px;
+  white-space: nowrap; /* 글자 일렬 유지 */
+  overflow:hidden; text-overflow: ellipsis;
+  font-size: clamp(14px,1.1vw,16px);
+}
+.lx2-card__text b{ font-weight:700; letter-spacing:-.01em; }
+.lx2-card__text i{ font-style:normal; opacity:.85; font-weight:600; }
+
+/* 라이트 모드 */
+.theme-light .lx2-hero{
+  background:
+    radial-gradient(1200px 1200px at 70% 62%, rgba(0,0,0,.03) 0%, transparent 60%),
+    radial-gradient(900px 900px at 70% 62%, rgba(0,0,0,.025) 0%, transparent 60%),
+    linear-gradient(180deg, #0c3a9c, #072d7a);
+}
+.theme-light .lx2-card{
+  background: linear-gradient(180deg, rgba(255,255,255,.66), rgba(255,255,255,.4));
+  color:#0b1b34; border-color: rgba(7,22,46,.14);
+  box-shadow: 0 8px 18px rgba(8,26,64,.15);
+}
+.theme-light .lx2-card__icon{
+  background: color-mix(in oklab, var(--accent) 16%, white);
+  outline-color: color-mix(in oklab, var(--accent) 38%, white);
+}
+.theme-light .lx2-hero__cta{ color:#fff; }
+
+/* ===== PATCH: 헤더 줄바꿈 + 크기/레이아웃 축소 + 그래프뷰 미가림 ===== */
+
+/* 히어로 전체 스케일 다운 & 레이어 조정(그래프뷰 가리지 않도록) */
+.lx2-hero{
+  --wrap: 1080px;                         /* 1200 → 1080: 전체 폭 소폭 축소 */
+  min-height: clamp(420px, 66dvh, 640px); /* 82dvh → 66dvh: 높이 낮춤 */
+  padding: clamp(20px, 6vh, 56px) clamp(16px, 4vw, 36px);
+  z-index: 0;            /* 페이지 위젯(그래프뷰)보다 낮게 */
+  isolation: initial;     /* 스태킹 컨텍스트 해제 */
+  overflow: visible;      /* 주변 위젯 겹침 이슈 방지 */
+}
+
+/* 좌/우 칼럼 간격과 비율도 한 단계 줄이기 */
+.lx2-hero__inner{
+  grid-template-columns: 1.1fr 0.9fr;     /* 왼쪽(텍스트) 조금 더 넓게 */
+  column-gap: clamp(16px, 3.5vw, 32px);   /* 5vw → 3.5vw */
+}
+
+/* 제목: 기본 크기는 약간 줄이고, LX2만 한 줄 아래로 더 크게 */
+.lx2-hero__title{
+  font-size: clamp(28px, 3.9vw, 54px);    /* 전체 타이틀 살짝 축소 */
+  line-height: 1.05;
+  margin: 0 0 .3em 0;
+  letter-spacing: -0.02em;
+}
+.lx2-title-accent{
+  display: block;          /* 줄바꿈(아래 줄로) */
+  margin-top: .18em;       /* ‘한 칸’ 느낌의 여백 */
+  font-size: 1.18em;       /* LX2만 살짝 키움 */
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+/* 카드도 살짝 컴팩트하게(아이콘과 텍스트는 가깝게 유지) */
+.lx2-card{
+  min-height: 72px;        /* 84px → 72px */
+  padding: 12px 14px;      /* 14/16 → 12/14 */
+  gap: 8px;                /* 아이콘-텍스트 거리 촘촘 */
+}
+.lx2-card__icon{
+  width: 36px; height: 36px; border-radius: 10px;
+}
+.lx2-card__icon svg{ width: 20px; height: 20px; }
+.lx2-card__text{
+  gap: 6px;
+  font-size: clamp(13px, 1.05vw, 15px);
+  white-space: nowrap;
+}
+
+/* 작은 화면 최적화(한 번 더 줄이기) */
+@media (max-width: 980px){
+  .lx2-hero{
+    min-height: clamp(380px, 60dvh, 560px);
+    padding: clamp(18px, 6vh, 48px) clamp(12px, 4vw, 24px);
+  }
+}
+
+
+
+
+.lx2-card__icon{
+  background: none;      /* 배경 제거 */
+  outline: none;         /* 테두리 제거 */
+}
+.lx2-card__icon svg {stroke: none;}
+
+/**/
+
+/* ===== PATCH: GraphView 안 덮기 + LX2 줄바꿈/확대 + 전체 축소 ===== */
+
+/* 1) 히어로 상단 세이프 마진 (헤더/그래프뷰 피하기) */
+.lx2-hero{
+  /* 필요 시 숫자만 조절하세요 (기본 72px) */
+  --hero-offset-top: clamp(40px, 7vh, 72px);
+  margin-top: var(--hero-offset-top);
+
+  /* 전체 크기 한 단계 더 축소 */
+  --wrap: 1040px;                         /* 1080 → 1040 */
+  min-height: clamp(340px, 56dvh, 580px); /* 66dvh → 56dvh */
+  padding: clamp(18px, 6vh, 48px) clamp(16px, 4vw, 32px);
+
+  /* 레이어는 낮게 유지(그래프뷰가 항상 위) */
+  z-index: auto;
+  isolation: initial;
+}
+
+/* 칼럼 간격/비율도 살짝 더 줄임 */
+.lx2-hero__inner{
+  grid-template-columns: 1.08fr 0.92fr;
+  column-gap: clamp(14px, 3vw, 28px);
+}
+
+/* 2) 제목: 'LX 2'를 다음 줄로 + 약간 더 크게 */
+.lx2-hero__title{
+  font-size: clamp(26px, 3.7vw, 52px); /* 본문 타이틀은 살짝 축소 */
+  line-height: 1.06;
+  margin: 0 0 .28em 0;
+}
+.lx2-title-accent{
+  display: block;              /* 줄바꿈 */
+  margin-top: .2em;            /* 한 칸 내려보이게 */
+  font-size: 1.24em;           /* LX2만 더 큼 (기존 1.18 → 1.24) */
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+/* 3) 카드 더 컴팩트(아이콘-텍스트는 가깝게 유지) */
+.lx2-card{
+  min-height: 68px;            /* 72 → 68 */
+  padding: 11px 14px;
+  gap: 8px;
+}
+.lx2-card__icon{ width: 34px; height: 34px; border-radius: 10px; }
+.lx2-card__icon svg{ width: 19px; height: 19px; }
+.lx2-card__text{ gap: 6px; font-size: clamp(13px, 1.02vw, 15px); white-space: nowrap; }
+
+/* 4) 모바일에서 여백 더 절약 */
+@media (max-width: 980px){
+  .lx2-hero{
+    --hero-offset-top: clamp(24px, 5vh, 48px);
+    margin-top: var(--hero-offset-top);
+    min-height: clamp(320px, 52dvh, 520px);
+  }
+}
+
+/* (선택) 그래프뷰가 여전히 위로 안 올라오면, 흔한 클래스에 우선순위 부여 */
+.graph, .graph-view, #graph, #graph-container{
+  position: relative;
+  z-index: 20; /* 히어로보다 항상 위 */
+}
+
+/* === PATCH v3: 그래프뷰 여유 + 히어로 더 콤팩트 + LX2 강조 === */
+.lx2-hero{
+  /* 상단 세이프존(그래프뷰/헤더 피하기) — 필요시 수치만 줄/늘리면 됨 */
+  --hero-offset-top: clamp(56px, 9vh, 96px); /* 기존보다 조금 더 확보 */
+  margin-top: var(--hero-offset-top);
+
+  /* 전체 크기 살짝 더 축소 */
+  --wrap: 980px;                          /* 1040 → 980 */
+  min-height: clamp(300px, 52dvh, 520px); /* 56dvh → 52dvh */
+  padding: clamp(16px, 5.5vh, 44px) clamp(14px, 3.6vw, 30px);
+
+  /* 그래프뷰가 항상 위로 올라오도록 레이어 낮춤 */
+  z-index: auto;
+  isolation: initial;
+}
+
+.lx2-hero__inner{
+  grid-template-columns: 1.06fr 0.94fr;   /* 우측 카드 폭 살짝 축소 */
+  column-gap: clamp(14px, 2.6vw, 26px);   /* 칼럼 간격도 한 단계 더 줄임 */
+}
+
+/* 제목은 유지, LX2만 아래 줄로 더 키우기 */
+.lx2-title-accent{
+  display:block;
+  margin-top:.22em;        /* ‘한 칸’ 느낌 */
+  font-size:1.26em;        /* LX2 조금 더 큼 (기존 1.24 → 1.26) */
+  line-height:1;
+  letter-spacing:-0.01em;
+}
+
+/* 카드 살짝 내려와 보이면 균형 맞추기용 미세 보정 */
+.lx2-hero__cards{ transform: translateY(-2px); }
+
+/* 그래프뷰 우선순위(혹시라도 테마에 따라 덮이면) */
+.graph, .graph-view, #graph, #graph-container{ position:relative; z-index:30; }
+
+
+/* === PATCH v4: 가로 길이 'center' 폭에 정확히 맞추기 === */
+
+/* 0) 예전에 제가 넣어둔 페이지 폭 해제(unset)를 되돌립니다. */
+.lx2-hero-page .page,
+.lx2-hero-page .content{
+  max-width: revert !important;   /* Quartz 기본 폭으로 복구 */
+  margin-inline: auto;            /* 중앙 정렬 유지 */
+}
+
+/* 1) 히어로 폭은 컨테이너(=center) 100%로 고정 */
+.lx2-hero{
+  width: 100% !important;         /* viewport 기준 min(...) 대신 컨테이너 기준 */
+  max-width: none !important;
+  margin-inline: 0;                /* 좌우 정확히 맞춤 */
+  /* 높이/상단 오프셋은 이전 값 유지 */
+}
+
+/* 2) 내부 그리드는 컨테이너 폭 변화에 맞춰 자연스럽게 */
+.lx2-hero__inner{
+  column-gap: clamp(12px, 2.6vw, 26px);
+}
+
+/* 3) 카드가 오른쪽 가장자리에서 튀어나오지 않도록 안전폭 확보 */
+.lx2-hero__cards{
+  min-width: 0;            /* grid overflow 방지 */
+}
+.lx2-card{ width: 100%; }  /* 카드 내부 내용이 길어도 줄바꿈 없이 엘립시스 유지 */
+.lx2-card__text{ white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* === PATCH v5: Hero 폭 787px 고정 + 아이콘 살짝 축소 === */
+
+/* 1) 히어로 전체 폭을 787px로 고정(데스크탑), 중앙 정렬 */
+.lx2-hero{
+  --wrap-fixed: 787px;
+  width: min(100%, var(--wrap-fixed)) !important; /* 787px 목표, 좁아지면 100% */
+  margin-inline: auto !important;                 /* 정확히 가운데 */
+}
+
+/* 작은 화면에서는 유동 폭 유지 */
+@media (max-width: 820px){
+  .lx2-hero{ width: 100% !important; }
+}
+
+/* 2) 내부 그리드는 현재 폭에 맞춰 간격만 살짝 줄임 */
+.lx2-hero__inner{
+  column-gap: clamp(12px, 2.4vw, 22px);
+}
+
+.lx2-card__icon{
+  width: 30px; height: 30px;   /* 34→30 */
+  border-radius: 9px;
+}
+.lx2-card__icon svg{
+  width: 30px; height: 30px;   /* 19→17 */
+  stroke: none;
+}
+.lx2-card__text{
+  font-size: clamp(12.5px, 0.98vw, 14px);
+  gap: 6px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.lx2-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;               /* 아이콘 ↔ 텍스트 간격 */
+  overflow: hidden;       /* 내부 넘침 방지 */
+  text-decoration: none;  /* 링크 밑줄 제거 */
+  color: inherit;         /* 텍스트 색상 카드에 맞춤 */
+}
+
+.lx2-card__icon {
+  flex: 0 0 auto;         /* 크기 고정 */
+}
+
+.lx2-card__text {
+  flex: 1 1 auto;         /* 남은 공간 차지 */
+  min-width: 0;           /* 줄임표 허용 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lx2-card__text {
+  flex: 1 1 auto;
+  min-width: 0;             /* 이거 빠지면 ellipsis 작동안 함 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* === FORCE WHITE TEXT IN LIGHT THEME (left block only) === */
+/* 테마에서 h1/h2 등에 !important가 걸려 있어도 이게 이깁니다(더 높은 특이성 + !important). */
+html.theme-light body .page .content .lx2-hero .lx2-hero__content,
+html.theme-light body .page .content .lx2-hero .lx2-hero__content *{
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important; /* 크롬/웨브킷 헤딩 채움색 */
+  mix-blend-mode: normal !important;        /* 혹시 블렌드 섞여 있으면 무효화 */
+}
+
+/* 버튼도 라이트에서 흰색 유지 */
+html.theme-light body .page .content .lx2-hero .lx2-hero__cta{
+  color:#fff !important;
+  border-color: rgba(255,255,255,.32) !important;
+}
+html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
+  border-color: rgba(255,255,255,.6) !important;
+  background: rgba(255,255,255,.06) !important;
+}
+/* 카드 안에 붙은 외부링크 아이콘 숨김 */
+.lx2-card .external-icon {
+  display: none !important;
+}
+
+/* 모든 페이지에서 ContentMeta 숨김 */
+.page .content-meta { 
+  display: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+
+/* ===== Explorer: 폴더 화살표 완전 제거 & 간격 보정 ===== */
+
+
+/* ===== Explorer: _etc 폴더/파일 전부 숨김 ===== */
+.sidebar.left .explorer {
+  /* 1) 폴더 자체(행) 숨김 + 공간까지 제거 */
+  li:has(> .folder-container[data-folderpath^="_etc"]),
+  li:has(> .folder-container[data-folderpath*="/_etc"]) {
+    display: none !important;
+  }
+  /* 폴더 컨테이너가 남더라도 바로 접힘 */
+  .folder-container[data-folderpath^="_etc"],
+  .folder-container[data-folderpath*="/_etc"] {
+    display: none !important;
+  }
+  /* 폴더 내용 블록(형제)도 제거 */
+  .folder-container[data-folderpath^="_etc"] + .folder-outer,
+  .folder-container[data-folderpath*="/_etc"] + .folder-outer {
+    display: none !important;
+  }
+
+  /* 2) 파일 링크가 _etc 경로를 가리키면 항목(li)ごと 제거 */
+  li:has(> a[data-for^="_etc/"]),
+  li:has(> a[href^="../_etc/"]),
+  li:has(> a[href*="/_etc/"]) {
+    display: none !important;
+  }
+  /* 앵커 자체도 보이지 않게(혹시 li:has 미지원 브라우저 대비) */
+  a[data-for^="_etc/"],
+  a[href^="../_etc/"],
+  a[href*="/_etc/"] {
+    display: none !important;
+  }
+}
+
+
+
+
+
+
+/* ===== Obsidian Slider (pure CSS, no JS) ===== */
+.obs-slider{
+  --h: 460px;
+  --btn-size: 48px;
+  --btn-bg: #fff;   /* 버튼 배경: 흰색 */
+  --btn-fg: #000;   /* 아이콘: 검정 */
+  --dot: #cfcfcf;
+  --dot-active: #000;
+  --dur: .45s;
+  --timing: cubic-bezier(.25,.8,.25,1);
+ 
+  position: relative;
+  max-width: 850px;
+  margin: 24px auto;
+  height: auto;
+  border-radius: 14px;
+  box-shadow: 0 6px 24px rgba(0,0,0,.10);
+  isolation: isolate;
+  overflow: hidden;
+}
+ 
+/* 상태 라디오 숨김 */
+.obs-slider > input[type="radio"]{ position:absolute; opacity:0; pointer-events:none; }
+ 
+/* 뷰포트/트랙 */
+.obs-slider .viewport{ position:relative; height: auto; overflow:hidden; }
+.obs-slider .track{
+  display:flex; gap:0; height:auto;
+  transform: translate3d(0,0,0);
+  transition: transform var(--dur) var(--timing);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+ 
+/* 패널: 정확히 100% 폭 */
+.obs-slider .panel{
+  flex: 0 0 100%;
+  height: auto;
+  display:grid; place-items:center;
+  background:#f6f7f9;
+  margin:0;           /* figure 기본 여백 제거 */
+}
+.obs-slider .panel img{ width:100%; height:100%; object-fit:contain; display:block; } /* 하단 공백 제거 */
+ 
+/* 네비게이션 버튼 (흰 원 + 검정 >, 호버 반전) — 자리 유지, 투명도만 토글 */
+.obs-slider .nav{
+  position:absolute; inset-block:0; margin-block:auto;
+  width:var(--btn-size); height:var(--btn-size);
+  display:flex; align-items:center; justify-content:center;
+  border-radius:999px;
+  background:var(--btn-bg); color:var(--btn-fg);
+  font-size:24px; font-weight:800; line-height:1;
+  box-shadow:0 2px 10px rgba(0,0,0,.22);
+  user-select:none; cursor:pointer;
+  transition: background .15s ease, color .15s ease, transform .15s ease, opacity .18s ease;
+  opacity:0; pointer-events:none;
+}
+.obs-slider .nav:hover{ background:#000; color:#fff; transform: scale(1.06); }
+.obs-slider .nav:active{ transform: scale(.98); }
+.obs-slider .nav.prev{ left:14px; }
+.obs-slider .nav.next{ right:14px; }
+ 
+/* 점 표시 */
+.obs-slider .dots{
+  position:absolute; left:0; right:0; bottom:14px;
+  display:flex; gap:10px; justify-content:center; align-items:center;
+}
+.obs-slider .dots label{
+  width:10px; height:10px; border-radius:999px; background:var(--dot);
+  cursor:pointer; transition: transform .2s, background .2s;
+}
+ 
+/* ===== 상태 → 이동/표시 ===== */
+#os-s1:checked ~ .viewport .track{ transform: translate3d(0,0,0); }
+#os-s2:checked ~ .viewport .track{ transform: translate3d(-100%,0,0); }
+#os-s3:checked ~ .viewport .track{ transform: translate3d(-200%,0,0); }
+ 
+/* 활성 dot 강조 */
+#os-s1:checked ~ .viewport .dots label:nth-child(1),
+#os-s2:checked ~ .viewport .dots label:nth-child(2),
+#os-s3:checked ~ .viewport .dots label:nth-child(3){
+  background: var(--dot-active);
+  transform: scale(1.25);
+}
+ 
+/* 각 슬라이드에서 활성화할 버튼 페어(투명도/포인터만 변경) */
+#os-s1:checked ~ .viewport .nav.for-1,
+#os-s2:checked ~ .viewport .nav.for-2,
+#os-s3:checked ~ .viewport .nav.for-3{
+  opacity:1; pointer-events:auto;
+}
+ 
+/* 접근성: 모션 줄이기 */
+@media (prefers-reduced-motion: reduce){
+  .obs-slider .track{ transition:none; }
+}
+ 
+/* 반응형 */
+@media (max-width: 720px){
+  .obs-slider{ --h: 320px; --btn-size: 44px; }
+}
+ 
+
+
+
+/* === Vertical variant === */
+.obs-slider.is-vertical .viewport{ height: var(--h); }
+.obs-slider.is-vertical .track{
+  flex-direction: column;                 /* 세로 스택 */
+}
+
+/* 패널 크기: 높이 100% 채우기 */
+.obs-slider.is-vertical .panel{
+  block-size: var(--h);
+}
+
+/* 네비게이션 버튼: 위/아래 */
+.obs-slider.is-vertical .nav{
+  left: 0; right: 0;                      /* 가운데 정렬 */
+  margin-inline: auto;
+}
+.obs-slider.is-vertical .nav.up{    top: 14px; }
+.obs-slider.is-vertical .nav.down{  bottom: 14px; }
+
+/* 점 네비: 우측 세로 배치 */
+.obs-slider.is-vertical .dots{
+  top: 50%; bottom: auto; right: 14px; left: auto;
+  transform: translateY(-50%);
+  flex-direction: column;
+}
+
+/* 상태 → 이동(translateY) */
+#ov-s1:checked ~ .viewport .track{ transform: translate3d(0,   0%, 0); }
+#ov-s2:checked ~ .viewport .track{ transform: translate3d(0, -100%, 0); }
+#ov-s3:checked ~ .viewport .track{ transform: translate3d(0, -200%, 0); }
+
+/* 활성 dot 강조 (그대로 재사용) */
+#ov-s1:checked ~ .viewport .dots label:nth-child(1),
+#ov-s2:checked ~ .viewport .dots label:nth-child(2),
+#ov-s3:checked ~ .viewport .dots label:nth-child(3){
+  background: var(--dot-active);
+  transform: scale(1.25);
+}
+
+/* 각 슬라이드에서 보일 버튼 페어 (가시성/포인터 토글) */
+#ov-s1:checked ~ .viewport .nav.for-1,
+#ov-s2:checked ~ .viewport .nav.for-2,
+#ov-s3:checked ~ .viewport .nav.for-3{
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* === Vertical fix: 중앙정렬 해제 후 위/아래 고정 === */
+.obs-slider.is-vertical .nav{
+  /* 기본의 inset-block:0; margin-block:auto 를 무효화 */
+  inset-block: auto !important;
+  margin-block: 0 !important;
+  top: auto !important;
+  bottom: auto !important;
+}
+.obs-slider.is-vertical .nav.up{
+  top: 14px !important;
+  bottom: auto !important;
+}
+.obs-slider.is-vertical .nav.down{
+  bottom: 14px !important;
+  top: auto !important;
+}
+
+/* (안전) 현재 슬라이드에서만 보일 버튼 페어 확실히 노출 */
+#ov-s1:checked ~ .viewport .nav{ opacity:0; pointer-events:none; }
+#ov-s2:checked ~ .viewport .nav{ opacity:0; pointer-events:none; }
+#ov-s3:checked ~ .viewport .nav{ opacity:0; pointer-events:none; }
+#ov-s1:checked ~ .viewport .nav.for-1,
+#ov-s2:checked ~ .viewport .nav.for-2,
+#ov-s3:checked ~ .viewport .nav.for-3{
+  opacity:1; pointer-events:auto;
+}
+
+/* === Vertical: 한 장씩 정확히 이동 (px/var 기반) === */
+.obs-slider.is-vertical .viewport{ height: var(--h); }
+.obs-slider.is-vertical .track{
+  flex-direction: column;
+  will-change: transform;
+}
+
+/* 각 패널은 정확히 --h 높이 */
+.obs-slider.is-vertical .panel{ block-size: var(--h); }
+
+/* 퍼센트(-100%) 대신 '패널 높이'로 이동 */
+#ov-s1:checked ~ .viewport .track{ transform: translate3d(0, calc(-0 * var(--h)), 0); }
+#ov-s2:checked ~ .viewport .track{ transform: translate3d(0, calc(-1 * var(--h)), 0); }
+#ov-s3:checked ~ .viewport .track{ transform: translate3d(0, calc(-2 * var(--h)), 0); }
+
+/* 버튼 중앙 겹침 방지(위/아래 고정) */
+.obs-slider.is-vertical .nav{
+  inset-block: auto !important; margin-block: 0 !important;
+  left: 0; right: 0; margin-inline: auto;
+}
+.obs-slider.is-vertical .nav.up{ top: 14px !important; }
+.obs-slider.is-vertical .nav.down{ bottom: 14px !important; }
+
+/* 현재 슬라이드에서만 버튼 보이게 */
+#ov-s1:checked ~ .viewport .nav,
+#ov-s2:checked ~ .viewport .nav,
+#ov-s3:checked ~ .viewport .nav{ opacity:0; pointer-events:none; }
+#ov-s1:checked ~ .viewport .nav.for-1,
+#ov-s2:checked ~ .viewport .nav.for-2,
+#ov-s3:checked ~ .viewport .nav.for-3{ opacity:1; pointer-events:auto; }
+
+/* 점 네비는 기존 그대로 (우측 세로) */
+
+
+/* 1) 슬라이더 자체를 독립 스택으로 + 내부만 보이게 클립 */
+.obs-slider{
+  position: relative;
+  isolation: isolate;  /* 바깥과 z-index 섞임 방지 */
+  z-index: 0;          /* 주변보다 높지도 낮지도 않게 기준값 */
+  overflow: clip;      /* 자식 절대요소가 밖으로 새지 않도록 */
+}
+.obs-slider .viewport{
+  position: relative;
+  overflow: clip;      /* nav/dots도 뷰포트 밖으로 못 나감 */
+}
+
+/* 내부 z-index 질서: track < dots < nav */
+.obs-slider .track{ position: relative; z-index: 0; }
+.obs-slider .dots { position: absolute; z-index: 1; }
+.obs-slider .nav  { position: absolute; z-index: 2; }
+
+/* 2) 세로 모드 – 버튼과 콘텐츠가 안 겹치게 패딩 확보 */
+.obs-slider.is-vertical .viewport{
+  /* 버튼 높이만큼 위/아래 여유; 필요하면 수치 조절 */
+  padding-block: calc(var(--btn-size) * 0.9);
+}
+
+/* 세로 nav 위치 상·하로 고정(중앙 겹침 방지) */
+.obs-slider.is-vertical .nav{
+  inset-block: auto !important;
+  margin-block: 0 !important;
+  left: 0; right: 0; margin-inline: auto;
+}
+.obs-slider.is-vertical .nav.up   { top:    14px !important; bottom: auto !important; }
+.obs-slider.is-vertical .nav.down { bottom: 14px !important; top:    auto !important; }
+
+/* 한 장씩 정확히 이동(끝까지 '슉' 방지) */
+#ov-s1:checked ~ .viewport .track{ transform: translate3d(0, calc(-0 * var(--h)), 0); }
+#ov-s2:checked ~ .viewport .track{ transform: translate3d(0, calc(-1 * var(--h)), 0); }
+#ov-s3:checked ~ .viewport .track{ transform: translate3d(0, calc(-2 * var(--h)), 0); }
+
+/* 현재 슬라이드에서만 버튼 페어 활성 */
+#ov-s1:checked ~ .viewport .nav,
+#ov-s2:checked ~ .viewport .nav,
+#ov-s3:checked ~ .viewport .nav{ opacity:0; pointer-events:none; }
+#ov-s1:checked ~ .viewport .nav.for-1,
+#ov-s2:checked ~ .viewport .nav.for-2,
+#ov-s3:checked ~ .viewport .nav.for-3{ opacity:1; pointer-events:auto; }
+
+
+
+
+.lx2-hero__copyright {
+  position: absolute;
+  bottom: 20px;   /* 섹션 하단에서 20px 위 */
+  left: 40px;     /* 왼쪽 여백 */
+  font-size: 0.9em;
+  color: gray;
+}
+
+
+.lx2-pdf-card {
+  position: absolute;
+  right:20px;
+  bottom: 20px;
+}
+
+.lx2-pdf-card .pdf-link {
+display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: rgba(255, 75, 75, 0.1);
+  border: 1px solid rgba(255, 75, 75, 0.4);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.lx2-pdf-card .pdf-link:hover {
+  background: rgba(255, 75, 75, 0.2);
+  border-color: rgba(255, 75, 75, 0.6);
+  transform: translateY(-2px);
+}
+
+.lx2-pdf-card .pdf-icon svg {
+  display: block;
+}
