@@ -1692,3 +1692,35 @@ html.theme-light body .page .content .lx2-hero .lx2-hero__cta:hover{
   font-size: 0.9em;
   color: gray;
 }
+
+
+.lx2-pdf-card {
+  position: absolute;
+  right:20px;
+  bottom: 20px;
+}
+
+.lx2-pdf-card .pdf-link {
+display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: rgba(255, 75, 75, 0.1);
+  border: 1px solid rgba(255, 75, 75, 0.4);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.lx2-pdf-card .pdf-link:hover {
+  background: rgba(255, 75, 75, 0.2);
+  border-color: rgba(255, 75, 75, 0.6);
+  transform: translateY(-2px);
+}
+
+.lx2-pdf-card .pdf-icon svg {
+  display: block;
+}
