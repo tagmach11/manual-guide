@@ -22,6 +22,19 @@ export const defaultContentPageLayout: PageLayout = {
       condition: (page) => page.fileData.slug !== "index",
     }),
     Component.ArticleTitle(),
+    Component.ConditionalRender({
+      component: Component.BackButton(),
+      condition: (page) => {
+        const slug = page.fileData.slug || ""
+        // 인덱스 페이지 제외
+        if (slug === "index") return false
+        // 카테고리 페이지 제외 (1.-회원, 2.-과정, 3.-콘텐츠, 등)
+        const categoryPattern = /^\d+\.-/
+        if (categoryPattern.test(slug)) return false
+        // 나머지 페이지에는 표시
+        return true
+      },
+    }),
     Component.ContentMeta(),
     Component.TagList(),
   ],
