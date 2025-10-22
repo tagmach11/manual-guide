@@ -369,6 +369,15 @@ export async function handleBuild(argv) {
       // strip baseDir prefix
       req.url = req.url?.slice(argv.baseDir.length)
 
+      // Decode URI to handle non-ASCII characters (e.g., Korean)
+      if (req.url) {
+        try {
+          req.url = decodeURIComponent(req.url)
+        } catch (e) {
+          // If decoding fails, use the original
+        }
+      }
+
       const serve = async () => {
         const release = await buildMutex.acquire()
         await serveHandler(req, res, {

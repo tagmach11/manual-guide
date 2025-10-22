@@ -19,6 +19,7 @@ const config: QuartzConfig = {
     baseUrl: "lx2.kr",
     ignorePatterns: ["private", "templates", ".obsidian"],
     defaultDateType: "modified",
+    slugify: (path) => encodeURI(path),
     theme: {
       fontOrigin: "googleFonts",
       cdnCaching: true,

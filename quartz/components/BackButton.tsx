@@ -7,8 +7,8 @@ const BackButton: QuartzComponent = ({ displayClass }: QuartzComponentProps) => 
   return (
     <div class={`back-button ${displayClass ?? ""}`}>
       <button 
-        type="button" 
-        id="back-button"
+        type="button"
+        id="back-btn"
         class="back-btn"
         aria-label="뒤로가기"
       >
