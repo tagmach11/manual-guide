@@ -31,6 +31,8 @@ export const defaultContentPageLayout: PageLayout = {
         // 카테고리 페이지 제외 (1.-회원, 2.-과정, 3.-콘텐츠, 등)
         const categoryPattern = /^\d+\.-/
         if (categoryPattern.test(slug)) return false
+        // 10.시스템 페이지 제외
+        if (slug === "10.시스템") return false
         // 나머지 페이지에는 표시
         return true
       },
